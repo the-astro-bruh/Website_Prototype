@@ -29,8 +29,50 @@
         .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-        .hero-section { position: relative; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; overflow: hidden; background-color: var(--color-text-dark); padding: 20px; box-sizing: border-box; }
-        #hero-video { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; object-fit: cover; transform: translate(-50%, -50%); z-index: 0; filter: brightness(0.6); }
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            background-color: var(--color-text-dark);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            filter: brightness(0.6);
+        }
+        /* Estilos para la imagen de fallback con parallax y zoom */
+        .hero-background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('img/hero-fallback.jpg'); /* Ruta de tu imagen de fallback */
+            background-size: 110%; /* Comienza un poco más grande para el zoom-out */
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.6);
+            z-index: 0;
+            transition: background-size 8s ease-in-out, filter 0.5s ease-in-out; /* Transición suave para el zoom */
+        }
+
+        .hero-section.parallax-active .hero-background-image {
+            background-size: 100%; /* Tamaño final para el zoom-in */
+        }
+        
         .hero-content { position: relative; z-index: 1; max-width: 1080px; width: 100%; margin: 0 auto; opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 0; transform: translateY(-50px); }
         .hero-content.visible { opacity: 1; transform: translateY(-50px); }
         .hero-logo-container { margin-bottom: 10px; width: 80%; max-width: 720px; height: 100px; display: flex; justify-content: center; align-items: center; position: relative; }
@@ -217,6 +259,8 @@
             <source src="bg-video.mp4" type="video/mp4">
             Tu navegador no soporta la etiqueta de video.
         </video>
+        <div class="hero-background-image" id="heroBackgroundImage"></div>
+
         <div class="hero-content" id="heroContent">
             <div class="hero-logo-container">
                 <img src="img/logo.png" alt="Logo Boost & Launch" class="hero-logo" id="mainLogo">
@@ -464,18 +508,44 @@
             setTimeout(() => logo.classList.remove('clicked'), 300);
         });
 
-        // Manejo de error de video
+        // Manejo de error de video y fallback con imagen parallax
         const heroVideo = document.getElementById('hero-video');
+        const heroSection = document.getElementById('hero');
+        const heroBackgroundImage = document.getElementById('heroBackgroundImage');
+
         if (heroVideo) {
             heroVideo.onerror = function() {
                 console.log('Error al cargar el video. Mostrando fondo alternativo.');
-                heroVideo.style.display = 'none';
+                heroVideo.style.display = 'none'; // Oculta el video
+                heroBackgroundImage.style.display = 'block'; // Muestra la imagen de fallback
+                heroSection.classList.add('parallax-active'); // Activa la animación de zoom
             };
+
+            // Para navegadores que no soportan autoplay o si la carga es lenta,
+            // también se puede añadir un timeout o un evento 'canplaythrough'
+            // para manejar casos donde el video no empieza a reproducirse.
+            // Por simplicidad, solo nos basamos en onerror.
+        } else {
+            // Si por alguna razón el elemento de video no existe (ej. JS deshabilitado)
+            // nos aseguramos de mostrar la imagen.
+            heroBackgroundImage.style.display = 'block';
+            heroSection.classList.add('parallax-active');
         }
 
         // Preload del logo
         const logoImg = new Image();
         logoImg.src = 'img/logo.png';
+
+        // Preload de la imagen de fallback para el hero principal
+        const heroFallbackImg = new Image();
+        heroFallbackImg.src = 'img/hero-fallback.jpg';
+        heroFallbackImg.onload = function() {
+            console.log('Imagen de fallback cargada.');
+        };
+        heroFallbackImg.onerror = function() {
+            console.error('Error al precargar la imagen de fallback.');
+        };
+
 
         // Efecto de iluminación en botones
         document.querySelectorAll('.btn-nav, .btn-primary, .project-link, .btn-whatsapp-footer').forEach(button => {
