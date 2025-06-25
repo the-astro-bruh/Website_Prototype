@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boost & Launch - Contáctanos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* === Variables CSS para colores (Consistente con el index) === */
+        :root {
+            --color-primary: #009bde;
+            --color-secondary: #007bff;
+            --color-dark-bg: #0f0f10;
+            --color-light-bg: #1a1a1e;
+            --color-text-light: #f4f4f4;
+            --color-text-dark: #000000;
+            --color-gray-text: #ccc;
+            --color-border: #333;
+            --color-shimmer-start: #ffffff;
+            --color-shimmer-middle: #009bde;
+            --color-shimmer-end: #ffffff;
+            --color-button-hover: #ffffff;
+            --color-icon-hover: #0f0f10;
+            --color-shadow-primary: rgba(0, 155, 222, 0.4);
+            --color-shadow-primary-hover: rgba(0, 155, 222, 0.6);
+            --color-shadow-dark: rgba(0,0,0,0.7);
+            --color-shadow-medium: rgba(0,0,0,0.5);
+            --color-shadow-light: rgba(0,0,0,0.4);
+            --color-shadow-button: rgba(0,0,0,0.3);
+            --color-form-bg: #27272a; /* Nuevo para inputs y botones nav */
+        }
+
+        /* === Estilos Base === */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif; /* Pila de fuentes más robusta */
+            background: var(--color-dark-bg);
+            color: var(--color-text-light);
+            line-height: 1.6;
+        }
+
+        /* === Secciones Generales === */
+        section {
+            width: 100%;
+            padding: 80px 20px;
+            box-sizing: border-box;
+        }
+
+        .section-negra {
+            background-color: var(--color-dark-bg);
+            text-align: center;
+            padding-top: 60px;
+            padding-bottom: 60px;
+        }
+
+        .section-clara {
+            background-color: var(--color-light-bg);
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .section-parallax {
+            background-image: url('img/bg_contactanos.jpg'); /* Asegúrate de que esta ruta sea correcta */
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 600px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* === Barra Superior y Navegación === */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: var(--color-text-dark); /* Usar variable */
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .logo {
+            font-size: 1.5em; /* Ajustado para consistencia con index */
+            font-weight: bold;
+            background-image: linear-gradient(120deg, var(--color-shimmer-start) 10%, var(--color-shimmer-middle) 40%, var(--color-shimmer-end) 70%);
+            background-size: 200% auto;
+            animation: shimmer 4s linear infinite;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        @keyframes logoPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .logo.clicked {
+            animation: shimmer 4s linear infinite, logoPop 0.3s ease-out;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -100% center; }
+            100% { background-position: 100% center; }
+        }
+
+        .nav-inline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn-nav,
+        .btn-primary,
+        .contact-form button[type="submit"] {
+            position: relative;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: color 0.3s ease-in-out, background 0.3s ease-in-out, border-color 0.3s ease-in-out, transform 0.3s ease, box-shadow 0.3s ease; /* Añadimos transform y box-shadow para todos los botones */
+            font-size: 0.95em;
+            white-space: nowrap;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-sizing: border-box; /* Asegura que el padding no aumente el ancho total */
+        }
+
+        .btn-nav {
+            background: var(--color-form-bg); /* Usar variable */
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .btn-nav i {
+            color: var(--color-primary);
+        }
+
+        /* Animación de brillo para todos los botones */
+        .btn-nav::before,
+        .btn-primary::before,
+        .contact-form button[type="submit"]::before {
+            content: "";
+            position: absolute;
+            top: var(--y, 50%);
+            left: var(--x, 50%);
+            transform: translate(-50%, -50%);
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 230, 230, 0.3), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.2s;
+            pointer-events: none;
+            z-index: 0; /* Asegura que el brillo esté detrás del texto */
+        }
+
+        .btn-nav:hover::before,
+        .btn-primary:hover::before,
+        .contact-form button[type="submit"]:hover::before {
+            opacity: 1;
+        }
+
+        .btn-nav:hover {
+            color: var(--color-button-hover);
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            transform: translateY(-2px); /* Pequeño lift al pasar el ratón */
+            box-shadow: 0 4px 10px var(--color-shadow-button);
+        }
+
+        .btn-nav:hover i {
+            color: var(--color-icon-hover);
+        }
+
+        /* === Botón Hamburguesa (Responsive) === */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 44px; /* Ajustado para consistencia con index */
+            height: 38px; /* Ajustado para consistencia con index */
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 200;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: var(--color-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* === Media Queries para Móvil === */
+        @media (max-width: 1080px) { /* Ajustado a 1080px para consistencia con index */
+            .hamburger {
+                display: flex;
+            }
+
+            .top-bar {
+                flex-direction: row;
+                align-items: center;
+                gap: 0;
+                padding: 15px 20px;
+            }
+            .top-bar .logo {
+                flex-grow: 1;
+            }
+
+            .nav-inline {
+                display: none;
+                flex-direction: column;
+                gap: 15px;
+                background: #1f1f22ee; /* Usar rgba para el blur */
+                border: 1px solid var(--color-border);
+                padding: 20px;
+                margin-top: 15px;
+                width: 90%;
+                max-width: 300px;
+                border-radius: 10px;
+                position: absolute;
+                top: 70px;
+                right: 20px;
+                box-shadow: 0 4px 15px var(--color-shadow-button);
+                backdrop-filter: blur(8px); /* Consistente con el top-bar */
+            }
+
+            .nav-inline.show {
+                display: flex;
+            }
+
+            .btn-nav {
+                width: 100%;
+            }
+
+            /* Ajustes específicos para esta página en móvil */
+            .page-hero-section {
+                height: 50vh; /* Ajustar altura del hero en móvil */
+                min-height: 250px; /* Asegura una altura mínima */
+                padding: 40px 20px;
+            }
+
+            .page-hero-slogan {
+                font-size: 2em; /* Tamaño de fuente más pequeño para el eslogan */
+                margin-bottom: 10px;
+            }
+
+            .page-hero-subtext {
+                font-size: 1em; /* Tamaño de fuente más pequeño para el subtexto */
+                margin-bottom: 20px;
+            }
+
+            .about-us-section-page,
+            .contact-section-page {
+                padding: 50px 20px; /* Reducir padding de secciones */
+            }
+
+            .about-us-section-page h2,
+            .contact-section-page h2 {
+                font-size: 2.0em; /* Reducir tamaño de títulos, consistente con index */
+                margin-bottom: 30px;
+            }
+
+            .about-us-section-page p,
+            .contact-section-page p {
+                font-size: 1.1em; /* Ajustar tamaño de párrafo, consistente con index */
+            }
+
+            .team-photo-page {
+                max-width: 120px; /* Mantener un tamaño decente para la imagen del equipo */
+                margin-top: 20px;
+            }
+
+            .contact-form {
+                padding: 30px; /* Ajustar padding del formulario */
+                border-radius: 10px;
+            }
+
+            .contact-form label {
+                font-size: 1em; /* Consistente */
+            }
+
+            .contact-form input[type="text"],
+            .contact-form input[type="email"],
+            .contact-form textarea {
+                padding: 12px; /* Consistente */
+                margin-bottom: 15px;
+                font-size: 1em; /* Consistente */
+            }
+
+            .contact-form textarea {
+                min-height: 100px; /* Reducir altura mínima del textarea */
+            }
+
+            .contact-form button[type="submit"] {
+                padding: 15px; /* Consistente */
+                font-size: 1.1em; /* Consistente */
+            }
+
+            .btn-primary {
+                width: 90%;
+                max-width: 350px; /* Un poco más amplio para mobile */
+                box-sizing: border-box;
+                margin: 10px auto !important; /* Centrar y asegurar margen */
+                padding: 18px 25px; /* Ligeramente más grande */
+                font-size: 1.2em; /* Texto más legible */
+            }
+
+            .social-icons {
+                gap: 12px;
+                margin-top: 25px;
+                margin-bottom: 25px;
+            }
+
+            .social-icons a {
+                width: 50px;
+                height: 50px;
+                font-size: 1.6em;
+            }
+        }
+
+        /* === Sección Principal (Hero Section - Adaptado para Contacto) === */
+        .page-hero-section {
+            position: relative;
+            height: 22vh; /* Ajusta la altura para que no sea tan grande como la del index */
+            min-height: 280px; /* Altura mínima para asegurar visibilidad */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--color-text-light);
+            overflow: hidden;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: var(--color-text-dark); /* Fondo negro mientras carga el video */
+        }
+
+        #page-hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            transform: translateX(-50%) translateY(-50%);
+            filter: brightness(0.8);
+            animation: zoomIn 15s infinite alternate ease-in-out;
+        }
+
+        @keyframes zoomIn {
+            0% { transform: translateX(-50%) translateY(-50%) scale(1); }
+            100% { transform: translateX(-50%) translateY(-50%) scale(1.05); }
+        }
+        
+        .page-hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+            width: 100%;  
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-hero-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .page-hero-slogan {
+            font-size: 2.0em;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 8px var(--color-shadow-dark);
+        }
+
+        .page-hero-subtext {
+            font-size: 1.5em;
+            color: var(--color-gray-text); /* Usar variable */
+            margin-bottom: 30px;
+            max-width: 800px;
+            text-shadow: 1px 1px 5px var(--color-shadow-medium);
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 18px 35px; /* Aumentado padding */
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            color: var(--color-button-hover);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em; /* Ajustado para mejor legibilidad */
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px var(--color-shadow-primary);
+            white-space: nowrap;
+            margin: 0 10px; /* Espacio entre botones */
+            border: none; /* Asegurar que no tenga un borde extra si no lo quieres */
+            position: relative; /* Necesario para el pseudoelemento ::before */
+            z-index: 1; /* Asegura que el texto y el icono estén por encima del brillo */
+        }
+
+        .btn-primary i {
+            margin-right: 8px; /* Espacio para ícono */
+            z-index: 2; /* Asegura que el icono también esté por encima */
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--color-shadow-primary-hover);
+            background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
+        }
+        
+        /* === Sección "Quiénes Somos" (En esta página) === */
+        .about-us-section-page {
+            background-color: var(--color-light-bg);
+            padding: 80px 20px;
+            text-align: center;
+            color: var(--color-text-light);
+        }
+
+        .about-us-section-page h2 {
+            font-size: 2.0em; /* Consistente con index */
+            color: var(--color-primary);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .about-us-section-page h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--color-primary);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .about-us-section-page p {
+            max-width: 1080px;
+            margin: 0 auto 30px;
+            font-size: 1.4em; /* Ajustado a 1.4em para consistencia con index */
+            line-height: 1.8;
+            color: var(--color-gray-text);
+        }
+
+        .team-photo-page {
+            max-width: 320px; /* Ajustado a 600px para consistencia con index */
+            border-radius: 15px;
+            box-shadow: 0 8px 25px var(--color-shadow-medium);
+            margin-top: 30px;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        /* === Sección de Contacto (En esta página) === */
+        .contact-section-page {
+            background-color: var(--color-dark-bg);
+            padding: 80px 20px;
+            text-align: center;
+            color: var(--color-text-light);
+        }
+
+        .contact-section-page h2 {
+            font-size: 2.2em; /* Consistente con index */
+            color: var(--color-primary);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .contact-section-page h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--color-primary);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .contact-section-page p {
+            max-width: 900px; /* Ajustado a 900px para consistencia con index */
+            margin: 0 auto 30px;
+            font-size: 1.4em; /* Ajustado a 1.4em para consistencia con index */
+            line-height: 1.8;
+            color: var(--color-gray-text);
+        }
+
+        .contact-form {
+            max-width: 700px; /* Ligeramente más grande */
+            margin: 0 auto;
+            background: var(--color-light-bg); /* Usar variable */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--color-shadow-medium);
+            text-align: left;
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--color-text-light);
+            font-size: 1.1em; /* Ligeramente más grande */
+            display: flex; /* Para el ícono */
+            align-items: center; /* Para el ícono */
+            gap: 8px; /* Espacio entre ícono y texto */
+        }
+
+        .contact-form label i {
+            color: var(--color-primary);
+        }
+
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 14px; /* Aumentado padding */
+            margin-bottom: 25px; /* Aumentado margen */
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            background-color: var(--color-form-bg); /* Usar variable */
+            color: var(--color-text-light);
+            font-size: 1.1em; /* Ajustado */
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-form input[type="text"]:focus,
+        .contact-form input[type="email"]:focus,
+        .contact-form textarea:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px var(--color-shadow-primary);
+            outline: none;
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 150px; /* Ligeramente más alto */
+        }
+
+        .contact-form button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 18px; /* Aumentado padding */
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            color: var(--color-button-hover);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em; /* Ajustado */
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px var(--color-shadow-primary);
+            display: flex; /* Para centrar contenido e ícono */
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Espacio para ícono */
+            position: relative; /* Necesario para el pseudoelemento ::before */
+            z-index: 1; /* Asegura que el texto y el icono estén por encima del brillo */
+        }
+
+        .contact-form button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--color-shadow-primary-hover);
+            background: linear-gradient(90deg, var(--color-secondary), var(--color-primary));
+        }
+
+        /* === Iconos Sociales === */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .social-icons a {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background-color: var(--color-form-bg); /* Usar variable */
+            color: var(--color-primary);
+            font-size: 1.8em;
+            transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+            box-shadow: 0 3px 10px var(--color-shadow-button);
+            line-height: 1;
+            padding-top: 2px; /* Pequeño ajuste para centrar visualmente el ícono */
+        }
+
+        .social-icons a:hover {
+            background-color: var(--color-primary);
+            color: var(--color-icon-hover);
+            transform: translateY(-5px) scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-bar">
+        <a href="index.html" class="logo" id="mainLogo" aria-label="Ir a la página principal de Boost & Launch">Boost & Launch 🚀</a> 
+        <button class="hamburger" id="hamburger" aria-label="Menú de Navegación">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="nav-inline" id="nav">
+            <a href="index.html#nuestros-trabajos" class="btn-nav" aria-label="Nuestros Trabajos"><i class="fa-solid fa-laptop-code"></i> Nuestros trabajos</a>
+            <a href="index.html#quienes-somos" class="btn-nav" aria-label="Quiénes Somos"><i class="fa-solid fa-users"></i> ¿Quiénes somos?</a>
+            <a href="index.html#contacto" class="btn-nav" aria-label="Contáctanos"><i class="fa-solid fa-paper-plane"></i> Contáctanos</a>
+        </nav>
+    </header>
+
+    <section class="page-hero-section">
+        <video id="page-hero-video" autoplay loop muted playsinline poster="path/to/your-poster-image.jpg">
+            <source src="bg-contact-video.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video>
+        <div class="page-hero-content" id="pageHeroContent">
+            <h1 class="page-hero-slogan">Conoce al Equipo Detrás de tu Éxito Digital.</h1>
+            <p class="page-hero-subtext">Aquí, cada miembro es un experto apasionado por transformar tus ideas en una identidad digital impactante.</p>
+        </div>
+    </section>
+
+    <section class="about-us-section-page" id="quienes-somos-page">
+        <h2><i class="fa-solid fa-handshake"></i> ¿Quiénes somos en Boost & Launch?</h2>
+        <p>Ayudamos a marcas y emprendedores a construir su presencia digital desde cero, con soluciones integrales que combinan diseño, programación, marketing y gestión estratégica de redes sociales. Nuestro enfoque se basa en el conocimiento, la experiencia y una visión clara: lograr que cada proyecto no solo se vea bien, sino que funcione, conecte y crezca.</p>
+        <p>Diseño, programación, marketing y redes sociales, todo en manos de profesionales con años y recorrido de experiencia.</p>
+        <img src="img/equipo.jpg" alt="Equipo de Boost & Launch trabajando juntos" class="team-photo-page">
+    </section>
+
+    <div class="section-parallax"></div>
+
+    <section class="contact-section-page" id="contacto">
+        <h2><i class="fa-solid fa-headset"></i> ¡Queremos Escucharte!</h2>
+        <p>¿Tienes un proyecto en mente, una pregunta o simplemente quieres saludar? Estamos listos para ayudarte a llevar tu presencia digital al siguiente nivel.</p>
+        
+        <div class="contact-form">
+            <form action="#" method="POST" aria-label="Formulario de contacto">
+                <label for="name"><i class="fa-solid fa-user"></i> Nombre Completo:</label>
+                <input type="text" id="name" name="name" required placeholder="Tu nombre">
+
+                <label for="email"><i class="fa-solid fa-envelope"></i> Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required placeholder="tu.correo@ejemplo.com">
+
+                <label for="subject"><i class="fa-solid fa-tag"></i> Asunto:</label>
+                <input type="text" id="subject" name="subject" required placeholder="Sobre qué quieres hablar">
+
+                <label for="message"><i class="fa-solid fa-comment-dots"></i> Tu Mensaje:</label>
+                <textarea id="message" name="message" required placeholder="Cuéntanos más sobre tu proyecto o consulta..."></textarea>
+
+                <button type="submit" aria-label="Enviar mensaje del formulario">Enviar Mensaje <i class="fa-solid fa-paper-plane"></i></button>
+            </form>
+        </div>
+
+        <p style="margin-top: 40px; font-size: 1.1em; color: var(--color-gray-text);">También puedes contactarnos directamente:</p>
+        <a href="mailto:tuemail@dominio.com" class="btn-primary" style="margin-top: 15px;" aria-label="Enviar correo electrónico"><i class="fa-solid fa-envelope"></i> Enviar Correo</a>
+        <a href="https://wa.me/tunumerodetelefono" target="_blank" rel="noopener noreferrer" class="btn-primary" style="margin-top: 15px; margin-left: 15px;" aria-label="Contactar por WhatsApp"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+
+        <div class="social-icons">
+            <a href="https://instagram.com/tu_usuario" target="_blank" rel="noopener noreferrer" aria-label="Visita nuestro Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/tu_usuario" target="_blank" rel="noopener noreferrer" aria-label="Visita nuestro perfil de X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://tiktok.com/@tu_usuario" target="_blank" rel="noopener noreferrer" aria-label="Visita nuestro TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://youtube.com/tu_usuario" target="_blank" rel="noopener noreferrer" aria-label="Visita nuestro canal de YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://linkedin.com/in/tu_perfil" target="_blank" rel="noopener noreferrer" aria-label="Visita nuestro LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </section>
+
+    <footer class="section-negra" style="padding: 30px 20px; font-size: 0.9em; color: #777;">
+        <p>© 2025 Boost & Launch. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Efecto de brillo en botones de navegación, botones primarios y botón de submit del formulario
+        document.querySelectorAll('.btn-nav, .btn-primary, .contact-form button[type="submit"]').forEach(btn => {
+            btn.addEventListener('mousemove', e => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                btn.style.setProperty('--x', `${x}px`);
+                btn.style.setProperty('--y', `${y}px`);
+            });
+        });
+
+        // Scroll reveal del Hero Section de esta página
+        const pageHeroContent = document.getElementById('pageHeroContent');
+        const pageHeroObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    pageHeroObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        pageHeroObserver.observe(pageHeroContent);
+
+        // Menú hamburguesa para dispositivos móviles
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('show');
+        });
+
+        // Cierra el menú móvil al hacer clic en un enlace de navegación
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (nav.classList.contains('show')) {
+                    hamburger.classList.remove('active');
+                    nav.classList.remove('show');
+                }
+            });
+        });
+
+        // Manejo del click en el logo para ir a index.html y luego hacer scroll
+        const mainLogo = document.getElementById('mainLogo');
+        mainLogo.addEventListener('click', function(event) {
+            event.preventDefault(); // Evita la navegación predeterminada del enlace
+            this.classList.add('clicked');
+            setTimeout(() => {
+                this.classList.remove('clicked');
+            }, 300);
+
+            // Redirige a index.html y añade un parámetro para saber que viene del logo
+            window.location.href = 'index.html?fromLogo=true';
+        });
+
+        // Si la página se carga desde un giro (para intentar arreglar el bug del video)
+        window.addEventListener('orientationchange', function() {
+            // Pequeño retardo para asegurar que el DOM se ajuste antes de recalcular
+            setTimeout(function() {
+                const video = document.getElementById('page-hero-video');
+                if (video) {
+                    // Fuerza un redibujado/reajuste del video
+                    video.style.display = 'none';
+                    video.offsetWidth; // Trigger reflow
+                    video.style.display = '';
+                }
+            }, 100); 
+        });
+
+        // Pequeño ajuste para el video al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('page-hero-video');
+            if (video) {
+                video.addEventListener('loadeddata', () => {
+                    // Asegura que el video sea visible y esté bien posicionado una vez cargado
+                    video.style.opacity = 1; // Si tuvieras un fade-in
+                });
+                // Manejo de errores para el video
+                video.onerror = function() {
+                    console.error('Error al cargar el video del hero de contacto. Se mostrará la imagen de póster.');
+                    // Puedes añadir aquí una clase o estilo para ocultar el video y asegurar que el poster sea visible
+                    // video.style.display = 'none'; 
+                };
+            }
+        });
+    </script>
+
+</body>
+</html>

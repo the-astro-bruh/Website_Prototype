@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Boost & Launch - Identidad Digital con Propósito</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <style>
+        :root {
+            --color-primary: #0084f7;
+            --color-secondary: #007bff;
+            --color-dark-bg: #0f0f10;
+            --color-light-bg: #1a1a1e;
+            --color-text-light: #f4f4f4;
+            --color-text-dark: #000;
+            --color-gray-text: #ccc;
+            --color-border: #333;
+            --color-button-hover: #fff;
+            --color-icon-hover: #0f0f10;
+            --color-shadow-primary: rgba(0, 132, 247, 0.4);
+            --color-shadow-dark: rgba(0,0,0,0.7);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--color-dark-bg);
+            color: var(--color-text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Barra Superior */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: #000000cc;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            background-image: linear-gradient(120deg, #fff 10%, var(--color-primary) 40%, #fff 70%);
+            background-size: 200% auto;
+            animation: shimmer 4s linear infinite;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -100% center; }
+            100% { background-position: 100% center; }
+        }
+
+        .logo.clicked { animation: shimmer 4s linear infinite, logoPop 0.3s ease-out; }
+        @keyframes logoPop {
+            0%,100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* Navegación */
+        .nav-inline {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-nav {
+            position: relative;
+            padding: 10px 20px;
+            background: #27272a;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            overflow: hidden;
+        }
+
+        .btn-nav::before {
+            content: '';
+            position: absolute;
+            top: var(--y);
+            left: var(--x);
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(0,132,247,0.8) 0%, rgba(0,132,247,0) 70%);
+            transition: width 0.5s, height 0.5s;
+            border-radius: 50%;
+        }
+
+        .btn-nav:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-nav:hover {
+            color: var(--color-button-hover);
+            background: var(--color-primary);
+        }
+
+        .btn-nav:hover i { color: var(--color-icon-hover); }
+
+        /* Menú Hamburguesa */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 44px;
+            height: 38px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 200;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: var(--color-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* Hero Principal */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            background-color: var(--color-text-dark);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            filter: brightness(0.6);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1080px;
+            width: 100%;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 0;
+            transform: translateY(-50px);
+        }
+
+        .hero-content.visible {
+            opacity: 1;
+            transform: translateY(-50px);
+        }
+
+        /* Espacio para el logo */
+        .hero-logo-container {
+            margin-bottom: 10px;
+            width: 80%;
+            max-width: 720px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-logo {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            position: relative;
+            z-index: 2;
+            background-image: linear-gradient(120deg, #fff 10%, var(--color-primary) 40%, #fff 70%);
+            background-size: 200% auto;
+            animation: shimmer 4s linear infinite;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            filter: none;
+        }
+        
+        /* Eliminar las animaciones de resplandor y destellos anteriores del logo */
+        .hero-logo-container::before,
+        .hero-logo-container::after {
+            content: none;
+        }
+
+        /* Slogan dinámico */
+        .hero-slogan { 
+            font-size: 3em;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 8px var(--color-shadow-dark);
+            line-height: 1.1;
+            min-height: 3.3em; /* Asegura un espacio constante para el slogan */
+            /* Transiciones para la animación del slogan */
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            will-change: opacity, transform; /* Mejora el rendimiento de la animación */
+        }
+
+        .hero-slogan.fade-out {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+        }
+
+        .hero-slogan.fade-in {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .hero-subtext {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            color: #e0e0e0;
+            text-shadow: 1px 1px 5px var(--color-shadow-dark);
+            max-width: 800px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .btn-primary {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 60px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            color: var(--color-button-hover);
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px var(--color-shadow-primary);
+            flex-grow: 1;
+            max-width: 600px;
+            text-align: center;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-primary i {
+            margin-right: 8px;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: var(--y);
+            left: var(--x);
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            transition: width 0.5s, height 0.5s;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--color-shadow-primary);
+        }
+        
+        /* WhatsApp Button Specific Styles */
+        .btn-whatsapp {
+            background: #25D366; /* WhatsApp Green */
+            background: linear-gradient(90deg, #25D366, #128C7E); /* Gradient for WhatsApp */
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+            color: #fff;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6);
+            background: #128C7E;
+        }
+
+        .btn-whatsapp::before {
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+        }
+
+        /* Hero Carrusel Mejorado */
+        .carousel-hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            touch-action: pan-y; /* Allow vertical scrolling */
+        }
+
+        .carousel-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            z-index: 1;
+            overflow-y: auto; /* Enable scrolling within slide */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
+
+        .carousel-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: blur(2px) brightness(0.5);
+            z-index: -1;
+        }
+
+        /* Fondos difuminados para cada slide */
+        .carousel-slide:nth-child(1)::before { background-image: url('img/img_bg_1.jpg'); }
+        .carousel-slide:nth-child(2)::before { background-image: url('img/img_bg_2.jpg'); }
+        .carousel-slide:nth-child(3)::before { background-image: url('img/img_bg_3.jpg'); } /* Asumiendo que img_3.jpeg existe ahora */
+
+        .carousel-slide.current {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .slide-content {
+            max-width: 1280px;
+            width: 100%;
+            position: relative;
+            display: flex; /* Añadido para controlar la alineación interna */
+            flex-direction: column; /* Añadido para apilar la imagen y el texto */
+            align-items: center; /* Centra horizontalmente la imagen y el texto */
+            justify-content: flex-end; /* Centra verticalmente si hay espacio */
+            height: 100%;
+            padding-bottom: 80px; /* Space for content */
+        }
+
+        .slide-image {
+            max-height: 50vh;
+            max-width: 80%;
+            margin-bottom: 60px; /* Separación entre la imagen y el texto */
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            transition: transform 0.5s ease;
+            object-fit: contain; /* Asegura que la imagen se ajuste sin recortarse */
+        }
+
+        .carousel-slide.current .slide-image {
+            transform: scale(1.10);
+        }
+
+        .slide-text {
+            background: rgba(15, 15, 16, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            width: 90%; /* Aumentado para que ocupe más ancho */
+            max-width: 1200px; /* Limita el ancho máximo para pantallas muy grandes */
+            margin: 0 auto; /* Centra el recuadro */
+            box-sizing: border-box; /* Incluye padding y border en el ancho total */
+        }
+
+        .slide-text::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 132, 247, 0.2),
+                transparent
+            );
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            100% { left: 100%; }
+        }
+
+        .carousel-slide h2 {
+            font-size: 2.0em;
+            margin-bottom: 30px;
+            color: var(--color-primary);
+            position: relative;
+        }
+
+        .carousel-slide p {
+            font-size: 1.1em;
+            margin-bottom: 30x;
+            position: relative;
+        }
+
+        .project-link {
+            position: relative;
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--color-primary);
+            color: var(--color-text-dark);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .project-link::before {
+            content: '';
+            position: absolute;
+            top: var(--y);
+            left: var(--x);
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            transition: width 0.5s, height 0.5s;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .project-link:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+
+        .project-link:hover {
+            background: var(--color-button-hover);
+            transform: translateY(-3px);
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 132, 247, 0.7);
+            border: none;
+            border-radius: 50%;
+            color: var(--color-text-light);
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .carousel-btn:hover {
+            background: var(--color-primary);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .left-btn { left: 30px; }
+        .right-btn { right: 30px; }
+
+        /* Secciones */
+        section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .section-dark { background: var(--color-dark-bg); }
+        .section-light { background: var(--color-light-bg); }
+
+        /* Quienes Somos Separator - NEW */
+        .separator-section {
+            padding: 60px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, var(--color-dark-bg), var(--color-light-bg));
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Social */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .social-icons a {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: var(--color-text-dark);
+            color: var(--color-primary);
+            font-size: 1.5em;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            background: var(--color-primary);
+            color: var(--color-icon-hover);
+            transform: translateY(-5px);
+        }
+
+        /* Parallax Section */
+        .section-parallax {
+            background-image: url('img/bg_index.jpg');
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 400px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center; /* Centra el texto del footer */
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Ajustes generales */
+            html {
+                font-size: 14px;
+                overflow-x: hidden;
+            }
+            
+            body {
+                overflow-x: hidden;
+                position: relative;
+            }
+            
+            /* Top Bar */
+            .top-bar {
+                padding: 15px 20px;
+            }
+            
+            .logo {
+                font-size: 1.3em;
+            }
+            
+            /* Menú Hamburguesa */
+            .hamburger { 
+                width: 36px;
+                height: 30px;
+            }
+            
+            .nav-inline {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: #1f1f22ee;
+                border: 1px solid var(--color-border);
+                padding: 15px;
+                border-radius: 0;
+                width: 100%;
+                max-width: none;
+                box-sizing: border-box;
+            }
+            
+            /* Hero Section */
+            .hero-section {
+                height: auto;
+                min-height: 100vh;
+                padding: 20px 15px;
+            }
+            
+            .hero-logo-container {
+                width: 180px;
+                height: 80px;
+                margin-bottom: 10px;
+            }
+            
+            .hero-slogan { 
+                font-size: 1.5em;
+                margin-bottom: 5px;
+                min-height: 2.5em;
+                padding: 0 10px;
+            }
+            
+            .hero-subtext { 
+                font-size: 1.1em;
+                margin-bottom: 20px;
+                padding: 0 10px;
+            }
+            
+            .hero-buttons { 
+                flex-direction: column;
+                width: 90%;
+                margin: 0 auto;
+                gap: 10px;
+            }
+            
+            .btn-primary {
+                width: 100%;
+                padding: 12px 15px;
+                font-size: 1.1em;
+            }
+            
+            /* Carrusel */
+            .carousel-hero {
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .slide-content {
+                padding-bottom: 80px;
+                justify-content: flex-end;
+            }
+
+            .slide-image { 
+                max-height: 30vh;
+                margin-bottom: 15px;
+            }
+            
+            .carousel-slide h2 { 
+                font-size: 1.4em; 
+                margin-bottom: 15px;
+            }
+            
+            .carousel-slide p { 
+                font-size: 0.9em; 
+                margin-bottom: 15px;
+            }
+
+            .slide-text {
+                width: 95%;
+                padding: 12px;
+            }
+            
+            .carousel-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .project-link {
+                font-size: 0.9em;
+                padding: 8px 15px;
+            }
+            
+            /* Secciones */
+            section {
+                padding: 50px 15px;
+            }
+            
+            /* Separador */
+            .separator-section {
+                padding: 40px 15px;
+            }
+            
+            .separator-section h2 {
+                font-size: 1.4em;
+            }
+            
+            .separator-section p {
+                font-size: 0.95em;
+            }
+            
+            /* Contacto */
+            #contacto h2 {
+                font-size: 1.4em;
+            }
+            
+            #contacto p {
+                font-size: 0.95em;
+            }
+            
+            /* Footer */
+            footer {
+                padding: 15px;
+            }
+        }
+
+        /* Ajustes adicionales para pantallas muy pequeñas */
+        @media (max-width: 480px) {
+            html {
+                font-size: 13px;
+            }
+            
+            .hero-slogan {
+                font-size: 1.3em;
+            }
+            
+            .hero-subtext {
+                font-size: 1em;
+            }
+            
+            .btn-primary {
+                padding: 10px 12px;
+                font-size: 1em;
+            }
+            
+            .slide-image {
+                max-height: 25vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-bar">
+        <div class="logo" id="logo">Boost & Launch 🚀</div>
+        <button class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="nav-inline" id="nav">
+            <a href="#carousel-hero" class="btn-nav"><i class="fa-solid fa-laptop-code"></i> Nuestros trabajos</a>
+            <a href="contactanos.html" class="btn-nav"><i class="fa-solid fa-users"></i> ¿Quiénes somos?</a>
+            <a href="#contacto" class="btn-nav"><i class="fa-solid fa-paper-plane"></i> Contáctanos</a>
+        </nav>
+    </header>
+
+    <section class="hero-section" id="hero">
+        <video id="hero-video" autoplay loop muted playsinline>
+            <source src="bg-video.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video>
+        <div class="hero-content" id="heroContent">
+            <div class="hero-logo-container">
+                <img src="img/logo.png" alt="Logo Boost & Launch" class="hero-logo" id="mainLogo">
+            </div>
+            
+            <h1 class="hero-slogan" id="heroSlogan"></h1> <p class="hero-subtext">Diseñamos experiencias que venden, crean comunidad y posicionan. Web + Redes Sociales + IA = una marca que vive en la mente y el corazón del cliente.</p>
+            <div class="hero-buttons">
+                <a href="#carousel-hero" class="btn-primary"><i class="fa-solid fa-circle-nodes"></i> Conoce nuestros servicios</a>
+                <a href="#contacto" class="btn-primary"><i class="fa-solid fa-lightbulb"></i> Estrategias que dan resultados</a>
+                <a href="#portafolio" class="btn-primary"><i class="fa-solid fa-briefcase"></i> Portafolio</a>
+                <a href="https://wa.me/XXXXXXXXXXX" target="_blank" class="btn-primary btn-whatsapp"><i class="fab fa-whatsapp"></i> Contáctanos vía WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="separator-section" id="quienes-somos">
+        <h2><i class="fa-solid fa-layer-group"></i> La primera impresión, hoy, es digital.</h2>
+        <p> Combinamos diseño web atractivo, contenido estratégico y tecnología inteligente para crear una presencia online coherente, profesional y orientada a resultados reales: más atención, más conexión, más ventas.</p>
+    </section>
+
+    <div class="carousel-hero" id="carousel-hero">
+        <div class="carousel-slide current">
+            <div class="slide-content">
+                <img src="img/img_1.png" alt="Sitio web corporativo" class="slide-image">
+                <div class="slide-text">
+                    <h2>Una plataforma web sólida, funcional y lista para crecer contigo</h2>
+                    <p>Creamos plataformas digitales sólidas. Desde la usabilidad hasta el rendimiento, desarrollamos soluciones a medida para empresas que quieren crecer, innovar y destacar en su sector.</p>
+                    <a href="#" class="project-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> ¿Empezamos con tu proyecto?</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="carousel-slide">
+            <div class="slide-content">
+                <img src="img/img_2.png" alt="Tienda online de moda" class="slide-image">
+                <div class="slide-text">
+                    <h2>Vende más, vende mejor. Tu tienda online empieza aquí</h2>
+                    <p>Creamos tiendas online con propósito: pensadas para atraer, retener y convertir clientes. Cada detalle está diseñado para impulsar tus ventas y tu marca.</p>
+                    <a href="#" class="project-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Quiero mi Tienda Online</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="carousel-slide">
+            <div class="slide-content">
+                <img src="img/img_3.png" alt="Campaña de redes sociales" class="slide-image">
+                <div class="slide-text">
+                    <h2>Tu marca merece algo más que likes. Merece resultados.</h2>
+                    <p>Estrategia y gestión profesional de redes con impacto real. Metricas y estadisticas que te enseñarán que tu inversión vale cada centavo.</p>
+                    <a href="#" class="project-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Caso</a>
+                </div>
+            </div>
+        </div>
+        
+        <button class="carousel-btn left-btn" onclick="moveSlide(-1)">‹</button>
+        <button class="carousel-btn right-btn" onclick="moveSlide(1)">›</button>
+    </div>
+
+    <section class="section-dark">
+        <h2><i class="fa-solid fa-id-card-clip"></i> Tu presencia online es tu carta de presentación</h2>
+        <p>Te ayudamos a potenciar tu marca con servicios personalizados que combinan creatividad, estrategia y tecnología para llevar tu negocio al siguiente nivel.</p>
+    </section>
+
+    <div class="section-parallax"></div>
+
+    <section class="section-light" id="contacto">
+        <h2><i class="fa-solid fa-headset"></i> Hablemos de tu Próximo Proyecto</h2>
+        <p>¿Listo para impulsar tu identidad digital? Contáctanos y transformemos tus ideas en realidad.</p>
+        
+        <div class="social-icons">
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </section>
+
+    <footer class="section-dark" style="padding: 20px; text-align: center;">
+        <p>© 2025 Boost & Launch. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Hero Principal - Animación de entrada
+        const heroContent = document.getElementById('heroContent');
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    heroObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        heroObserver.observe(heroContent);
+
+        // Slogan dinámico
+        const heroSlogan = document.getElementById('heroSlogan');
+        const slogans = [
+            "Identidad digital con propósito y una presencia que impacta.",
+            "Tu imagen digital no es un lujo, es la clave para vender, destacar y crecer.",
+            "Tu marca brilla con estrategias web y redes sociales de impacto.",
+            "Conecta, vende y crece con una identidad digital memorable.",
+            "Desarrollamos soluciones digitales pensadas para tu éxito.",
+            "Transformamos tus ideas en una presencia online poderosa.",
+            "Si no impactas online, simplemente no existes. Crea una presencia que te abra puertas."
+        ];
+        let currentSloganIndex = 0;
+
+        function changeSlogan() {
+            heroSlogan.classList.add('fade-out'); // Inicia el fade out
+            setTimeout(() => {
+                currentSloganIndex = (currentSloganIndex + 1) % slogans.length;
+                heroSlogan.textContent = slogans[currentSloganIndex];
+                heroSlogan.classList.remove('fade-out'); // Elimina la clase para el fade out
+                heroSlogan.classList.add('fade-in'); // Agrega la clase para el fade in
+                // Después de un breve tiempo, elimina la clase fade-in para permitir la próxima animación
+                setTimeout(() => {
+                    heroSlogan.classList.remove('fade-in');
+                }, 500); // Duración de la animación de fade-in
+            }, 500); // Duración de la animación de fade-out
+        }
+
+        // Inicia el primer slogan y luego el intervalo
+        heroSlogan.textContent = slogans[currentSloganIndex];
+        currentSloganIndex = (currentSloganIndex + 1) % slogans.length;
+        setInterval(changeSlogan, 7000);
+
+        // Hero Carrusel
+        const carouselHero = document.getElementById('carousel-hero');
+        const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+        let currentIndex = 0;
+        let startX, startY, moveX, moveY;
+        let isDragging = false;
+        let autoSlideInterval;
+        let scrollTopBeforeDrag = 0;
+        let isScrollingVertically = false;
+
+        function updateCarousel() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('current');
+                if (index === currentIndex) {
+                    slide.classList.add('current');
+                }
+            });
+        }
+
+        function moveSlide(direction) {
+            currentIndex = (currentIndex + direction + slides.length) % slides.length;
+            updateCarousel();
+            resetAutoSlide();
+        }
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                moveSlide(1);
+            }, 7000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+        // Improved touch events for swipe with vertical scroll detection
+        carouselHero.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            isDragging = true;
+            isScrollingVertically = false;
+            scrollTopBeforeDrag = carouselHero.scrollTop;
+            resetAutoSlide();
+        }, { passive: true });
+
+        carouselHero.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            moveX = e.touches[0].clientX;
+            moveY = e.touches[0].clientY;
+            
+            const diffX = Math.abs(startX - moveX);
+            const diffY = Math.abs(startY - moveY);
+            
+            // Determine if user is scrolling vertically
+            if (!isScrollingVertically && diffY > 5 && diffY > diffX) {
+                isScrollingVertically = true;
+            }
+            
+            // If horizontal movement is more significant than vertical, prevent default
+            if (!isScrollingVertically && diffX > diffY) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        carouselHero.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            const diffX = startX - moveX;
+            const diffY = Math.abs(startY - moveY);
+            
+            // Only consider it a swipe if not scrolling vertically and horizontal movement is significant
+            if (!isScrollingVertically && Math.abs(diffX) > 50) {
+                if (diffX > 50) {
+                    moveSlide(1); // Swipe izquierda
+                } else if (diffX < -50) {
+                    moveSlide(-1); // Swipe derecha
+                }
+            }
+            
+            isDragging = false;
+            isScrollingVertically = false;
+        }, { passive: true });
+
+        // Mouse events for drag and vertical scroll
+        carouselHero.addEventListener('mousedown', (e) => {
+            startX = e.clientX;
+            startY = e.clientY;
+            isDragging = true;
+            isScrollingVertically = false;
+            scrollTopBeforeDrag = carouselHero.scrollTop;
+            e.preventDefault();
+            resetAutoSlide();
+        });
+
+        carouselHero.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            moveX = e.clientX;
+            moveY = e.clientY;
+            
+            const diffX = Math.abs(startX - moveX);
+            const diffY = Math.abs(startY - moveY);
+            
+            // Determine if user is scrolling vertically
+            if (!isScrollingVertically && diffY > 5 && diffY > diffX) {
+                isScrollingVertically = true;
+                // Apply vertical scroll
+                const scrollDiff = startY - moveY;
+                carouselHero.scrollTop = scrollTopBeforeDrag + scrollDiff;
+            }
+        });
+
+        carouselHero.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            const diffX = startX - moveX;
+            const diffY = Math.abs(startY - moveY);
+            
+            // Only consider it a swipe if not scrolling vertically and horizontal movement is significant
+            if (!isScrollingVertically && Math.abs(diffX) > 50) {
+                if (diffX > 50) {
+                    moveSlide(1);
+                } else if (diffX < -50) {
+                    moveSlide(-1);
+                }
+            }
+            
+            isDragging = false;
+            isScrollingVertically = false;
+        });
+
+        carouselHero.addEventListener('mouseleave', () => {
+            isDragging = false;
+            isScrollingVertically = false;
+        });
+
+        // Iniciar auto-slide
+        startAutoSlide();
+
+        // Menú hamburguesa
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('show');
+        });
+
+        // Cerrar menú al hacer clic en enlace
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (nav.classList.contains('show')) {
+                    hamburger.classList.remove('active');
+                    nav.classList.remove('show');
+                }
+            });
+        });
+
+        // Logo click
+        const logo = document.getElementById('logo');
+        logo.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            logo.classList.add('clicked');
+            setTimeout(() => logo.classList.remove('clicked'), 300);
+        });
+
+        // Manejo de error de video
+        const heroVideo = document.getElementById('hero-video');
+        if (heroVideo) {
+            heroVideo.onerror = function() {
+                console.log('Error al cargar el video. Mostrando fondo alternativo.');
+                heroVideo.style.display = 'none';
+            };
+        }
+
+        // Preload del logo para evitar parpadeo
+        const logoImg = new Image();
+        logoImg.src = 'img/logo.png';
+
+        // Efecto de iluminación en botones
+        document.querySelectorAll('.btn-nav, .btn-primary, .project-link').forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                button.style.setProperty('--x', `${x}px`);
+                button.style.setProperty('--y', `${y}px`);
+            });
+        });
+    </script>
+</body>
+</html>
