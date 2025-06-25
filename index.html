@@ -77,10 +77,10 @@
         .hero-content.visible { opacity: 1; transform: translateY(-50px); }
         .hero-logo-container { margin-bottom: 10px; width: 80%; max-width: 720px; height: 100px; display: flex; justify-content: center; align-items: center; position: relative; }
         .hero-logo { max-width: 100%; max-height: 100%; object-fit: contain; position: relative; z-index: 2; background-image: linear-gradient(120deg, #fff 10%, var(--color-primary) 40%, #fff 70%); background-size: 200% auto; animation: shimmer 4s linear infinite; color: transparent; background-clip: text; -webkit-background-clip: text; filter: none; }
-        .hero-slogan { font-size: 3em; margin-bottom: 5px; text-shadow: 2px 2px 8px var(--color-shadow-dark); line-height: 1.1; min-height: 3.3em; transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; will-change: opacity, transform; }
+        .hero-slogan { font-size: 3.3em; margin-bottom: 10px; text-shadow: 2px 2px 8px var(--color-shadow-dark); line-height: 1.1; min-height: 3.3em; transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; will-change: opacity, transform; }
         .hero-slogan.fade-out { opacity: 0; transform: translateY(20px) scale(0.95); }
         .hero-slogan.fade-in { opacity: 1; transform: translateY(0) scale(1); }
-        .hero-subtext { font-size: 1.5em; margin-bottom: 30px; color: #e0e0e0; text-shadow: 1px 1px 5px var(--color-shadow-dark); max-width: 800px; }
+        .hero-subtext { font-size: 1.5em; margin-bottom: 80px; color: #e0e0e0; text-shadow: 1px 1px 5px var(--color-shadow-dark); max-width: 800px; }
         .hero-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; width: 100%; }
         .btn-primary { position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 20px 60px; background: linear-gradient(90deg, var(--color-primary), var(--color-secondary)); color: var(--color-button-hover); text-decoration: none; border-radius: 50px; font-size: 1.5em; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 5px 15px var(--color-shadow-primary); flex-grow: 1; max-width: 600px; text-align: center; overflow: hidden; z-index: 1; }
         .btn-primary i { margin-right: 8px; }
@@ -266,7 +266,7 @@
                 <img src="img/logo.png" alt="Logo Boost & Launch" class="hero-logo" id="mainLogo">
             </div>
             <h1 class="hero-slogan" id="heroSlogan"></h1>
-            <p class="hero-subtext">Diseñamos experiencias que venden, crean comunidad y posicionan. Web + Redes Sociales + IA = una marca que vive en la mente y el corazón del cliente.</p>
+            <p class="hero-subtext">Necesitas experiencias que vendan, crear comunidad y posicionanarte digitalmente. Website + Google Ads = una marca que vende sola.</p>
             <div class="hero-buttons">
                 <a href="#carousel-hero" class="btn-primary"><i class="fa-solid fa-circle-nodes"></i> Conoce nuestros servicios</a>
                 <a href="#contacto" class="btn-primary"><i class="fa-solid fa-lightbulb"></i> Estrategias que dan resultados</a>
@@ -356,10 +356,9 @@
         // Slogan dinámico
         const heroSlogan = document.getElementById('heroSlogan');
         const slogans = [
-            "¿Necesitas una web que venda? ¡Estás en el lugar correcto!",
-            "Armamos tu tienda online para que vendas más y mejor.",
-            "Usamos Google Ads y redes sociales para que tu marca brille.",
-            "Rebranding y armado de marca. Tu identidad digital empieza aquí.",
+            "Diseñamos la Página Web que impulsará tu negocio.",
+            "Creamos una Tienda Online que potenciará tus ventas",
+            "Implementamos Google Ads para que despeguen tus redes sociales.",
         ];
         let currentSloganIndex = 0;
         function changeSlogan() {
