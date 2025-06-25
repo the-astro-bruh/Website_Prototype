@@ -286,7 +286,7 @@
                 <img src="img/img_1.png" alt="Sitio web corporativo" class="slide-image">
                 <div class="slide-text">
                     <h2>Página Web para tú Empresa / Marca / Servicio.</h2>
-                    <p>Creamos plataformas digitales sólidas. Desde la usabilidad hasta el rendimiento, desarrollamos soluciones a medida para empresas que quieren crecer, innovar y destacar en su sector.</p>
+                    <p>Desarrollamos soluciones a medida para empresas que quieren crecer, innovar y destacar en su sector.</p>
                     <a href="#" class="project-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> ¿Empezamos con tu proyecto?</a>
                 </div>
             </div>
@@ -295,8 +295,8 @@
             <div class="slide-content">
                 <img src="img/img_2.png" alt="Tienda online" class="slide-image">
                 <div class="slide-text">
-                    <h2>Tienda Online (+ Multiples funciones a escoger.)</h2>
-                    <p>Creamos tiendas online con propósito: pensadas para atraer, retener y convertir clientes. Cada detalle está diseñado para impulsar tus ventas y tu marca.</p>
+                    <h2>Tienda Online con multiples funciones a escoger.</h2>
+                    <p>Creamos tiendas con propósito: pensadas para atraer, retener y convertir. Cada detalle está diseñado para impulsar tus ventas.</p>
                     <a href="#" class="project-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Quiero mi Tienda Online</a>
                 </div>
             </div>
@@ -305,8 +305,8 @@
             <div class="slide-content">
                 <img src="img/img_3.png" alt="Gestión de redes sociales" class="slide-image">
                 <div class="slide-text">
-                    <h2>Tu marca merece algo más que likes. Merece resultados.</h2>
-                    <p>Estrategia y gestión profesional de redes con impacto real. Metricas y estadisticas que te enseñarán que tu inversión vale cada centavo.</p>
+                    <h2>Implementación de Google Ads en Redes Sociales.</h2>
+                    <p>Para posicionarte y que puedan conseguirte con solo un click desde cualquier dispositivo.</p>
                     <a href="#" class="project-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver Caso</a>
                 </div>
             </div>
@@ -372,7 +372,7 @@
         }
         heroSlogan.textContent = slogans[currentSloganIndex];
         currentSloganIndex = (currentSloganIndex + 1) % slogans.length;
-        setInterval(changeSlogan, 7000);
+        setInterval(changeSlogan, 8000);
 
         // Hero Carrusel
         const carouselHero = document.getElementById('carousel-hero');
@@ -396,7 +396,7 @@
             resetAutoSlide();
         }
         function startAutoSlide() {
-            autoSlideInterval = setInterval(() => moveSlide(1), 7000);
+            autoSlideInterval = setInterval(() => moveSlide(1), 15000);
         }
         function resetAutoSlide() {
             clearInterval(autoSlideInterval);
