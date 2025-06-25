@@ -29,66 +29,203 @@
         .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-        .hero-section {
+        
+        /* Hero section con 3 opciones - Versión masiva */
+        .hero-options-section {
             position: relative;
+            min-height: 100vh;
+            display: flex;
+            padding: 0;
+            background-color: var(--color-dark-bg);
+            overflow: hidden;
+        }
+        
+        .hero-options-container {
+            display: flex;
+            width: 100%;
             height: 100vh;
+            margin: 0;
+        }
+        
+        .hero-option {
+            position: relative;
+            flex: 1;
+            min-width: 0;
+            height: 100%;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
             text-align: center;
-            overflow: hidden;
-            background-color: var(--color-text-dark);
-            padding: 20px;
-            box-sizing: border-box;
         }
-        #hero-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: translate(-50%, -50%);
-            z-index: 0;
-            filter: brightness(0.6);
-        }
-        /* Estilos para la imagen de fallback con parallax y zoom */
-        .hero-background-image {
+        
+        .hero-option::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('img/hero-fallback.jpg'); /* Ruta de tu imagen de fallback */
-            background-size: 110%; /* Comienza un poco más grande para el zoom-out */
-            background-position: center;
-            background-repeat: no-repeat;
-            filter: brightness(0.6);
-            z-index: 0;
-            transition: background-size 8s ease-in-out, filter 0.5s ease-in-out; /* Transición suave para el zoom */
-        }
-
-        .hero-section.parallax-active .hero-background-image {
-            background-size: 100%; /* Tamaño final para el zoom-in */
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%);
+            transition: all 0.5s ease;
         }
         
-        .hero-content { position: relative; z-index: 1; max-width: 1080px; width: 100%; margin: 0 auto; opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: 0; transform: translateY(-50px); }
-        .hero-content.visible { opacity: 1; transform: translateY(-50px); }
-        .hero-logo-container { margin-bottom: 10px; width: 80%; max-width: 720px; height: 100px; display: flex; justify-content: center; align-items: center; position: relative; }
-        .hero-logo { max-width: 100%; max-height: 100%; object-fit: contain; position: relative; z-index: 2; background-image: linear-gradient(120deg, #fff 10%, var(--color-primary) 40%, #fff 70%); background-size: 200% auto; animation: shimmer 4s linear infinite; color: transparent; background-clip: text; -webkit-background-clip: text; filter: none; }
-        .hero-slogan { font-size: 3.3em; margin-bottom: 10px; text-shadow: 2px 2px 8px var(--color-shadow-dark); line-height: 1.1; min-height: 3.3em; transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; will-change: opacity, transform; }
-        .hero-slogan.fade-out { opacity: 0; transform: translateY(20px) scale(0.95); }
-        .hero-slogan.fade-in { opacity: 1; transform: translateY(0) scale(1); }
-        .hero-subtext { font-size: 1.5em; margin-bottom: 80px; color: #e0e0e0; text-shadow: 1px 1px 5px var(--color-shadow-dark); max-width: 800px; }
-        .hero-buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; width: 100%; }
-        .btn-primary { position: relative; display: inline-flex; align-items: center; justify-content: center; padding: 20px 60px; background: linear-gradient(90deg, var(--color-primary), var(--color-secondary)); color: var(--color-button-hover); text-decoration: none; border-radius: 50px; font-size: 1.5em; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 5px 15px var(--color-shadow-primary); flex-grow: 1; max-width: 600px; text-align: center; overflow: hidden; z-index: 1; }
-        .btn-primary i { margin-right: 8px; }
-        .btn-primary::before { content: ''; position: absolute; top: var(--y); left: var(--x); transform: translate(-50%, -50%); width: 0; height: 0; background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%); transition: width 0.5s, height 0.5s; border-radius: 50%; z-index: -1; }
-        .btn-primary:hover::before { width: 300px; height: 300px; }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 20px var(--color-shadow-primary); }
-        .btn-whatsapp { background: linear-gradient(90deg, #25D366, #128C7E); box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4); color: #fff; }
-        .btn-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6); background: #128C7E; }
+        .hero-option:hover::before {
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%);
+        }
+        
+        .hero-option-content {
+            position: relative;
+            width: 100%;
+            padding: 40px 30px;
+            box-sizing: border-box;
+            color: white;
+            z-index: 2;
+            max-width: 800px;
+            margin-bottom: 60px;
+        }
+        
+        .hero-option h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+            transition: all 0.5s ease;
+        }
+        
+        .hero-option p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+            opacity: 0.9;
+            transition: all 0.5s ease;
+        }
+        
+        .hero-option-btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: var(--color-primary);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            opacity: 0.9;
+        }
+        
+        .hero-option-btn:hover {
+            background: white;
+            color: var(--color-primary);
+            transform: translateY(-3px);
+            opacity: 1;
+        }
+        
+        /* Animaciones */
+        .hero-option.zoom-in {
+            transform: scale(1.02);
+        }
+        
+        .hero-option.clicked {
+            animation: optionClick 0.6s ease-out;
+        }
+        
+        @keyframes optionClick {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.98); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Versión móvil */
+        @media (max-width: 768px) {
+            html { font-size: 13px; overflow-x: hidden; }
+            body { overflow-x: hidden; position: relative; }
+
+            .top-bar {
+                padding: 10px 20px;
+                justify-content: space-between;
+                background: #000;
+            }
+            .logo { font-size: 1.3em; }
+            .nav-inline {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: #1f1f22ee;
+                border: 1px solid var(--color-border);
+                padding: 15px;
+                border-radius: 0;
+                width: 100%;
+                max-width: none;
+                box-sizing: border-box;
+                flex-direction: column;
+                display: none;
+            }
+            .nav-inline.show { display: flex; }
+
+            .hamburger { display: flex; width: 36px; height: 30px; }
+            
+            .hero-options-section {
+                min-height: auto;
+                height: auto;
+            }
+            
+            .hero-options-container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .hero-option {
+                height: 100vh;
+                min-height: 500px;
+            }
+            
+            .hero-option-content {
+                padding: 30px 20px;
+                margin-bottom: 40px;
+            }
+            
+            .hero-option h2 {
+                font-size: 2em;
+            }
+            
+            .hero-option p {
+                font-size: 1.1em;
+            }
+            
+            .hero-option-btn {
+                padding: 12px 30px;
+                font-size: 1em;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            html { font-size: 12px; }
+            
+            .hero-option {
+                min-height: 450px;
+            }
+            
+            .hero-option h2 {
+                font-size: 1.8em;
+            }
+            
+            .hero-option p {
+                font-size: 1em;
+            }
+            
+            .hero-option-btn {
+                padding: 10px 25px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Resto de estilos existentes */
         .carousel-hero { position: relative; width: 100%; height: 95vh; overflow: hidden; touch-action: pan-y; }
         .carousel-slide { position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; opacity: 0; transition: opacity 0.8s ease; z-index: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
         .carousel-slide::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(2px) brightness(0.5); z-index: -1; }
@@ -102,7 +239,7 @@
         .slide-text { background: rgba(15, 15, 16, 0.8); padding: 20px; border-radius: 15px; position: relative; overflow: hidden; width: 90%; max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
         .slide-text::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0, 132, 247, 0.2), transparent); animation: shine 3s infinite; }
         @keyframes shine { 100% { left: 100%; } }
-        .carousel-slide h2 { font-size: 2.0em; margin-bottom: 30px; color: var(--color-text-light); /* Changed to white */ position: relative; }
+        .carousel-slide h2 { font-size: 2.0em; margin-bottom: 30px; color: var(--color-text-light); position: relative; }
         .carousel-slide p { font-size: 1.1em; margin-bottom: 30x; position: relative; }
         .project-link { position: relative; display: inline-block; padding: 12px 25px; background: var(--color-primary); color: var(--color-text-dark); text-decoration: none; border-radius: 5px; font-weight: bold; transition: all 0.3s ease; overflow: hidden; z-index: 1; }
         .project-link::before { content: ''; position: absolute; top: var(--y); left: var(--x); transform: translate(-50%, -50%); width: 0; height: 0; background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%); transition: width 0.5s, height 0.5s; border-radius: 50%; z-index: -1; }
@@ -119,7 +256,7 @@
         .social-icons { display: flex; justify-content: center; gap: 15px; margin: 30px 0; }
         .social-icons a { width: 50px; height: 50px; display: flex; justify-content: center; align-items: center; border-radius: 50%; background: var(--color-text-dark); color: var(--color-primary); font-size: 1.5em; transition: all 0.3s ease; }
         .social-icons a:hover { background: var(--color-primary); color: var(--color-icon-hover); transform: translateY(-5px); }
-        .section-parallax { background-image: url('img/bg_index.jpg'); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; height: 400px; }
+        .section-parallax { background-image: url('img/bg_index.jpg'); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; height: 600px; }
         footer { text-align: center; }
 
         /* Estilos para el botón de WhatsApp al final */
@@ -128,7 +265,7 @@
             align-items: center;
             justify-content: center;
             padding: 15px 40px;
-            margin-top: 30px; /* Espacio entre los iconos sociales y el botón */
+            margin-top: 30px;
             background: linear-gradient(90deg, #25D366, #128C7E);
             color: #fff;
             text-decoration: none;
@@ -171,69 +308,30 @@
             background: #128C7E;
         }
 
-
         @media (max-width: 768px) {
-            html { font-size: 13px; /* Reducción del 10% aproximadamente del tamaño base */ overflow-x: hidden; }
-            body { overflow-x: hidden; position: relative; }
-
-            .top-bar {
-                padding: 10px 20px; /* Un poco menos de padding */
-                justify-content: space-between;
-                background: #000; /* Header negro completo */
-            }
-            .logo { font-size: 1.3em; /* Ajuste para que se vea bien */ }
-            .nav-inline {
-                position: fixed;
-                top: 60px; /* Ajuste para la altura del nuevo header */
-                left: 0;
-                right: 0;
-                background: #1f1f22ee;
-                border: 1px solid var(--color-border);
-                padding: 15px;
-                border-radius: 0;
-                width: 100%;
-                max-width: none;
-                box-sizing: border-box;
-                flex-direction: column; /* Apila los elementos del menú */
-                display: none; /* Oculto por defecto */
-            }
-            .nav-inline.show { display: flex; } /* Muestra el menú cuando esté activo */
-
-            .hamburger { display: flex; /* Muestra el botón de hamburguesa */ width: 36px; height: 30px; }
-            .hero-section { height: auto; min-height: 100vh; padding: 20px 15px; }
-            .hero-logo-container { width: 160px; height: 70px; margin-bottom: 8px; } /* Reducción visual */
-            .hero-slogan { font-size: 1.4em; margin-bottom: 4px; min-height: 2.3em; padding: 0 8px; } /* Reducción visual */
-            .hero-subtext { font-size: 1em; margin-bottom: 18px; padding: 0 8px; } /* Reducción visual */
-            .hero-buttons { flex-direction: column; width: 90%; margin: 0 auto; gap: 8px; } /* Reducción visual */
-            .btn-primary { width: 100%; padding: 10px 12px; font-size: 1em; } /* Reducción visual */
             .carousel-hero { height: auto; min-height: 100vh; }
-            .slide-content { padding-bottom: 70px; justify-content: flex-end; } /* Reducción visual */
-            .slide-image { max-height: 28vh; margin-bottom: 12px; } /* Reducción visual */
-            .carousel-slide h2 { font-size: 1.3em; margin-bottom: 12px; } /* Reducción visual */
-            .carousel-slide p { font-size: 0.85em; margin-bottom: 12px; } /* Reducción visual */
-            .slide-text { width: 95%; padding: 10px; } /* Reducción visual */
-            .carousel-btn { width: 35px; height: 35px; font-size: 16px; } /* Reducción visual */
-            .project-link { font-size: 0.85em; padding: 7px 12px; } /* Reducción visual */
-            section { padding: 45px 15px; } /* Reducción visual */
-            .separator-section { padding: 35px 15px; } /* Reducción visual */
-            .separator-section h2 { font-size: 1.3em; } /* Reducción visual */
-            .separator-section p { font-size: 0.9em; } /* Reducción visual */
-            #contacto h2 { font-size: 1.3em; } /* Reducción visual */
-            #contacto p { font-size: 0.9em; } /* Reducción visual */
-            footer { padding: 12px; } /* Reducción visual */
-            .social-icons { margin: 20px 0; } /* Ajuste del margen para dejar espacio al botón */
-            .social-icons a { width: 45px; height: 45px; font-size: 1.3em; } /* Reducción visual */
+            .slide-content { padding-bottom: 70px; justify-content: flex-end; }
+            .slide-image { max-height: 28vh; margin-bottom: 12px; }
+            .carousel-slide h2 { font-size: 1.3em; margin-bottom: 12px; }
+            .carousel-slide p { font-size: 0.85em; margin-bottom: 12px; }
+            .slide-text { width: 95%; padding: 10px; }
+            .carousel-btn { width: 35px; height: 35px; font-size: 16px; }
+            .project-link { font-size: 0.85em; padding: 7px 12px; }
+            section { padding: 45px 15px; }
+            .separator-section { padding: 35px 15px; }
+            .separator-section h2 { font-size: 1.3em; }
+            .separator-section p { font-size: 0.9em; }
+            #contacto h2 { font-size: 1.3em; }
+            #contacto p { font-size: 0.9em; }
+            footer { padding: 12px; }
+            .social-icons { margin: 20px 0; }
+            .social-icons a { width: 45px; height: 45px; font-size: 1.3em; }
             .btn-whatsapp-footer {
                 padding: 12px 30px;
                 font-size: 1.1em;
             }
         }
         @media (max-width: 480px) {
-            html { font-size: 12px; } /* Mayor reducción para pantallas muy pequeñas */
-            .hero-slogan { font-size: 1.2em; }
-            .hero-subtext { font-size: 0.9em; }
-            .btn-primary { padding: 8px 10px; font-size: 0.9em; }
-            .slide-image { max-height: 22vh; }
             .carousel-slide h2 { font-size: 1.2em; }
             .carousel-slide p { font-size: 0.8em; }
             .btn-whatsapp-footer {
@@ -254,23 +352,40 @@
         </nav>
     </header>
 
-    <section class="hero-section" id="hero">
-        <video id="hero-video" autoplay loop muted playsinline>
-            <source src="bg-video.mp4" type="video/mp4">
-            Tu navegador no soporta la etiqueta de video.
-        </video>
-        <div class="hero-background-image" id="heroBackgroundImage"></div>
-
-        <div class="hero-content" id="heroContent">
-            <div class="hero-logo-container">
-                <img src="img/logo.png" alt="Logo Boost & Launch" class="hero-logo" id="mainLogo">
+    <!-- Hero section con 3 opciones - Versión masiva -->
+    <section class="hero-options-section" id="hero">
+        <div class="hero-options-container">
+            <div class="hero-option" 
+                 style="background-image: url('img/h1.jpg');"
+                 data-title="Diseño de Páginas Webs"
+                 data-subtitle="Tu mejor herramienta para tu identidad digital.">
+                <div class="hero-option-content">
+                    <h2>Diseño de Páginas Webs</h2>
+                    <p>Tu mejor herramienta para tu identidad digital.</p>
+                    <a href="#" class="hero-option-btn">Ver Más</a>
+                </div>
             </div>
-            <h1 class="hero-slogan" id="heroSlogan"></h1>
-            <p class="hero-subtext">Necesitas experiencias que vendan, crear comunidad y posicionanarte. Website + Google Ads = una marca que vende sola.</p>
-            <div class="hero-buttons">
-                <a href="#carousel-hero" class="btn-primary"><i class="fa-solid fa-circle-nodes"></i> Conoce nuestros servicios</a>
-                <a href="#portafolio" class="btn-primary"><i class="fa-solid fa-briefcase"></i> Portafolio</a>
-                <a href="https://wa.me/+50764706442" target="_blank" class="btn-primary btn-whatsapp"><i class="fab fa-whatsapp"></i> Contáctanos vía WhatsApp</a>
+            
+            <div class="hero-option" 
+                 style="background-image: url('img/h2.jpg');"
+                 data-title="Creación de Tienda Online."
+                 data-subtitle="Haz más fácil para tus clientes invertir en lo que ofreces.">
+                <div class="hero-option-content">
+                    <h2>Creación de Tienda Online.</h2>
+                    <p>Haz más fácil para tus clientes invertir en lo que ofreces.</p>
+                    <a href="#" class="hero-option-btn">Ver Más</a>
+                </div>
+            </div>
+            
+            <div class="hero-option" 
+                 style="background-image: url('img/h3.jpg');"
+                 data-title="Plan de Minimización y Manejo de Residuos Sólidos No Municipales"
+                 data-subtitle="Plan de Minimización y Manejo de Residuos Sólidos No Municipales">
+                <div class="hero-option-content">
+                    <h2>Integración de Google Ads</h2>
+                    <p>Posicionate y te conseguirán con un click.</p>
+                    <a href="#" class="hero-option-btn">Ver Más</a>
+                </div>
             </div>
         </div>
     </section>
@@ -340,39 +455,32 @@
     </footer>
 
     <script>
-        // Hero Principal - Animación de entrada
-        const heroContent = document.getElementById('heroContent');
-        const heroObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    heroObserver.unobserve(entry.target);
+        // Animaciones para las opciones del hero
+        const heroOptions = document.querySelectorAll('.hero-option');
+        
+        heroOptions.forEach(option => {
+            // Efecto hover - zoom in
+            option.addEventListener('mouseenter', () => {
+                option.classList.add('zoom-in');
+            });
+            
+            option.addEventListener('mouseleave', () => {
+                option.classList.remove('zoom-in');
+            });
+            
+            // Efecto click
+            option.addEventListener('click', (e) => {
+                if (!e.target.classList.contains('hero-option-btn')) {
+                    option.classList.add('clicked');
+                    setTimeout(() => {
+                        option.classList.remove('clicked');
+                    }, 600);
+                    
+                    // Aquí puedes agregar la acción que ocurre al hacer click
+                    console.log('Opción seleccionada:', option.dataset.title);
                 }
             });
-        }, { threshold: 0.1 });
-        heroObserver.observe(heroContent);
-
-        // Slogan dinámico
-        const heroSlogan = document.getElementById('heroSlogan');
-        const slogans = [
-            "Diseñamos la Página Web que impulsará tu negocio.",
-            "Creamos una Tienda Online que potenciará tus ventas",
-            "Implementamos Google Ads para que despeguen tus redes sociales.",
-        ];
-        let currentSloganIndex = 0;
-        function changeSlogan() {
-            heroSlogan.classList.add('fade-out');
-            setTimeout(() => {
-                currentSloganIndex = (currentSloganIndex + 1) % slogans.length;
-                heroSlogan.textContent = slogans[currentSloganIndex];
-                heroSlogan.classList.remove('fade-out');
-                heroSlogan.classList.add('fade-in');
-                setTimeout(() => heroSlogan.classList.remove('fade-in'), 500);
-            }, 500);
-        }
-        heroSlogan.textContent = slogans[currentSloganIndex];
-        currentSloganIndex = (currentSloganIndex + 1) % slogans.length;
-        setInterval(changeSlogan, 8000);
+        });
 
         // Hero Carrusel
         const carouselHero = document.getElementById('carousel-hero');
@@ -503,51 +611,24 @@
             setTimeout(() => logo.classList.remove('clicked'), 300);
         });
 
-        // Manejo de error de video y fallback con imagen parallax
-        const heroVideo = document.getElementById('hero-video');
-        const heroSection = document.getElementById('hero');
-        const heroBackgroundImage = document.getElementById('heroBackgroundImage');
-
-        if (heroVideo) {
-            heroVideo.onerror = function() {
-                console.log('Error al cargar el video. Mostrando fondo alternativo.');
-                heroVideo.style.display = 'none'; // Oculta el video
-                heroBackgroundImage.style.display = 'block'; // Muestra la imagen de fallback
-                heroSection.classList.add('parallax-active'); // Activa la animación de zoom
-            };
-
-            // Para navegadores que no soportan autoplay o si la carga es lenta,
-            // también se puede añadir un timeout o un evento 'canplaythrough'
-            // para manejar casos donde el video no empieza a reproducirse.
-            // Por simplicidad, solo nos basamos en onerror.
-        } else {
-            // Si por alguna razón el elemento de video no existe (ej. JS deshabilitado)
-            // nos aseguramos de mostrar la imagen.
-            heroBackgroundImage.style.display = 'block';
-            heroSection.classList.add('parallax-active');
-        }
-
-        // Preload del logo
-        const logoImg = new Image();
-        logoImg.src = 'img/logo.png';
-
-        // Preload de la imagen de fallback para el hero principal
-        const heroFallbackImg = new Image();
-        heroFallbackImg.src = 'img/hero-fallback.jpg';
-        heroFallbackImg.onload = function() {
-            console.log('Imagen de fallback cargada.');
-        };
-        heroFallbackImg.onerror = function() {
-            console.error('Error al precargar la imagen de fallback.');
-        };
-
+        // Preload de imágenes para el hero
+        const heroImages = [
+            'img/h1.jpg',
+            'img/h2.jpg',
+            'img/h3.jpg'
+        ];
+        
+        heroImages.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
 
         // Efecto de iluminación en botones
-        document.querySelectorAll('.btn-nav, .btn-primary, .project-link, .btn-whatsapp-footer').forEach(button => {
+        document.querySelectorAll('.btn-nav, .btn-primary, .project-link, .btn-whatsapp-footer, .hero-option-btn').forEach(button => {
             button.addEventListener('mousemove', (e) => {
                 const rect = button.getBoundingClientRect();
-                button.style.setProperty('--x', `${e.clientX - rect.left}px`);
-                button.style.setProperty('--y', `${e.clientY - rect.top}px`);
+                button.style.setProperty('--x', (e.clientX - rect.left) + 'px');
+                button.style.setProperty('--y', (e.clientY - rect.top) + 'px');
             });
         });
     </script>
