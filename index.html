@@ -27,18 +27,6 @@
         .btn-nav:hover::before, .project-link:hover::before { width: 300px; height: 300px; }
         .btn-whatsapp-footer:hover::before, .pre-hero-btn:hover::before { width: 250px; height: 250px; }
 
-        /* Info Bar */
-        .info-bar {
-            display: flex; align-items: center; justify-content: center; width: 100%; height: 40px;
-            background: linear-gradient(90deg, rgba(0,0,0,0.9), rgba(0,0,0,0.9)); padding: 7px 25px;
-            border-bottom: 1px solid var(--color-border); box-sizing: border-box; position: relative;
-            z-index: 99; margin-bottom: 30px; overflow: hidden;
-        }
-        .info-bar-content { position: relative; width: 100%; text-align: center; font-size: 1.8em; font-weight: bold; color: var(--color-text-light); text-shadow: 0 0 5px rgba(0,0,0,0.5); height: 100%;  }
-        .info-bar-text { position: absolute; width: 100%; top: 50%; left: 0; transform: translateY(-50%); opacity: 0; transition: opacity 1s ease-in-out; padding: 0 10px; box-sizing: border-box; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
-        .info-bar-text.active { opacity: 1; }
-        .info-bar-text span { color: var(--color-primary); font-weight: bold; }
-
         /* Top Bar */
         .top-bar { position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: #000; backdrop-filter: blur(10px); border-bottom: 5px solid var(--color-border); transition: all 0.3s ease; }
         .scrolled .top-bar { padding: 10px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
@@ -77,11 +65,35 @@
 
         /* Pre-Hero Parallax & Buttons */
         .pre-hero-parallax { 
-            background: url('img/bg_main.png') fixed center/cover no-repeat; 
-            height: 580px; 
+            background: url('img/bg_main.gif') fixed center/cover no-repeat; 
+            height: 720px; 
             border-radius: 40px; 
-            margin-bottom: 5px; 
+            margin-bottom: 30px; 
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo-parallax {
+            width: 1800px;
+            height: 1000px;
+            background-image: url('img/logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: relative;
+            animation: floatRotate 8s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px rgba(38, 186, 245, 0.3));
+        }
+        @keyframes floatRotate {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg);
+                filter: drop-shadow(0 0 15px rgba(38, 186, 245, 0.3));
+            }
+            50% { 
+                transform: translateY(-20px) rotate(3deg);
+                filter: drop-shadow(0 0 20px rgba(38, 186, 245, 0.5));
+            }
         }
         .pre-hero-buttons { 
             display: flex; 
@@ -90,6 +102,7 @@
             padding: 30px 20px; 
             background: var(--color-dark-bg); 
             flex-wrap: wrap; 
+            margin-top: 10px;
         }
         .pre-hero-btn { 
             display: inline-flex; 
@@ -106,10 +119,22 @@
             box-shadow: 0 5px 15px rgba(38, 186, 245, 0.4); 
             min-width: 440px; 
             text-align: center; 
-            margin-bottom: 250px; 
+            margin-bottom: 120px; 
         }
         .pre-hero-btn i { margin-right: 8px; }
         .pre-hero-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(38, 186, 245, 0.6); background: var(--color-button-hover); }
+
+        /* Info Bar */
+        .info-bar {
+            display: flex; align-items: center; justify-content: center; width: 100%; height: 40px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9), rgba(0,0,0,0.9)); padding: 7px 25px;
+            border-bottom: 1px solid var(--color-border); box-sizing: border-box; position: relative;
+            z-index: 99; margin: 10px 0 10px; overflow: hidden;
+        }
+        .info-bar-content { position: relative; width: 100%; text-align: center; font-size: 1.8em; font-weight: bold; color: var(--color-text-light); text-shadow: 0 0 5px rgba(0,0,0,0.5); height: 100%;  }
+        .info-bar-text { position: absolute; width: 100%; top: 50%; left: 0; transform: translateY(-50%); opacity: 0; transition: opacity 1s ease-in-out; padding: 0 10px; box-sizing: border-box; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+        .info-bar-text.active { opacity: 1; }
+        .info-bar-text span { color: var(--color-primary); font-weight: bold; }
 
         /* Hero Options Section */
         .hero-options-section { position: relative; min-height: 100vh; padding: 0; background-color: var(--color-dark-bg); overflow: hidden; }
@@ -181,29 +206,33 @@
             .nav-inline { position: fixed; top: 60px; left: 0; width: 100%; background: #1f1f22ee; border: 1px solid var(--color-border); padding: 15px; flex-direction: column; display: none; font-size: 1.4em; z-index: 1000; box-sizing: border-box; }
             .nav-inline.show { display: flex; }
             .hamburger { display: flex; width: 46px; height: 30px;}
-            .info-bar { height: 65px; padding: 10px }
-            .info-bar-text { font-size: 0.8em; white-space: normal; }
+            .info-bar { height: 65px; padding: 10px; margin: 6px 0 15px; }
+            .info-bar-text { font-size: 0.8em; white-space: normal; margin: 6px 0 15px; }
             .pre-hero-parallax { 
-                height: 290px; 
+                height: 400px; 
                 margin: 0 6px;
-                border-radius: 30px;
+                border-radius: 30px;    
+            }
+            .logo-parallax {
+                width: 280px;
+                height: 280px;
             }
             .pre-hero-buttons { 
                 flex-direction: column; 
                 align-items: center; 
                 gap: 6px; 
-                padding: 35px 10px; 
+                padding: 5px 10px; 
             }
             .pre-hero-btn { 
                 width: 100%; 
-                max-width: 280px; 
+                max-width: 260px; 
                 min-width: auto;
-                padding: 20px 10px 20px; 
+                padding: 10px 6px; 
                 font-size: 1.5em; 
-                margin-bottom: 5px;
+                margin-bottom: 4px;
             }
             .hero-options-container { flex-direction: column; height: auto; }
-            .hero-option { height: 70vh; min-height: 195px; margin: 11px; border-radius: 33px; }
+            .hero-option { height: 70vh; min-height: 200px; margin: 10px; border-radius: 44px; }
             .hero-option::before, .hero-option-bg { border-radius: 15px; }
             .hero-option-content { padding: 5px; margin-bottom: 60px; }
             .hero-option h2 { font-size: 2.0em; margin-bottom: -50px; }
@@ -243,6 +272,10 @@
         </nav>
     </header>
 
+    <div class="pre-hero-parallax">
+        <div class="logo-parallax"></div>
+    </div>
+
     <div class="info-bar">
         <div class="info-bar-content">
             <div class="info-bar-text active">Hola, bienvenido a <span>Boost & Launch</span> ¿Cómo podemos ayudarte?</div>
@@ -252,13 +285,11 @@
             <div class="info-bar-text">Agenda una <span>consulta gratuita</span> via WhatsApp.</div>
         </div>
     </div>
-
-    <div class="pre-hero-parallax"></div>
     
     <div class="pre-hero-buttons">
-        <a href="#hero" class="pre-hero-btn"><i class="fas fa-cogs"></i> Nuestros Servicios</a>
+        <a href="#hero" class="pre-hero-btn"><i class="fa fa-bars" aria-hidden="true"></i> Nuestros Servicios</a>
         <a href="#carousel-hero" class="pre-hero-btn"><i class="fas fa-briefcase"></i> Portafolio</a>
-        <a href="#contacto" class="pre-hero-btn"><i class="fas fa-phone-alt"></i> Contáctanos</a>
+        <a href="#contacto" class="pre-hero-btn"><i class="fa fa-phone-square" aria-hidden="true"></i> Contáctanos</a>
     </div>
 
     <section class="hero-options-section" id="hero">
