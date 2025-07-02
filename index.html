@@ -13,59 +13,60 @@
             --color-shadow-dark: rgba(0,0,0,0.7);
         }
         body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: var(--color-dark-bg); color: var(--color-text-light); line-height: 1.6; overflow-x: hidden; }
-        
-        /* Scrolling Info Bar */
+
+        /* General Button Hover Effect */
+        .btn-nav, .project-link, .btn-whatsapp-footer, .pre-hero-btn {
+            position: relative; overflow: hidden; z-index: 1;
+        }
+        .btn-nav::before, .project-link::before, .btn-whatsapp-footer::before, .pre-hero-btn::before {
+            content: ''; position: absolute; top: var(--y); left: var(--x);
+            transform: translate(-50%, -50%); width: 0; height: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            transition: width 0.5s, height 0.5s; border-radius: 50%; z-index: -1;
+        }
+        .btn-nav:hover::before, .project-link:hover::before { width: 300px; height: 300px; }
+        .btn-whatsapp-footer:hover::before, .pre-hero-btn:hover::before { width: 250px; height: 250px; }
+
+        /* Info Bar */
         .info-bar {
-            width: 100%;
-            background: linear-gradient(90deg, rgba(0,0,0,0.9), rgba(0,0,0,0.9));
-            padding: 6px 0;
-            overflow: hidden;
-            white-space: nowrap;
-            box-sizing: border-box;
-            position: relative;
-            z-index: 99; /* Below top-bar, above hero */
-            border-bottom: 1px solid var(--color-border);
-            display: flex;
-            align-items: center;
+            display: flex; align-items: center; justify-content: center; width: 100%; height: 40px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9), rgba(0,0,0,0.9)); padding: 7px 25px;
+            border-bottom: 1px solid var(--color-border); box-sizing: border-box; position: relative;
+            z-index: 99; margin-bottom: 30px; overflow: hidden;
         }
-
-        .info-bar-content {
-            display: inline-block;
-            padding-left: 100%; /* Start off-screen to the right */
-            animation: scroll-left 40s linear infinite; /* Adjust duration for speed */
-            font-size: 1.6em;
-            font-weight: bold;
-            color: var(--color-text-light);
-            text-shadow: 0 0 5px rgba(0,0,0,0.5);
-        }
-
-        .info-bar-text {
-            display: inline-block;
-            margin-right: 100px; /* Space between phrases */
-            white-space: nowrap;
-            padding: 0 10px;
-        }
-
-        .info-bar-text span {
-            color: var(--color-primary);
-            font-weight: bold;
-        }
-
-        @keyframes scroll-left {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-100%); }
-        }
+        .info-bar-content { position: relative; width: 100%; text-align: center; font-size: 1.8em; font-weight: bold; color: var(--color-text-light); text-shadow: 0 0 5px rgba(0,0,0,0.5); height: 100%;  }
+        .info-bar-text { position: absolute; width: 100%; top: 50%; left: 0; transform: translateY(-50%); opacity: 0; transition: opacity 1s ease-in-out; padding: 0 10px; box-sizing: border-box; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+        .info-bar-text.active { opacity: 1; }
+        .info-bar-text span { color: var(--color-primary); font-weight: bold; }
 
         /* Top Bar */
-        .top-bar { position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 20px 30px; background: #000000; backdrop-filter: blur(10px); border-bottom: 1px solid var(--color-border); }
-        .logo { font-size: 2.0em; font-weight: bold; background-image: linear-gradient(120deg, #fff 10%, var(--color-primary) 40%, #fff 70%); background-size: 200% auto; animation: shimmer 4s linear infinite; color: transparent; background-clip: text; -webkit-background-clip: text; white-space: nowrap; cursor: pointer; }
-        @keyframes shimmer { 0% { background-position: -100% center; } 100% { background-position: 100% center; } }
-        .logo.clicked { animation: shimmer 4s linear infinite, logoPop 0.3s ease-out; }
-        @keyframes logoPop { 0%,100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+        .top-bar { position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: #000; backdrop-filter: blur(10px); border-bottom: 5px solid var(--color-border); transition: all 0.3s ease; }
+        .scrolled .top-bar { padding: 10px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .logo { 
+            font-size: 2.0em; 
+            font-weight: bold; 
+            background-image: linear-gradient(120deg, #fff 10%, var(--color-primary) 40%, #fff 70%); 
+            background-size: 200% auto; 
+            animation: shimmer 3s linear infinite; 
+            color: transparent; 
+            background-clip: text; 
+            -webkit-background-clip: text; 
+            white-space: nowrap; 
+            cursor: pointer; 
+            transition: transform 0.3s ease;
+        }
+        @keyframes shimmer { 
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; } 
+        }
+        .logo.clicked { animation: shimmer 3s linear infinite, logoPop 0.3s ease-out; }
+        @keyframes logoPop { 
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
         .nav-inline { display: flex; gap: 12px; }
-        .btn-nav { position: relative; padding: 10px 20px; background: #27272a; border: 1px solid var(--color-primary); color: var(--color-primary); border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 0.95em; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; overflow: hidden; }
-        .btn-nav::before { content: ''; position: absolute; top: var(--y); left: var(--x); transform: translate(-50%, -50%); width: 0; height: 0; background: radial-gradient(circle, rgba(0,132,247,0.8) 0%, rgba(0,132,247,0) 70%); transition: width 0.5s, height 0.5s; border-radius: 50%; }
-        .btn-nav:hover::before { width: 300px; height: 300px; }
+        .btn-nav { padding: 10px 20px; background: #27272a; border: 1px solid var(--color-primary); color: var(--color-primary); border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 1.10em; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
         .btn-nav:hover { color: var(--color-button-hover); background: var(--color-primary); }
         .btn-nav:hover i { color: var(--color-icon-hover); }
         .hamburger { display: none; flex-direction: column; justify-content: space-between; width: 44px; height: 38px; background: none; border: none; cursor: pointer; z-index: 200; }
@@ -73,180 +74,64 @@
         .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-        
-        /* Hero Section - Optimizado para bordes, 3D y animación de encendido */
-        .hero-options-section {
-            position: relative;
-            min-height: 100vh;
-            padding: 0;
-            background-color: var(--color-dark-bg);
-            overflow: hidden;
-        }
-        
-        .hero-options-container {
-            display: flex;
-            width: 100%;
-            height: 100vh;
-            margin: 0;
-        }
-        
-        .hero-option {
-            position: relative;
-            flex: 1;
-            min-width: 0;
-            height: 100%;
-            overflow: hidden;
-            transition: all 0.5s ease;
-            cursor: pointer;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            text-align: center;
-            border-radius: 50px; /* Rounded corners */
-            margin: 22px; /* Space between "buttons" */
-            transform-style: preserve-3d;
-            isolation: isolate;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.1); /* 3D effect */
-            border: 2px solid transparent; /* For ignition animation */
-        }
-        
-        .hero-option::before {
-            content: '';
-            position: absolute;
-            top: -1px; left: -1px; right: -1px; bottom: -1px;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%);
-            transition: all 0.5s ease;
-            z-index: 1;
-            border-radius: 25px; /* Match parent border-radius */
-        }
-        
-        .hero-option:hover::before {
-            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%);
-        }
-        
-        .hero-option-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            transition: transform 0.2s ease-out; /* Faster transition for parallax */
-            will-change: transform;
-            border-radius: 25px; /* Match parent border-radius */
-        }
-        
-        .hero-option-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: transform 0.1s ease-out, filter 0.3s ease; /* Faster transition for 3D rotation */
-            z-index: 2;
-            transform: translateZ(20px);
-            will-change: transform;
-            filter: drop-shadow(0 0 44px rgba(0,0,0,0.5));
-        }
-        
-        .hero-option:hover .hero-option-overlay {
-            transform: translateZ(20px) scale(1.05);
-            filter: drop-shadow(0 0 15px var(--color-shadow-primary));
-        }
-        
-        .hero-option-content {
-            position: relative;
-            width: 100%;
-            padding: 40px 30px;
-            box-sizing: border-box;
-            color: white;
-            z-index: 3;
-            max-width: 600px;
-            margin-bottom: 80px;
-            transform: translateZ(30px);
-            transition: transform 0.1s ease-out; /* Faster transition for 3D rotation */
-        }
-        
-        .hero-option h2 {
-            font-size: 2.5em;
-            margin-bottom: 110px;
-            text-shadow: 8px 8px 22px rgba(0, 0, 0, 0.8);
-            transition: all 0.5s ease;
-        }
-        
-        .hero-option-btn {
-            display: inline-block;
-            padding: 15px 50px;
-            background: var(--color-primary);
-            color: white;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1em;
-            transition: all 0.3s ease;
-            opacity: 0.9;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        
-        .hero-option-btn:hover {
-            background: white;
-            color: var(--color-primary);
-            transform: translateY(-3px);
-            opacity: 1;
-        }
-        
-        /* Animaciones */
-        .hero-option.clicked {
-            animation: optionClick 0.6s ease-out;
-        }
-        
-        @keyframes optionClick {
-            0% { transform: scale(1); }
-            50% { transform: scale(0.98); }
-            100% { transform: scale(1); }
-        }
 
-        /* Ignition animation for hero options */
-        .hero-option.ignite {
-            animation: ignite-border 0.8s ease-out forwards;
+        /* Pre-Hero Parallax & Buttons */
+        .pre-hero-parallax { 
+            background: url('img/bg_main.png') fixed center/cover no-repeat; 
+            height: 580px; 
+            border-radius: 40px; 
+            margin-bottom: 5px; 
+            position: relative;
         }
+        .pre-hero-buttons { 
+            display: flex; 
+            justify-content: center; 
+            gap: 30px; 
+            padding: 30px 20px; 
+            background: var(--color-dark-bg); 
+            flex-wrap: wrap; 
+        }
+        .pre-hero-btn { 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 15px 35px; 
+            background: var(--color-primary); 
+            color: #fff; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-size: 1.6em; 
+            font-weight: bold; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 5px 15px rgba(38, 186, 245, 0.4); 
+            min-width: 440px; 
+            text-align: center; 
+            margin-bottom: 250px; 
+        }
+        .pre-hero-btn i { margin-right: 8px; }
+        .pre-hero-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(38, 186, 245, 0.6); background: var(--color-button-hover); }
 
+        /* Hero Options Section */
+        .hero-options-section { position: relative; min-height: 100vh; padding: 0; background-color: var(--color-dark-bg); overflow: hidden; }
+        .hero-options-container { display: flex; width: 100%; height: 100vh; margin: 0; }
+        .hero-option { position: relative; flex: 1; min-width: 0; height: 100%; overflow: hidden; transition: all 0.5s ease; cursor: pointer; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; border-radius: 50px; margin: 22px; transform-style: preserve-3d; isolation: isolate; box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.1); border: 2px solid transparent; }
+        .hero-option::before { content: ''; position: absolute; inset: -1px; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%); transition: all 0.5s ease; z-index: 1; border-radius: 25px; }
+        .hero-option:hover::before { background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%); }
+        .hero-option-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 0.2s ease-out; will-change: transform; border-radius: 25px; }
+        .hero-option-overlay { position: absolute; inset: 0; background-size: contain; background-position: center; background-repeat: no-repeat; transition: transform 0.1s ease-out, filter 0.3s ease; z-index: 2; transform: translateZ(20px); will-change: transform; filter: drop-shadow(0 0 44px rgba(0,0,0,0.5)); }
+        .hero-option:hover .hero-option-overlay { transform: translateZ(20px) scale(1.05); filter: drop-shadow(0 0 15px var(--color-shadow-primary)); }
+        .hero-option-content { position: relative; width: 100%; padding: 40px 30px; box-sizing: border-box; color: white; z-index: 3; max-width: 600px; margin-bottom: 80px; transform: translateZ(30px); transition: transform 0.1s ease-out; }
+        .hero-option h2 { font-size: 2.5em; margin-bottom: 110px; text-shadow: 8px 8px 22px rgba(0, 0, 0, 0.8); transition: all 0.5s ease; }
+        .hero-option.ignite { animation: ignite-border 0.8s ease-out forwards; }
         @keyframes ignite-border {
-            0% {
-                box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.1);
-                border: 2px solid transparent;
-            }
-            25% {
-                box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 25px var(--color-primary);
-                border: 2px solid var(--color-primary);
-            }
-            50% {
-                box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.1);
-                border: 2px solid transparent;
-            }
-            75% {
-                box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 25px var(--color-primary);
-                border: 2px solid var(--color-primary);
-            }
-            100% {
-                box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.1);
-                border: 2px solid transparent;
-            }
+            25%, 75% { box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 25px var(--color-primary); border-color: var(--color-primary); }
+            0%, 50%, 100% { box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.1); border-color: transparent; }
         }
-        
+
         /* Carousel */
         .carousel-hero { position: relative; width: 100%; height: 105vh; overflow: hidden; touch-action: pan-y; }
-        .carousel-slide { position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; opacity: 0; transition: opacity 0.8s ease; z-index: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-        .carousel-slide::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(2px) brightness(0.5); z-index: -1; }
+        .carousel-slide { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; opacity: 0; transition: opacity 0.8s ease; z-index: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        .carousel-slide::before { content: ''; position: absolute; inset: 0; background-size: cover; background-position: center; filter: blur(2px) brightness(0.5); z-index: -1; }
         .carousel-slide:nth-child(1)::before { background-image: url('img/img_bg_1.jpg'); }
         .carousel-slide:nth-child(2)::before { background-image: url('img/img_bg_2.jpg'); }
         .carousel-slide:nth-child(3)::before { background-image: url('img/img_bg_3.jpg'); }
@@ -257,16 +142,16 @@
         .slide-text { background: rgba(15, 15, 16, 0.8); padding: 20px; border-radius: 15px; position: relative; overflow: hidden; width: 90%; max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
         .slide-text::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0, 132, 247, 0.2), transparent); animation: shine 3s infinite; }
         @keyframes shine { 100% { left: 100%; } }
-        .carousel-slide h2 { font-size: 2.0em; margin-bottom: 30px; color: var(--color-text-light); position: relative; }
-        .carousel-slide p { font-size: 1.1em; margin-bottom: 30x; position: relative; }
-        .project-link { position: relative; display: inline-block; padding: 12px 25px; background: var(--color-primary); color: var(--color-text-dark); text-decoration: none; border-radius: 5px; font-weight: bold; transition: all 0.3s ease; overflow: hidden; z-index: 1; }
-        .project-link::before { content: ''; position: absolute; top: var(--y); left: var(--x); transform: translate(-50%, -50%); width: 0; height: 0; background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%); transition: width 0.5s, height 0.5s; border-radius: 50%; z-index: -1; }
-        .project-link:hover::before { width: 200px; height: 200px; }
+        .carousel-slide h2 { font-size: 2.0em; margin-bottom: 30px; color: var(--color-text-light); }
+        .carousel-slide p { font-size: 1.1em; margin-bottom: 30px; }
+        .project-link { display: inline-block; padding: 12px 25px; background: var(--color-primary); color: var(--color-text-dark); text-decoration: none; border-radius: 5px; font-weight: bold; transition: all 0.3s ease; }
         .project-link:hover { background: var(--color-button-hover); transform: translateY(-3px); }
         .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 60px; height: 60px; background: hwb(0 0% 100% / 0.7); border: none; border-radius: 50%; color: var(--color-text-light); font-size: 24px; cursor: pointer; z-index: 3; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; backdrop-filter: blur(5px); }
         .carousel-btn:hover { background: var(--color-primary); transform: translateY(-50%) scale(1.1); }
         .left-btn { left: 30px; }
         .right-btn { right: 30px; }
+        
+        /* Sections & Footer */
         section { padding: 80px 20px; text-align: center; }
         .section-dark { background: var(--color-dark-bg); }
         .section-light { background: var(--color-light-bg); }
@@ -274,93 +159,56 @@
         .social-icons { display: flex; justify-content: center; gap: 30px; margin: 10px 0; }
         .social-icons a { width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; border-radius: 50%; background: var(--color-text-dark); color: var(--color-primary); font-size: 2em; transition: all 0.3s ease; }
         .social-icons a:hover { background: var(--color-primary); color: var(--color-icon-hover); transform: translateY(-5px); }
-        .section-parallax { background-image: url('img/bg_index.jpg'); background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; height: 480px; }
+        .section-parallax { background: url('img/bg_index.jpg') fixed center/cover no-repeat; height: 480px; }
         footer { text-align: center; }
 
         /* WhatsApp Footer Button */
         .btn-whatsapp-footer {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px 40px;
-            margin-top: 30px;
-            background: linear-gradient(90deg, #25D366, #128C7E);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 1.3em;
-            font-weight: bold;
-            transition: all 0.3s ease;
+            display: inline-flex; align-items: center; justify-content: center; padding: 15px 40px; margin-top: 30px;
+            background: linear-gradient(90deg, #25D366, #128C7E); color: #fff; text-decoration: none;
+            border-radius: 50px; font-size: 1.3em; font-weight: bold; transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
         }
         .btn-whatsapp-footer i { margin-right: 8px; }
-        .btn-whatsapp-footer::before {
-            content: '';
-            position: absolute;
-            top: var(--y); left: var(--x);
-            transform: translate(-50%, -50%);
-            width: 0; height: 0;
-            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
-            transition: width 0.5s, height 0.5s;
-            border-radius: 50%;
-            z-index: -1;
-        }
-        .btn-whatsapp-footer:hover::before { width: 250px; height: 250px; }
-        .btn-whatsapp-footer:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6);
-            background: #128C7E;
-        }
+        .btn-whatsapp-footer:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6); background: #128C7E; }
 
         /* Responsive */
         @media (max-width: 768px) {
-            html { font-size: 13px; overflow-x: hidden; }
-            body { overflow-x: hidden; position: relative; }
-
-            .top-bar {
-                padding: 10px 20px;
-                justify-content: space-between;
-                background: #000000;
-            }
+            html { font-size: 13px; }
+            .top-bar { padding: 10px 20px; }
+            .scrolled .top-bar { padding: 8px 15px; }
             .logo { font-size: 1.5em; }
-            .nav-inline {
-                position: fixed;
-                top: 60px;
-                left: 0;
-                right: 0;
-                background: #1f1f22ee;
-                border: 1px solid var(--color-border);
-                padding: 15px;
-                border-radius: 0;
-                width: 100%;
-                max-width: none;
-                box-sizing: border-box;
-                flex-direction: column;
-                display: none;
-                font-size: 1.2em;
-                z-index: 1000;
-            }
+            .nav-inline { position: fixed; top: 60px; left: 0; width: 100%; background: #1f1f22ee; border: 1px solid var(--color-border); padding: 15px; flex-direction: column; display: none; font-size: 1.4em; z-index: 1000; box-sizing: border-box; }
             .nav-inline.show { display: flex; }
-
             .hamburger { display: flex; width: 46px; height: 30px;}
-            
-            .info-bar-content { animation: scroll-left 50s linear infinite; } /* Faster scroll on mobile */
-            .info-bar-text { font-size: 1.1em; margin-right: 50px; } /* Less space on mobile */
-
-            .hero-options-section { min-height: auto; height: auto; }
+            .info-bar { height: 65px; padding: 10px }
+            .info-bar-text { font-size: 0.8em; white-space: normal; }
+            .pre-hero-parallax { 
+                height: 290px; 
+                margin: 0 6px;
+                border-radius: 30px;
+            }
+            .pre-hero-buttons { 
+                flex-direction: column; 
+                align-items: center; 
+                gap: 6px; 
+                padding: 35px 10px; 
+            }
+            .pre-hero-btn { 
+                width: 100%; 
+                max-width: 280px; 
+                min-width: auto;
+                padding: 20px 10px 20px; 
+                font-size: 1.5em; 
+                margin-bottom: 5px;
+            }
             .hero-options-container { flex-direction: column; height: auto; }
-            .hero-option { height: 70vh; min-height: 180px; margin: 11px; border-radius: 33px; } /* Adjusted height, margin, and border-radius for mobile */
-            .hero-option::before { border-radius: 15px; }
-            .hero-option-bg { border-radius: 15px; }
-            .hero-option-content { padding: 5px 5px; margin-bottom: 60px; } /* Adjusted margin-bottom */
+            .hero-option { height: 70vh; min-height: 195px; margin: 11px; border-radius: 33px; }
+            .hero-option::before, .hero-option-bg { border-radius: 15px; }
+            .hero-option-content { padding: 5px; margin-bottom: 60px; }
             .hero-option h2 { font-size: 2.0em; margin-bottom: -50px; }
-            .hero-option-btn { padding: 10px 30px; font-size: 1.2em; }
             .hero-option-overlay { transform: translateZ(10px); }
             .hero-option:hover .hero-option-overlay { transform: translateZ(10px) scale(1.03); }
-            
             .carousel-hero { height: auto; min-height: 95vh; }
             .slide-content { padding-bottom: 20px; }
             .slide-image { max-height: 70vh; margin-bottom: 12px; }
@@ -370,15 +218,13 @@
             .carousel-btn { width: 35px; height: 35px; font-size: 22px; }
             .project-link { font-size: 1.0em; padding: 7px 12px; }
             section { padding: 30px 15px; }
-            .separator-section { padding: 20px 10px; }
+            .separator-section, #contacto { padding: 20px 10px; }
             .separator-section h2, #contacto h2 { font-size: 1.2em; }
             .separator-section p, #contacto p { font-size: 1.0em; }
             footer { padding: 10px; }
-            .social-icons { margin: 5px 0; }
             .social-icons a { width: 55px; height: 55px; font-size: 2em; }
             .btn-whatsapp-footer { padding: 12px 40px; font-size: 1.1em; }
         }
-        
         @media (max-width: 480px) {
             .carousel-slide h2 { font-size: 1.2em; }
             .carousel-slide p { font-size: 1.0em; }
@@ -399,44 +245,38 @@
 
     <div class="info-bar">
         <div class="info-bar-content">
-            <span class="info-bar-text">Hola, bienvenido a <span>Boost & Launch</span> ¿Cómo podemos ayudarte?</span>
-            <span class="info-bar-text">Recuerda que puedes agendar una <span>consulta gratuita</span> via WhatsApp.</span>
-            <span class="info-bar-text">Diseñamos Páginas webs adaptables a <span>dispositivos moviles</span>.</span>
-            <span class="info-bar-text">Creamos Tiendas Online atractivas que <span>venden solas</span>.</span>
-            <span class="info-bar-text">Agenda una <span>consulta gratuita</span> via WhatsApp.</span>
+            <div class="info-bar-text active">Hola, bienvenido a <span>Boost & Launch</span> ¿Cómo podemos ayudarte?</div>
+            <div class="info-bar-text">Recuerda que puedes agendar una <span>consulta gratuita</span> via WhatsApp.</div>
+            <div class="info-bar-text">Diseñamos Páginas webs adaptables a <span>dispositivos moviles</span>.</div>
+            <div class="info-bar-text">Creamos Tiendas Online atractivas que <span>venden solas</span>.</div>
+            <div class="info-bar-text">Agenda una <span>consulta gratuita</span> via WhatsApp.</div>
         </div>
+    </div>
+
+    <div class="pre-hero-parallax"></div>
+    
+    <div class="pre-hero-buttons">
+        <a href="#hero" class="pre-hero-btn"><i class="fas fa-cogs"></i> Nuestros Servicios</a>
+        <a href="#carousel-hero" class="pre-hero-btn"><i class="fas fa-briefcase"></i> Portafolio</a>
+        <a href="#contacto" class="pre-hero-btn"><i class="fas fa-phone-alt"></i> Contáctanos</a>
     </div>
 
     <section class="hero-options-section" id="hero">
         <div class="hero-options-container">
-            <div class="hero-option" 
-                 data-title="Diseñamos tu página web."
-                 data-slide="0">
+            <div class="hero-option" data-slide="0">
                 <div class="hero-option-bg" style="background-image: url('img/h1.gif');"></div>
                 <div class="hero-option-overlay" style="background-image: url('img/h1-overlay.png');"></div>
-                <div class="hero-option-content">
-                    <h2>Diseño de Website</h2>
-                </div>
+                <div class="hero-option-content"><h2>Diseño de Website</h2></div>
             </div>
-            
-            <div class="hero-option" 
-                 data-title="~ Tienda Online ~"
-                 data-slide="1">
+            <div class="hero-option" data-slide="1">
                 <div class="hero-option-bg" style="background-image: url('img/h2.gif');"></div>
                 <div class="hero-option-overlay" style="background-image: url('img/h2-overlay.png');"></div>
-                <div class="hero-option-content">
-                    <h2>Tienda Online</h2>
-                </div>
+                <div class="hero-option-content"><h2>Tienda Online</h2></div>
             </div>
-            
-            <div class="hero-option" 
-                 data-title="Remodelación de Marca."
-                 data-slide="2">
+            <div class="hero-option" data-slide="2">
                 <div class="hero-option-bg" style="background-image: url('img/h3.gif');"></div>
                 <div class="hero-option-overlay" style="background-image: url('img/h3-overlay.png');"></div>
-                <div class="hero-option-content">
-                    <h2>Remodelado de Marca</h2>
-                </div>
+                <div class="hero-option-content"><h2>Remodelado de Marca</h2></div>
             </div>
         </div>
     </section>
@@ -503,192 +343,135 @@
     </footer>
 
     <script>
-        // Hero Options - Optimizado
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Globals ---
+        const infoBarTexts = document.querySelectorAll('.info-bar-text');
         const heroOptions = document.querySelectorAll('.hero-option');
-        
+        const carouselHero = document.getElementById('carousel-hero');
+        const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+        const logo = document.getElementById('logo');
+        let currentInfoIndex = 0;
+        let currentIndex = 0;
+        let autoSlideInterval;
+
+        // --- Info Bar ---
+        function rotateInfoTexts() {
+            infoBarTexts[currentInfoIndex].classList.remove('active');
+            currentInfoIndex = (currentInfoIndex + 1) % infoBarTexts.length;
+            infoBarTexts[currentInfoIndex].classList.add('active');
+        }
+        setInterval(rotateInfoTexts, 4000);
+
+        // --- Header Scroll Effect ---
+        window.addEventListener('scroll', () => {
+            document.body.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // --- Hero Options Interaction ---
         heroOptions.forEach(option => {
             const bg = option.querySelector('.hero-option-bg');
             const overlay = option.querySelector('.hero-option-overlay');
             const content = option.querySelector('.hero-option-content');
-            
-            // Parallax and 3D rotation for PNG renders
-            option.addEventListener('mousemove', (e) => {
+
+            option.addEventListener('mousemove', e => {
                 const rect = option.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
                 
-                // Parallax for background GIF (subtle)
-                const moveX_bg = (x - centerX) / 40; // Smaller divisor for more subtle effect
-                const moveY_bg = (y - centerY) / 40;
-                bg.style.transform = `translate(${moveX_bg}px, ${moveY_bg}px) scale(1.02)`; // Slight scale for depth
-
-                // 3D rotation for PNG overlay
-                const rotateY = (x - centerX) / 10; // Adjust divisor for rotation intensity
-                const rotateX = (y - centerY) / -10; // Invert Y for natural tilt
-                overlay.style.transform = `translateZ(20px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.05)`;
-                
-                // Content movement (subtle)
-                const moveX_content = (x - centerX) / 60;
-                const moveY_content = (y - centerY) / 60;
-                content.style.transform = `translateZ(30px) translate(${moveX_content}px, ${moveY_content}px)`;
+                bg.style.transform = `translate(${(x - centerX) / 40}px, ${(y - centerY) / 40}px) scale(1.02)`;
+                overlay.style.transform = `translateZ(20px) rotateY(${(x - centerX) / 10}deg) rotateX(${(y - centerY) / -10}deg) scale(1.05)`;
+                content.style.transform = `translateZ(30px) translate(${(x - centerX) / 60}px, ${(y - centerY) / 60}px)`;
             });
 
             option.addEventListener('mouseleave', () => {
-                bg.style.transform = `translate(0px, 0px) scale(1)`;
-                overlay.style.transform = `translateZ(20px) rotateY(0deg) rotateX(0deg) scale(1)`;
-                content.style.transform = `translateZ(30px) translate(0px, 0px)`;
+                bg.style.transform = 'translate(0px, 0px) scale(1)';
+                overlay.style.transform = 'translateZ(20px) rotateY(0deg) rotateX(0deg) scale(1)';
+                content.style.transform = 'translateZ(30px) translate(0px, 0px)';
             });
-            
-            // Ignition animation on click
-            option.addEventListener('click', (e) => {
-                // Prevent default link behavior if it were a direct link, but here it's a carousel trigger
-                e.preventDefault(); 
 
-                // Add ignition animation class
+            option.addEventListener('click', e => {
+                e.preventDefault();
                 option.classList.add('ignite');
-
-                // After animation, trigger the carousel change and scroll
                 setTimeout(() => {
-                    option.classList.remove('ignite'); // Remove class after animation
-                    
-                    // Get slide index from data attribute
-                    const slideIndex = parseInt(option.getAttribute('data-slide'));
-                    
-                    // Change to corresponding slide
-                    currentIndex = slideIndex;
+                    option.classList.remove('ignite');
+                    currentIndex = parseInt(option.getAttribute('data-slide'));
                     updateCarousel();
                     resetAutoSlide();
-                    
-                    // Smooth scroll to carousel
                     document.getElementById('carousel-hero').scrollIntoView({ behavior: 'smooth' });
-                }, 800); // Duration of ignite-border animation
+                }, 800);
             });
         });
 
-        // Carousel - Optimizado
-        const carouselHero = document.getElementById('carousel-hero');
-        const slides = Array.from(document.querySelectorAll('.carousel-slide'));
-        let currentIndex = 0;
-        let autoSlideInterval;
-
-        function updateCarousel() {
-            slides.forEach((slide, index) => {
-                slide.classList.toggle('current', index === currentIndex);
-            });
-        }
-        
-        function moveSlide(direction) {
+        // --- Carousel ---
+        window.moveSlide = direction => {
             currentIndex = (currentIndex + direction + slides.length) % slides.length;
             updateCarousel();
             resetAutoSlide();
-        }
+        };
+
+        const updateCarousel = () => slides.forEach((slide, index) => slide.classList.toggle('current', index === currentIndex));
+        const startAutoSlide = () => autoSlideInterval = setInterval(() => moveSlide(1), 15000);
+        const resetAutoSlide = () => { clearInterval(autoSlideInterval); startAutoSlide(); };
+
+        // Carousel Drag/Swipe (simplified for brevity, keeps core logic)
+        let isDragging = false, startX;
+        carouselHero.addEventListener('mousedown', e => { isDragging = true; startX = e.clientX; resetAutoSlide(); });
+        carouselHero.addEventListener('touchstart', e => { isDragging = true; startX = e.touches[0].clientX; resetAutoSlide(); }, { passive: true });
         
-        function startAutoSlide() {
-            autoSlideInterval = setInterval(() => moveSlide(1), 15000);
-        }
-        
-        function resetAutoSlide() {
-            clearInterval(autoSlideInterval);
-            startAutoSlide();
-        }
-        
-        // Eventos táctiles y de ratón unificados
-        function handleDragStart(e) {
-            this.startX = e.clientX || e.touches[0].clientX;
-            this.startY = e.clientY || e.touches[0].clientY;
-            this.isDragging = true;
-            this.isScrollingVertically = false;
-            this.scrollTopBeforeDrag = carouselHero.scrollTop;
-            resetAutoSlide();
-        }
-        
-        function handleDragMove(e) {
-            if (!this.isDragging) return;
-            const moveX = e.clientX || e.touches[0].clientX;
-            const moveY = e.clientY || e.touches[0].clientY;
-            const diffX = Math.abs(this.startX - moveX);
-            const diffY = Math.abs(this.startY - moveY);
-            
-            if (!this.isScrollingVertically && diffY > 5 && diffY > diffX) {
-                this.isScrollingVertically = true;
+        const handleDragEnd = e => {
+            if (!isDragging) return;
+            isDragging = false;
+            const endX = e.clientX || e.changedTouches[0].clientX;
+            if (Math.abs(startX - endX) > 50) {
+                moveSlide(startX > endX ? 1 : -1);
             }
-            
-            if (!this.isScrollingVertically && diffX > diffY) {
-                e.preventDefault();
-            }
-        }
-        
-        function handleDragEnd() {
-            if (!this.isDragging) return;
-            const diffX = this.startX - (this.moveX || (this.isScrollingVertically ? this.startX : (e.clientX || e.changedTouches[0].clientX))); // Ensure moveX is defined
-            
-            if (!this.isScrollingVertically && Math.abs(diffX) > 50) {
-                moveSlide(diffX > 0 ? 1 : -1);
-            }
-            
-            this.isDragging = false;
-            this.isScrollingVertically = false;
-        }
-        
-        carouselHero.addEventListener('touchstart', handleDragStart, { passive: true });
-        carouselHero.addEventListener('touchmove', handleDragMove, { passive: false });
-        carouselHero.addEventListener('touchend', handleDragEnd, { passive: true });
-        carouselHero.addEventListener('mousedown', handleDragStart);
-        carouselHero.addEventListener('mousemove', (e) => {
-            if (carouselHero.isDragging) {
-                carouselHero.moveX = e.clientX; // Store current mouse X for drag end calculation
-                handleDragMove.call(carouselHero, e);
-            }
-        });
+        };
         carouselHero.addEventListener('mouseup', handleDragEnd);
-        carouselHero.addEventListener('mouseleave', () => {
-            carouselHero.isDragging = false;
-            carouselHero.isScrollingVertically = false;
-        });
+        carouselHero.addEventListener('mouseleave', () => isDragging = false);
+        carouselHero.addEventListener('touchend', handleDragEnd);
         
         startAutoSlide();
+        updateCarousel(); // Initial call
 
-        // Menú hamburguesa
-        const hamburger = document.getElementById('hamburger');
-        const nav = document.getElementById('nav');
-        
+        // --- Hamburger Menu ---
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             nav.classList.toggle('show');
         });
-        
-        nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (nav.classList.contains('show')) {
-                    hamburger.classList.remove('active');
-                    nav.classList.remove('show');
-                }
-            });
+
+        nav.addEventListener('click', e => {
+            if (e.target.tagName === 'A' && nav.classList.contains('show')) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('show');
+            }
         });
 
-        // Logo click
-        const logo = document.getElementById('logo');
+        // --- Logo Click ---
         logo.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             logo.classList.add('clicked');
             setTimeout(() => logo.classList.remove('clicked'), 300);
         });
 
-        // Preload de imágenes
-        ['img/h1.gif', 'img/h2.gif', 'img/h3.gif', 'img/h1-overlay.png', 'img/h2-overlay.png', 'img/h3-overlay.png'].forEach(src => {
-            new Image().src = src;
-        });
-
-        // Efecto de iluminación en botones
-        document.querySelectorAll('.btn-nav, .project-link, .btn-whatsapp-footer, .hero-option-btn').forEach(button => {
-            button.addEventListener('mousemove', (e) => {
+        // --- Button Hover Illumination ---
+        document.querySelectorAll('.btn-nav, .project-link, .btn-whatsapp-footer, .pre-hero-btn').forEach(button => {
+            button.addEventListener('mousemove', e => {
                 const rect = button.getBoundingClientRect();
-                button.style.setProperty('--x', (e.clientX - rect.left) + 'px');
-                button.style.setProperty('--y', (e.clientY - rect.top) + 'px');
+                button.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                button.style.setProperty('--y', `${e.clientY - rect.top}px`);
             });
         });
+
+        // --- Image Preloading ---
+        ['img/h1.gif', 'img/h2.gif', 'img/h3.gif', 'img/h1-overlay.png', 'img/h2-overlay.png', 'img/h3-overlay.png'].forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+    });
     </script>
 </body>
 </html>
