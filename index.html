@@ -20,7 +20,15 @@
             --color-shadow-primary: rgba(59, 151, 238, 0.4); /* Sombra azul para elementos */
             --color-shadow-dark: rgba(0,0,0,0.7); /* Sombra oscura para elementos */
         }
-        body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; background: var(--color-dark-bg); color: var(--color-text-light); line-height: 1.6; overflow-x: hidden; }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--color-dark-bg);
+            color: var(--color-text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth; /* Smooth scroll para todo el body */
+        }
 
         /* Preloader Styles */
         #preloader {
@@ -34,18 +42,18 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s ease;
+            transition: opacity 1.5s ease;
         }
 
         .preloader-logo {
-            width: 200px;
-            height: 200px;
-            background-image: url('img/logo.png'); /* Asegúrate de que esta ruta sea correcta */
+            width: 600px;
+            height: 300px;
+            background-image: url('img/logo.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             animation: preloaderFloatRotate 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px var(--color-primary)); /* Sombra para el logo del preloader */
+            filter: drop-shadow(0 0 30px var(--color-primary));
         }
 
         @keyframes preloaderFloatRotate {
@@ -61,20 +69,44 @@
 
         /* General Button Hover Effect */
         .btn-nav, .project-link, .btn-whatsapp-footer, .pre-hero-btn {
-            position: relative; overflow: hidden; z-index: 1;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
         .btn-nav::before, .project-link::before, .btn-whatsapp-footer::before, .pre-hero-btn::before {
-            content: ''; position: absolute; top: var(--y); left: var(--x);
-            transform: translate(-50%, -50%); width: 0; height: 0;
+            content: '';
+            position: absolute;
+            top: var(--y);
+            left: var(--x);
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
             background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
-            transition: width 0.5s, height 0.5s; border-radius: 50%; z-index: -1;
+            transition: width 0.5s, height 0.5s;
+            border-radius: 50%;
+            z-index: -1;
         }
         .btn-nav:hover::before, .project-link:hover::before { width: 300px; height: 300px; }
         .btn-whatsapp-footer:hover::before, .pre-hero-btn:hover::before { width: 250px; height: 250px; }
 
         /* Top Bar */
-        .top-bar { position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background: #000; backdrop-filter: blur(10px); border-bottom: 5px solid var(--color-border); transition: all 0.3s ease; }
-        .scrolled .top-bar { padding: 10px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: #000;
+            backdrop-filter: blur(10px);
+            border-bottom: 5px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+        .scrolled .top-bar {
+            padding: 10px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
         .logo {
             font-size: 2.0em;
             font-weight: bold;
@@ -99,11 +131,41 @@
             100% { transform: scale(1); }
         }
         .nav-inline { display: flex; gap: 12px; }
-        .btn-nav { padding: 10px 20px; background: #27272a; border: 1px solid var(--color-primary); color: var(--color-primary); border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-size: 1.10em; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-nav {
+            padding: 10px 20px;
+            background: #27272a;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.10em;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
         .btn-nav:hover { color: var(--color-button-hover); background: var(--color-primary); }
         .btn-nav:hover i { color: var(--color-icon-hover); }
-        .hamburger { display: none; flex-direction: column; justify-content: space-between; width: 44px; height: 38px; background: none; border: none; cursor: pointer; z-index: 200; }
-        .hamburger span { display: block; height: 3px; width: 100%; background: var(--color-primary); border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 44px;
+            height: 38px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 200;
+        }
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: var(--color-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
         .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
@@ -116,14 +178,14 @@
             margin: 0 6px;
             margin-bottom: 30px;
             overflow: hidden;
-            background-color: var(--color-dark-bg); /* Fondo negro inicial */
-            box-shadow: 0 40px 60px rgba(0,0,0,0.8); /* Sombra inferior añadida */
+            background-color: var(--color-dark-bg);
+            box-shadow: 0 40px 60px rgba(0,0,0,0.8);
         }
         .parallax-slider {
             position: absolute;
             width: 100%;
             height: 100%;
-            display: flex; /* Mantener flex para futuras expansiones si fuera necesario */
+            display: flex;
         }
         .parallax-slide {
             min-width: 100%;
@@ -131,18 +193,18 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            position: absolute; /* Cambiado a absolute */
+            position: absolute;
             top: 0;
             left: 0;
-            opacity: 0; /* Por defecto oculto hasta que se active */
-            filter: brightness(0.2) saturate(0.2); /* Inicia oscuro y desaturado */
+            opacity: 0;
+            filter: brightness(0.2) saturate(0.2);
             transform: scale(1);
-            transition: opacity 1.5s ease-in-out, transform 20s linear, filter 20s linear; /* Transición para todo */
-            background-image: url('img/bg_main_1.jpg'); /* Única imagen */
+            transition: opacity 1.5s ease-in-out, transform 20s ease-in-out, filter 20s ease-in-out; /* Adjusted to ease-in-out */
+            background-image: url('img/bg_main_1.png');
         }
         .parallax-slide.active {
             opacity: 1;
-            animation: zoomDarkenLighten 20s linear infinite forwards;
+            animation: zoomDarkenLighten 20s ease-in-out infinite forwards; /* Adjusted to ease-in-out */
         }
 
         @keyframes zoomDarkenLighten {
@@ -151,16 +213,16 @@
                 filter: brightness(0.2) saturate(0.2);
             }
             50% {
-                transform: scale(1.08); /* Ligero zoom in */
-                filter: brightness(1) saturate(1); /* Más claro y saturado */
+                transform: scale(1.08);
+                filter: brightness(1) saturate(1);
             }
             100% {
                 transform: scale(1);
-                filter: brightness(0.2) saturate(0.2); /* Vuelve a oscuro y desaturado */
+                filter: brightness(0.2) saturate(0.2);
             }
         }
 
-        /* Partículas por encima de las imágenes */
+        /* Partículas por encima de las imágenes (animación invertida) */
         .particles {
             position: absolute;
             top: 0;
@@ -168,8 +230,8 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            z-index: 3; /* Asegura que esté por encima de las imágenes */
-            pointer-events: none; /* Permite interacción con elementos debajo */
+            z-index: 3;
+            pointer-events: none;
         }
         .particle {
             position: absolute;
@@ -178,13 +240,16 @@
             background: var(--color-primary);
             border-radius: 50%;
             opacity: 0.6;
-            animation: fall linear infinite;
+            /* Inicia desde abajo y sube */
+            transform: translateY(100vh);
+            animation: floatUp linear infinite;
         }
-        @keyframes fall {
+        @keyframes floatUp {
             to {
-                transform: translateY(100vh);
+                transform: translateY(-100vh); /* Sube fuera de la vista */
             }
         }
+
         .logo-parallax {
             position: absolute;
             top: 50%;
@@ -196,11 +261,18 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            z-index: 4; /* Asegura que el logo esté por encima de las partículas y las imágenes */
-            animation: floatRotate 8s ease-in-out infinite;
-            /* Sombra más gruesa y notoria */
+            z-index: 4;
+            animation: floatRotate 8s ease-in-out infinite, shimmer-parallax-logo 3s linear infinite; /* Added shimmer-parallax-logo */
             filter: drop-shadow(0 0 60px rgba(38, 186, 245, 0.8)) drop-shadow(0 0 100px rgba(38, 186, 245, 0.5));
         }
+
+        /* New animation for parallax logo shimmer */
+        @keyframes shimmer-parallax-logo {
+            0% { filter: drop-shadow(0 0 40px rgba(38, 186, 245, 0.6)); }
+            50% { filter: drop-shadow(0 0 70px rgba(38, 186, 245, 1)); }
+            100% { filter: drop-shadow(0 0 40px rgba(38, 186, 245, 0.6)); }
+        }
+
         @keyframes floatRotate {
             0%, 100% {
                 transform: translate(-50%, -50%) rotate(0deg);
@@ -319,6 +391,38 @@
         .btn-whatsapp-footer i { margin-right: 8px; }
         .btn-whatsapp-footer:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6); background: #128C7E; }
 
+        /* Back Button */
+        #back-to-top-btn {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            font-size: 24px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.5s ease;
+            opacity: 0;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #back-to-top-btn.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        #back-to-top-btn:hover {
+            background-color: var(--color-button-hover);
+            transform: translateY(-3px);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             html { font-size: 13px; }
@@ -334,7 +438,7 @@
                 height: 400px;
                 margin: 0 6px;
                 border-radius: 30px;
-                box-shadow: 0 20px 40px rgba(0,0,0,0.8); /* Ajuste de sombra para móvil */
+                box-shadow: 0 20px 40px rgba(0,0,0,0.8);
             }
             .logo-parallax {
                 width: 280px;
@@ -358,10 +462,10 @@
                 height: 100px;
             }
             .hero-options-container { flex-direction: column; height: auto; }
-            .hero-option { height: 70vh; min-height: 200px; margin: 10px; border-radius: 44px; }
+            .hero-option { height: 70vh; min-height: 200px; margin: 5px; border-radius: 44px; }
             .hero-option::before, .hero-option-bg { border-radius: 15px; }
             .hero-option-content { padding: 5px; margin-bottom: 60px; }
-            .hero-option h2 { font-size: 2.0em; margin-bottom: -50px; }
+            .hero-option h2 { font-size: 2.2em; margin-bottom: -60px; }
             .hero-option-overlay { transform: translateZ(10px); }
             .hero-option:hover .hero-option-overlay { transform: translateZ(10px) scale(1.03); }
             .carousel-hero { height: auto; min-height: 95vh; }
@@ -379,12 +483,19 @@
             footer { padding: 10px; }
             .social-icons a { width: 55px; height: 55px; font-size: 2em; }
             .btn-whatsapp-footer { padding: 12px 40px; font-size: 1.1em; }
+            #back-to-top-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
         }
         @media (max-width: 480px) {
             .carousel-slide h2 { font-size: 1.2em; }
             .carousel-slide p { font-size: 1.0em; }
             .btn-whatsapp-footer { padding: 10px 25px; font-size: 1.8em; }
-            .preloader-logo { /* Ajuste del tamaño del logo en el preloader para móviles */
+            .preloader-logo {
                 width: 150px;
                 height: 150px;
             }
@@ -425,16 +536,16 @@
     </div>
 
     <div class="pre-hero-buttons">
-        <a href="#hero" class="pre-hero-btn"><i class="fa fa-bars" aria-hidden="true"></i> Nuestros Servicios</a>
-        <a href="#carousel-hero" class="pre-hero-btn"><i class="fas fa-briefcase"></i> Portafolio</a>
-        <a href="#contacto" class="pre-hero-btn"><i class="fa fa-phone-square" aria-hidden="true"></i> Contáctanos</a>
+        <a href="#hero-option-design" class="pre-hero-btn scroll-link"><i class="fa fa-bars" aria-hidden="true"></i> Nuestros Servicios</a>
+        <a href="#carousel-hero" class="pre-hero-btn scroll-link"><i class="fas fa-briefcase"></i> Portafolio</a>
+        <a href="#contacto" class="pre-hero-btn scroll-link"><i class="fa fa-phone-square" aria-hidden="true"></i> Contáctanos</a>
     </div>
 
     <div class="hero-spacer"></div>
 
     <section class="hero-options-section" id="hero">
         <div class="hero-options-container">
-            <div class="hero-option" data-slide="0">
+            <div class="hero-option" data-slide="0" id="hero-option-design">
                 <div class="hero-option-bg" style="background-image: url('img/h1.gif');"></div>
                 <div class="hero-option-overlay" style="background-image: url('img/h1-overlay.png');"></div>
                 <div class="hero-option-content"><h2>Diseño de Website</h2></div>
@@ -464,7 +575,7 @@
                 <div class="slide-text">
                     <h2>Te diseñamos la Página Web que necesitas.</h2>
                     <p>Destaca con una Web Personalizada, tu empresa merece más que una plantilla más.</p>
-                    <a href="#contacto" class="project-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Necesito mi Página Web</a>
+                    <a href="#contacto" class="project-link scroll-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Necesito mi Página Web</a>
                 </div>
             </div>
         </div>
@@ -474,7 +585,7 @@
                 <div class="slide-text">
                     <h2>Imagina comprar con un click.</h2>
                     <p>Te creamos la tienda que quieres con las funciones que necesitas.</p>
-                    <a href="#contacto" class="project-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Quiero una Tienda Online</a>
+                    <a href="#contacto" class="project-link scroll-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Quiero una Tienda Online</a>
                 </div>
             </div>
         </div>
@@ -484,7 +595,7 @@
                 <div class="slide-text">
                     <h2>¿Buscas hacer cambios a tú marca?</h2>
                     <p>¿Quieres cambiar tú logo?, ¿Los colores?, ¿Te hace falta una animación? Consultanos y te cotizamos.</p>
-                    <a href="#contacto" class="project-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Empecemos con mi Proyecto.</a>
+                    <a href="#contacto" class="project-link scroll-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Empecemos con mi Proyecto.</a>
                 </div>
             </div>
         </div>
@@ -513,6 +624,8 @@
         <p>© 2025 ~ 👨‍💻 by: theAstroBruh con 💙~</p>
     </footer>
 
+    <button id="back-to-top-btn"><i class="fas fa-arrow-up"></i></button>
+
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         // --- Globals ---
@@ -523,36 +636,34 @@
         const hamburger = document.getElementById('hamburger');
         const nav = document.getElementById('nav');
         const logo = document.getElementById('logo');
-        const parallaxSlider = document.getElementById('parallaxSlider');
-        const parallaxSlide = document.querySelector('.parallax-slide'); // Ahora es una sola
+        const parallaxSlide = document.querySelector('.parallax-slide');
         const particlesContainer = document.getElementById('particles');
-        const preloader = document.getElementById('preloader'); // Preloader element
+        const preloader = document.getElementById('preloader');
+        const backToTopBtn = document.getElementById('back-to-top-btn');
 
         let currentInfoIndex = 0;
         let currentIndex = 0;
         let autoSlideInterval;
         let autoParallaxInterval;
-        let parallaxAnimationTimeout; // Para el temporizador de la animación del parallax
+        let parallaxAnimationTimeout;
+        let scrollHistory = []; // Para almacenar el historial de desplazamiento
 
         // --- Preloader Logic ---
-        // Ocultar preloader cuando la página y todos los recursos (imágenes, etc.) estén cargados
         window.addEventListener('load', () => {
             preloader.style.opacity = '0';
             setTimeout(() => {
                 preloader.style.display = 'none';
-                // Iniciar el parallax y otras animaciones solo después de que el preloader se haya ocultado
-                startParallaxAnimation(); // Llama a la nueva función de inicio del parallax
-            }, 500); // Duración de la transición de opacidad del preloader
+                startParallaxAnimation();
+            }, 500);
         });
 
-        // Create particles
+        // Create particles (inverted animation and fixed initial position)
         function createParticles() {
             const particleCount = 50;
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
 
-                // Random properties
                 const size = Math.random() * 3 + 1;
                 const posX = Math.random() * 100;
                 const delay = Math.random() * 5;
@@ -560,7 +671,6 @@
                 const opacity = Math.random() * 0.5 + 0.3;
                 const color = `hsl(${Math.random() * 60 + 180}, 100%, ${Math.random() * 30 + 70}%)`;
 
-                // Apply properties
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 particle.style.left = `${posX}%`;
@@ -568,12 +678,12 @@
                 particle.style.animationDuration = `${duration}s`;
                 particle.style.opacity = opacity;
                 particle.style.background = color;
+                // Posición inicial para que las partículas no se vean en el borde
+                particle.style.bottom = `-10px`; // Inicia justo debajo del contenedor
 
                 particlesContainer.appendChild(particle);
             }
         }
-
-        // Initialize particles
         createParticles();
 
         // --- Info Bar ---
@@ -584,28 +694,25 @@
         }
         setInterval(rotateInfoTexts, 4000);
 
-        // --- Parallax Slider (modificado) ---
+        // --- Parallax Slider ---
         function startParallaxAnimation() {
-            // Asegura que la slide esté oculta y con filtros iniciales
+            // Reset styles before starting animation to ensure smooth restart
             parallaxSlide.style.opacity = 0;
             parallaxSlide.style.filter = 'brightness(0.2) saturate(0.2)';
             parallaxSlide.style.transform = 'scale(1)';
-            parallaxSlide.classList.remove('active'); // Asegura que no tenga la animación activa
+            parallaxSlide.classList.remove('active');
 
-            // Retraso de 2 segundos con fondo negro (pre-hero-parallax ya es negro)
             parallaxAnimationTimeout = setTimeout(() => {
-                // Muestra la imagen y aplica la animación
                 parallaxSlide.classList.add('active');
-                parallaxSlide.style.opacity = 1; // Para la transición inicial
+                parallaxSlide.style.opacity = 1;
                 
-                // Reinicia la animación cada 20 segundos
                 autoParallaxInterval = setInterval(() => {
-                    parallaxSlide.classList.remove('active'); // Detiene la animación actual
-                    // Forzar reflow para reiniciar la animación
-                    void parallaxSlide.offsetWidth; 
-                    parallaxSlide.classList.add('active'); // Vuelve a aplicar la animación
-                }, 20000); // 20 segundos
-            }, 2000); // 2 segundos de retraso inicial
+                    // Re-trigger animation by removing and re-adding the class
+                    parallaxSlide.classList.remove('active');
+                    void parallaxSlide.offsetWidth; // Trigger reflow
+                    parallaxSlide.classList.add('active');
+                }, 20000); // This should match the animation duration
+            }, 2000);
         }
 
         // --- Hero Options Interaction ---
@@ -640,7 +747,7 @@
                     currentIndex = parseInt(option.getAttribute('data-slide'));
                     updateCarousel();
                     resetAutoSlide();
-                    document.getElementById('carousel-hero').scrollIntoView({ behavior: 'smooth' });
+                    smoothScrollTo('carousel-hero');
                 }, 800);
             });
         });
@@ -691,7 +798,7 @@
 
         // --- Logo Click ---
         logo.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            smoothScrollTo(0);
             logo.classList.add('clicked');
             setTimeout(() => logo.classList.remove('clicked'), 300);
         });
@@ -705,9 +812,69 @@
             });
         });
 
+        // --- Smooth Scroll Logic and History ---
+        const smoothScrollTo = (targetId) => {
+            let targetElement;
+            if (typeof targetId === 'string') {
+                targetElement = document.getElementById(targetId);
+            } else if (typeof targetId === 'number') {
+                window.scrollTo({ top: targetId, behavior: 'smooth' });
+                return;
+            }
+
+            if (targetElement) {
+                const currentScrollTop = window.scrollY;
+                // Add current scroll position to history only if it's a significant change
+                if (scrollHistory.length === 0 || Math.abs(currentScrollTop - scrollHistory[scrollHistory.length - 1]) > 50) {
+                    scrollHistory.push(currentScrollTop);
+                }
+                
+                // Adjust scroll for "Nuestros Servicios" button
+                if (targetId === 'hero-option-design') {
+                    const offset = targetElement.getBoundingClientRect().top + window.scrollY;
+                    window.scrollTo({ top: offset, behavior: 'smooth' });
+                } else {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        };
+
+        // Attach smooth scroll to all relevant links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                smoothScrollTo(targetId);
+            });
+        });
+
+        // --- Back to Top Button Logic ---
+        window.addEventListener('scroll', () => {
+            const heroOptionsSection = document.getElementById('hero');
+            if (heroOptionsSection) {
+                const heroOptionsRect = heroOptionsSection.getBoundingClientRect();
+                // Show button if the user has scrolled past the top of the hero options section
+                if (heroOptionsRect.top < window.innerHeight) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            if (scrollHistory.length > 0) {
+                const lastScrollPos = scrollHistory.pop();
+                window.scrollTo({ top: lastScrollPos, behavior: 'smooth' });
+            } else {
+                // If no history, scroll to the top of hero-options-section as a fallback
+                smoothScrollTo('hero');
+            }
+        });
+
         // --- Image Preloading (mantener para un mejor rendimiento) ---
         ['img/h1.gif', 'img/h2.gif', 'img/h3.gif', 'img/h1-overlay.png', 'img/h2-overlay.png', 'img/h3-overlay.png',
-         'img/bg_main_1.jpg'].forEach(src => { // Solo precarga la imagen principal del parallax
+         'img/bg_main_1.png'].forEach(src => {
             const img = new Image();
             img.src = src;
         });
