@@ -66,7 +66,7 @@
         /* Pre-Hero Parallax & Buttons */
         .pre-hero-parallax { 
             position: relative;
-            height: 700px; 
+            height: 680px; 
             border-radius: 40px; 
             margin: 0 6px;
             margin-bottom: 30px; 
@@ -112,8 +112,8 @@
         }
         .particle {
             position: absolute;
-            width: 2px;
-            height: 2px;
+            width: 4px;
+            height: 4px;
             background: var(--color-primary);
             border-radius: 50%;
             opacity: 0.6;
@@ -129,7 +129,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 1800px;
+            width: 1200px;
             height: 1000px;
             background-image: url('img/logo.png');
             background-size: contain;
@@ -338,10 +338,10 @@
     <div class="pre-hero-parallax">
         <div class="particles" id="particles"></div>
         <div class="parallax-slider" id="parallaxSlider">
-            <div class="parallax-slide" style="background-image: url('img/bg_main_1.png');"></div>
-            <div class="parallax-slide" style="background-image: url('img/bg_main_2.png');"></div>
-            <div class="parallax-slide" style="background-image: url('img/bg_main_3.png');"></div>
-            <div class="parallax-slide" style="background-image: url('img/bg_main_4.png');"></div>
+            <div class="parallax-slide" style="background-image: url('img/bg_main_1.jpg');"></div>
+            <div class="parallax-slide" style="background-image: url('img/bg_main_2.jpg');"></div>
+            <div class="parallax-slide" style="background-image: url('img/bg_main_3.jpg');"></div>
+            <div class="parallax-slide" style="background-image: url('img/bg_main_4.jpg');"></div>
         </div>
         <div class="logo-parallax"></div>
     </div>
@@ -634,7 +634,7 @@
 
         // --- Image Preloading ---
         ['img/h1.gif', 'img/h2.gif', 'img/h3.gif', 'img/h1-overlay.png', 'img/h2-overlay.png', 'img/h3-overlay.png',
-         'img/bg_main_1.png', 'img/bg_main_2.png', 'img/bg_main_3.png', 'img/bg_main_4.png'].forEach(src => {
+         'img/bg_main_1.jpg', 'img/bg_main_2.jpg', 'img/bg_main_3.jpg', 'img/bg_main_4.jpg'].forEach(src => {
             const img = new Image();
             img.src = src;
         });
