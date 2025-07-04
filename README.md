@@ -1,9 +1,8 @@
-Prototype Website ~ 
-[ Boost & Launch ](https://the-astro-bruh.github.io/Boost_and_Launch-Website/)
+Website Prototype v0.9.1 - Boost & Launch (ALPHA)
 
 - - -
-
-Website Prototype v0.9.1 - Boost & Launch (ALPHA)
+ 
+[ Prototype Website ~ ](https://the-astro-bruh.github.io/Boost_and_Launch-Website/)
 
 - - -
 
