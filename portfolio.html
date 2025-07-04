@@ -320,7 +320,7 @@
             height: 900px; /* Responsive height */
             max-width: 600px;
             max-height: 1100px;
-            background-image: url('img/chibi.png');
+            background-image: url('img/main_chibi_portfolio.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -479,11 +479,11 @@
             filter: brightness(0.2) saturate(0.2);
         }
         .wide-parallax-logo {
-            width: 40vmin; /* Responsive width */
-            height: 40vmin; /* Responsive height */
-            max-width: 400px;
-            max-height: 400px;
-            background-image: url('img/chibi.png');
+            width: 400px; /* Responsive width */
+            height: 600px; /* Responsive height */
+            max-width: 320px;
+            max-height: 600px;
+            background-image: url('img/main_chibi_portfolio.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -841,9 +841,9 @@
     <section class="hero-3d-image-section" id="hero3dImageSectionTop">
         <div class="hero-image-slider">
             <div class="hero-slider-track" id="heroSliderTrackTop">
-                <div class="hero-slide" style="background-image: url('img/slider_bg_1.jpg');"></div>
-                <div class="hero-slide" style="background-image: url('img/slider_bg_2.jpg');"></div>
-                <div class="hero-slide" style="background-image: url('img/slider_bg_3.jpg');"></div>
+                <div class="hero-slide" style="background-image: url('img/parallax.portfolio_01.jpeg');"></div>
+                <div class="hero-slide" style="background-image: url('img/parallax.portfolio_02.jpeg');"></div>
+                <div class="hero-slide" style="background-image: url('img/parallax.portfolio_03.jpeg');"></div>
             </div>
         </div>
         <div class="central-render" id="centralRenderTop"></div>
@@ -1198,7 +1198,7 @@
         });
 
         // Preload images
-        ['img/chibi.png', 'img/bg_main_1.png', 'img/img_1.png', 'img/img_2.png', 'img/img_3.png', 'img/img_h1.png', 'img/render_central.png', 'img/slider_bg_1.jpg', 'img/slider_bg_2.jpg', 'img/slider_bg_3.jpg'].forEach(src => {
+        ['img/chibi.png', 'img/main_chibi_portfolio.png', 'img/bg_main_1.png', 'img/img_1.png', 'img/img_2.png', 'img/img_3.png', 'img/img_h1.png', 'img/render_central.png', 'img/parallax.portfolio_01.jpeg', 'img/parallax.portfolio_02.jpeg', 'img/parallax.portfolio_03.jpeg'].forEach(src => {
             const img = new Image();
             img.src = src;
         });
