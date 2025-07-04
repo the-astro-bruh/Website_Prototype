@@ -43,17 +43,72 @@
             align-items: center;
             z-index: 9999;
             transition: opacity 1.5s ease;
+            flex-direction: column;
+        }
+
+        .preloader-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .preloader-logo {
-            width: 320px;
-            height: 320px;
+            width: 200px; /* Ajustado para dejar espacio para el círculo */
+            height: 200px; /* Ajustado para dejar espacio para el círculo */
             background-image: url('img/chibi.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             animation: preloaderFloatRotate 3s ease-in-out infinite;
             filter: drop-shadow(0 0 30px var(--color-primary));
+            position: absolute;
+        }
+
+        .preloader-progress-ring {
+            position: absolute;
+            width: 300px; /* Tamaño del aro */
+            height: 300px; /* Tamaño del aro */
+            border-radius: 50%;
+            border: 8px solid rgba(38, 186, 245, 0.3); /* Fondo del aro */
+            border-top: 8px solid var(--color-primary); /* Color de progreso */
+            animation: preloaderRingRotate 2s linear infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .preloader-percentage {
+            position: absolute;
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--color-text-light);
+            text-shadow: 0 0 10px var(--color-primary);
+        }
+
+        .preloader-messages {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: var(--color-gray-text);
+            height: 30px; /* Altura fija para evitar saltos de contenido */
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+
+        .preloader-message-item {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .preloader-message-item.active {
+            opacity: 1;
         }
 
         @keyframes preloaderFloatRotate {
@@ -65,6 +120,11 @@
                 transform: translateY(-20px) rotate(5deg);
                 filter: drop-shadow(0 0 50px var(--color-primary));
             }
+        }
+
+        @keyframes preloaderRingRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* General Button Hover Effect */
@@ -175,7 +235,7 @@
             position: relative;
             height: 680px;
             border-radius: 40px;
-            margin: 0 6px;
+            margin: 0 11px;
             margin-bottom: 30px;
             overflow: hidden;
             background-color: var(--color-dark-bg);
@@ -427,15 +487,15 @@
         .whatsapp-float {
             position: fixed;
             right: 0;
-            top: 50%;
+            top: 23%;
             transform: translateY(-50%) translateX(25px); /* Initially slightly off-screen */
             background: linear-gradient(90deg, #25D366, #128C7E);
             color: #fff;
-            padding: 10px 25px;
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
+            padding: 40px 25px;
+            border-top-left-radius: 40px;
+            border-bottom-left-radius: 40px;
             text-decoration: none;
-            font-size: 1.4em;
+            font-size: 1.5em;
             font-weight: bold;
             display: flex;
             align-items: center;
@@ -543,7 +603,7 @@
             }
 
             .whatsapp-float {
-                padding: 10px 12px;
+                padding: 30px 15px;
                 font-size: 1.4em;
                 transform: translateY(-50%) translateX(15px); /* Adjusted for smaller screens */
             }
@@ -553,21 +613,53 @@
             .whatsapp-float i {
                 font-size: 1.5em;
             }
+
+            .preloader-logo {
+                width: 150px;
+                height: 150px;
+            }
+
+            .preloader-progress-ring {
+                width: 200px;
+                height: 200px;
+            }
         }
         @media (max-width: 480px) {
             .carousel-slide h2 { font-size: 1.2em; }
             .carousel-slide p { font-size: 1.0em; }
             .btn-whatsapp-footer { padding: 10px 25px; font-size: 1.8em; }
             .preloader-logo {
-                width: 250px;
-                height: 250px;
+                width: 120px;
+                height: 120px;
+            }
+            .preloader-progress-ring {
+                width: 180px;
+                height: 180px;
+            }
+            .preloader-percentage {
+                font-size: 1.5em;
+            }
+            .preloader-messages {
+                font-size: 1em;
             }
         }
     </style>
 </head>
 <body>
     <div id="preloader">
-        <div class="preloader-logo"></div>
+        <div class="preloader-container">
+            <div class="preloader-logo"></div>
+            <div class="preloader-progress-ring"></div>
+            <div class="preloader-percentage" id="preloaderPercentage">0%</div>
+        </div>
+        <div class="preloader-messages" id="preloaderMessages">
+            <div class="preloader-message-item active">Bienvenido a Boost & Launch.</div>
+            <div class="preloader-message-item">Diseñamos páginas web que impresionan.</div>
+            <div class="preloader-message-item">Creamos tiendas online que venden solas.</div>
+            <div class="preloader-message-item">Refrescamos tu marca con estilo y estrategia.</div>
+            <div class="preloader-message-item">Agenda una consulta gratuita vía WhatsApp.</div>
+            <div class="preloader-message-item">Tu próxima gran idea, hecha realidad.</div>
+        </div>
     </div>
 
     <header class="top-bar">
@@ -706,25 +798,67 @@
         const parallaxSlide = document.querySelector('.parallax-slide');
         const particlesContainer = document.getElementById('particles');
         const preloader = document.getElementById('preloader');
+        const preloaderPercentage = document.getElementById('preloaderPercentage');
+        const preloaderProgressRing = document.querySelector('.preloader-progress-ring');
+        const preloaderMessages = document.querySelectorAll('.preloader-message-item');
         const backToTopBtn = document.getElementById('back-to-top-btn');
         const whatsappFloat = document.getElementById('whatsappFloat');
 
 
         let currentInfoIndex = 0;
+        let currentPreloaderMessageIndex = 0;
         let currentIndex = 0;
         let autoSlideInterval;
         let autoParallaxInterval;
         let parallaxAnimationTimeout;
         let scrollHistory = []; // Para almacenar el historial de desplazamiento
+        let loadProgress = 0;
+        let loadingInterval;
 
         // --- Preloader Logic ---
+        function updatePreloaderProgress() {
+            if (loadProgress < 100) {
+                loadProgress += Math.floor(Math.random() * 10) + 1; // Incremento aleatorio
+                if (loadProgress > 100) loadProgress = 100;
+                preloaderPercentage.textContent = `${loadProgress}%`;
+
+                // Calculate stroke-dasharray for progress ring
+                const radius = preloaderProgressRing.offsetWidth / 2;
+                const circumference = 2 * Math.PI * radius;
+                const offset = circumference - (loadProgress / 100) * circumference;
+                preloaderProgressRing.style.strokeDasharray = `${circumference} ${circumference}`;
+                preloaderProgressRing.style.strokeDashoffset = offset;
+                
+                // For demonstration, we're using border-top for progress visually
+                // A true SVG circle would be better for actual dasharray
+                // For CSS border, we will simulate by rotating the top border visually.
+                // This will be handled by the preloaderRingRotate animation for now,
+                // and the percentage update gives the numerical progress.
+            } else {
+                clearInterval(loadingInterval);
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    startParallaxAnimation();
+                }, 500);
+            }
+        }
+
+        function rotatePreloaderMessages() {
+            preloaderMessages[currentPreloaderMessageIndex].classList.remove('active');
+            currentPreloaderMessageIndex = (currentPreloaderMessageIndex + 1) % preloaderMessages.length;
+            preloaderMessages[currentPreloaderMessageIndex].classList.add('active');
+        }
+
+        // Start preloader animations and loading simulation
         window.addEventListener('load', () => {
-            preloader.style.opacity = '0';
-            setTimeout(() => {
-                preloader.style.display = 'none';
-                startParallaxAnimation();
-            }, 500);
+            // Simulate loading progress
+            loadingInterval = setInterval(updatePreloaderProgress, 150); // Faster loading simulation
+            
+            // Rotate preloader messages
+            setInterval(rotatePreloaderMessages, 3000); // Change message every 3 seconds
         });
+
 
         // Create particles (inverted animation and fixed initial position)
         function createParticles() {
