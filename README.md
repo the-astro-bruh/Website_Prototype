@@ -1,5 +1,5 @@
 Prototype Website ~ 
-[https://the-astro-bruh.github.io/Boost_and_Launch-Website/index.html ](https://the-astro-bruh.github.io/Boost_and_Launch-Website/)
+[ Boost & Launch ](https://the-astro-bruh.github.io/Boost_and_Launch-Website/)
 
 - - -
 
