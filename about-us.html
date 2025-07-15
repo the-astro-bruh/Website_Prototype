@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Boost & Launch🚀 - Quiénes Somos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <style>
+        :root {
+            --color-primary: #26baf5; /* Azul brillante */
+            --color-secondary: #26baf5; /* Azul brillante */
+            --color-dark-bg: #000000; /* Negro puro */
+            --color-light-bg: #090f20; /* Azul oscuro casi negro */
+            --color-text-light: #f4f4f4; /* Blanco grisáceo */
+            --color-text-dark: #000; /* Negro puro */
+            --color-gray-text: #ccc; /* Gris claro */
+            --color-border: #000000; /* Negro puro */
+            --color-button-hover: #005374; /* Azul más claro para hover */
+            --color-icon-hover: #0f0f10; /* Casi negro para iconos en hover */
+            --color-shadow-primary: rgba(59, 151, 238, 0.4); /* Sombra azul para elementos */
+            --color-shadow-dark: rgba(0,0,0,0.7); /* Sombra oscura para elementos */
+        }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--color-dark-bg);
+            color: var(--color-text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Preloader Styles - Keep for consistency if you want it on about us too */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1.5s ease;
+            flex-direction: column;
+        }
+
+        .preloader-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .preloader-logo {
+            width: 200px;
+            height: 200px;
+            background-image: url('img/chibi.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            animation: preloaderFloatRotate 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px var(--color-primary));
+            position: absolute;
+        }
+
+        .preloader-progress-ring {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 8px solid rgba(38, 186, 245, 0.3);
+            border-top: 8px solid var(--color-primary);
+            animation: preloaderRingRotate 2s linear infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .preloader-percentage {
+            position: absolute;
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--color-text-light);
+            text-shadow: 0 0 10px var(--color-primary);
+        }
+
+        .preloader-messages {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: var(--color-gray-text);
+            height: 30px;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+
+        .preloader-message-item {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .preloader-message-item.active {
+            opacity: 1;
+        }
+
+        @keyframes preloaderFloatRotate {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                filter: drop-shadow(0 0 30px var(--color-primary));
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+                filter: drop-shadow(0 0 50px var(--color-primary));
+            }
+        }
+
+        @keyframes preloaderRingRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* General Button Hover Effect */
+        .btn-nav, .project-link, .btn-whatsapp-footer, .pre-hero-btn, .whatsapp-float, .contact-btn {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-nav::before, .project-link::before, .btn-whatsapp-footer::before, .pre-hero-btn::before, .whatsapp-float::before, .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: var(--y);
+            left: var(--x);
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            transition: width 0.5s, height 0.5s;
+            border-radius: 50%;
+            z-index: -1;
+        }
+        .btn-nav:hover::before, .project-link:hover::before { width: 300px; height: 300px; }
+        .btn-whatsapp-footer:hover::before, .pre-hero-btn:hover::before, .whatsapp-float:hover::before, .contact-btn:hover::before { width: 250px; height: 250px; }
+
+        /* Top Bar */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: #000;
+            backdrop-filter: blur(10px);
+            border-bottom: 5px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+        .scrolled .top-bar {
+            padding: 10px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .logo {
+            font-size: 2.0em;
+            font-weight: bold;
+            background-image: linear-gradient(120deg, #fff 10%, var(--color-primary) 40%, #fff 70%);
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        .logo.clicked { animation: shimmer 3s linear infinite, logoPop 0.3s ease-out; }
+        @keyframes logoPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .nav-inline { display: flex; gap: 12px; }
+        .btn-nav {
+            padding: 10px 20px;
+            background: #27272a;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.10em;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-nav:hover { color: var(--color-button-hover); background: var(--color-primary); }
+        .btn-nav:hover i { color: var(--color-icon-hover); }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 44px;
+            height: 38px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 200;
+        }
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: var(--color-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* Smaller Parallax for About Us */
+        .about-parallax {
+            position: relative;
+            height: 400px; /* Smaller height */
+            border-radius: 40px;
+            margin: 30px 11px; /* Adjust margin as needed */
+            overflow: hidden;
+            background-color: var(--color-dark-bg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .about-parallax .parallax-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            filter: brightness(0.2) saturate(0.2);
+            transform: scale(1);
+            transition: opacity 1.5s ease-in-out, filter 20s ease-in-out; /* No zoom for this one */
+            background-image: url('img/about-us-bg_1.png');
+        }
+        .about-parallax .parallax-slide.active {
+            opacity: 1;
+            animation: darkenLighten 20s ease-in-out infinite forwards; /* No zoom */
+        }
+        @keyframes darkenLighten {
+            0% { filter: brightness(0.2) saturate(0.2); }
+            50% { filter: brightness(1) saturate(1); }
+            100% { filter: brightness(0.2) saturate(0.2); }
+        }
+
+        .about-parallax .logo-parallax {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px; /* Smaller logo */
+            height: 450px; /* Smaller logo */
+            background-image: url('img/main_chibi_about-us.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 4;
+            animation: floatRotate 8s ease-in-out infinite, shimmer-parallax-logo 3s linear infinite;
+            filter: drop-shadow(0 0 30px rgba(38, 186, 245, 0.8)) drop-shadow(0 0 50px rgba(38, 186, 245, 0.5));
+        }
+
+        .about-parallax .parallax-text {
+            position: relative;
+            z-index: 5;
+            color: var(--color-text-light);
+            font-size: 2.5em;
+            font-weight: bold;
+            text-shadow: 0 0 15px var(--color-shadow-primary);
+            margin-top: 300px; /* Position below the logo */
+        }
+
+        /* Partículas */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 3;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            opacity: 0.6;
+            transform: translateY(100vh);
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            to {
+                transform: translateY(-100vh);
+            }
+        }
+
+        /* Reveal Image */
+        .reveal-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .reveal-image {
+            width: 350px;
+            height: 350px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            transition: transform 0.3s ease;
+        }
+        .reveal-image:hover {
+            transform: translateY(-5px);
+        }
+        .reveal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: blur(15px) grayscale(100%); /* Censored/blurred effect */
+            transition: filter 0.8s ease-in-out;
+        }
+        .reveal-image.revealed img {
+            filter: blur(0) grayscale(0);
+        }
+        .reveal-image::after {
+            content: 'Toca para revelar';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.8em;
+            font-weight: bold;
+            border-radius: 20px;
+            transition: opacity 0.8s ease-in-out;
+            pointer-events: none;
+            opacity: 1;
+        }
+        .reveal-image.revealed::after {
+            opacity: 0;
+        }
+
+        /* About Us Text Section */
+        .about-text-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: var(--color-dark-bg);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .about-text-section p {
+            font-size: 1.3em;
+            color: var(--color-text-light);
+            margin-bottom: 25px;
+        }
+
+        /* Wider Parallax */
+        .wider-parallax {
+            position: relative;
+            height: 550px; /* Wider height */
+            margin: 60px 11px;
+            border-radius: 40px;
+            overflow: hidden;
+            background-color: var(--color-dark-bg);
+            box-shadow: 0 40px 60px rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .wider-parallax .parallax-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 1; /* Always visible and no animation */
+            filter: brightness(0.2) saturate(0.2);
+            background-image: url('img/about-us-bg_2.png');
+        }
+        .wider-parallax .logo-parallax {
+            width: 400px; /* Medium logo */
+            height: 400px; /* Medium logo */
+            animation: floatRotate 8s ease-in-out infinite, shimmer-parallax-logo 3s linear infinite;
+        }
+
+        /* Contact Section */
+        #contacto {
+            padding: 80px 20px;
+            text-align: center;
+            background: var(--color-light-bg);
+        }
+        #contacto h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: var(--color-text-light);
+        }
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            text-align: left;
+            background: var(--color-dark-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .contact-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            color: var(--color-text-light);
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: var(--color-text-light);
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .contact-form .contact-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: var(--color-primary);
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.4em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(38, 186, 245, 0.4);
+        }
+        .contact-form .contact-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(38, 186, 245, 0.6);
+            background: var(--color-button-hover);
+        }
+        .contact-info p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: var(--color-text-light);
+        }
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .contact-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .contact-links a i {
+            margin-right: 8px;
+        }
+        .contact-links .btn-email {
+            background: #D44638; /* Google Red */
+            color: #fff;
+        }
+        .contact-links .btn-email:hover {
+            background: #B8352A;
+            transform: translateY(-3px);
+        }
+        .contact-links .btn-whatsapp-direct {
+            background: linear-gradient(90deg, #25D366, #128C7E);
+            color: #fff;
+        }
+        .contact-links .btn-whatsapp-direct:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+        }
+
+
+        /* Social Icons & Footer (reused from index) */
+        .social-icons { display: flex; justify-content: center; gap: 30px; margin: 10px 0; }
+        .social-icons a { width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; border-radius: 50%; background: var(--color-text-dark); color: var(--color-primary); font-size: 2em; transition: all 0.3s ease; }
+        .social-icons a:hover { background: var(--color-primary); color: var(--color-icon-hover); transform: translateY(-5px); }
+        footer { text-align: center; }
+
+        /* WhatsApp Footer Button */
+        .btn-whatsapp-footer {
+            display: inline-flex; align-items: center; justify-content: center; padding: 15px 50px; margin-top: 5px;
+            background: linear-gradient(90deg, #25D366, #128C7E); color: #fff; text-decoration: none;
+            border-radius: 50px; font-size: 1.3em; font-weight: bold; transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+        }
+        .btn-whatsapp-footer i { margin-right: 8px; }
+        .btn-whatsapp-footer:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6); background: #128C7E; }
+
+        /* Back Button */
+        #back-to-top-btn {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            font-size: 24px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.5s ease;
+            opacity: 0;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #back-to-top-btn.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        #back-to-top-btn:hover {
+            background-color: var(--color-button-hover);
+            transform: translateY(-3px);
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            right: 0;
+            top: 23%;
+            transform: translateY(-50%) translateX(25px);
+            background: linear-gradient(90deg, #25D366, #128C7E);
+            color: #fff;
+            padding: 40px 25px;
+            border-top-left-radius: 40px;
+            border-bottom-left-radius: 40px;
+            text-decoration: none;
+            font-size: 1.5em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            z-index: 100;
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            white-space: nowrap;
+            transform-origin: center right;
+        }
+
+        .whatsapp-float:hover {
+            transform: translateY(-50%) translateX(0px);
+            background: #128C7E;
+            box-shadow: -8px 0 20px rgba(0,0,0,0.5);
+        }
+
+        .whatsapp-float i {
+            font-size: 1.8em;
+            margin-right: 0;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .whatsapp-float.clicked {
+            animation: whatsappFloatPop 0.3s ease-out;
+        }
+
+        @keyframes whatsappFloatPop {
+            0% { transform: translateY(-50%) translateX(0px) scale(1); }
+            50% { transform: translateY(-50%) translateX(0px) scale(1.05); }
+            100% { transform: translateY(-50%) translateX(0px) scale(1); }
+        }
+
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            html { font-size: 13px; }
+            .top-bar { padding: 10px 20px; }
+            .scrolled .top-bar { padding: 8px 15px; }
+            .logo { font-size: 1.5em; }
+            .nav-inline { position: fixed; top: 60px; left: 0; width: 100%; background: #1f1f22ee; border: 1px solid var(--color-border); padding: 15px; flex-direction: column; display: none; font-size: 1.4em; z-index: 1000; box-sizing: border-box; }
+            .nav-inline.show { display: flex; }
+            .hamburger { display: flex; width: 46px; height: 30px;}
+
+            .about-parallax {
+                height: 360px;
+                margin: 30px 6px;
+                border-radius: 50px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+            }
+            .about-parallax .logo-parallax {
+                width: 180px;
+                height: 360px;
+            }
+            .about-parallax .parallax-text {
+                font-size: 1.5em;
+                margin-top: 300px;
+            }
+
+            .reveal-image {
+                width: 360px;
+                height: 360px;
+                border-radius: 15px;
+            }
+            .reveal-image::after {
+                font-size: 1.4em;
+            }
+            .about-text-section {
+                padding: 40px 15px;
+            }
+            .about-text-section p {
+                font-size: 1.1em;
+            }
+
+            .wider-parallax {
+                height: 350px;
+                margin: 40px 6px;
+                border-radius: 30px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            }
+            .wider-parallax .logo-parallax {
+                width: 280px;
+                height: 280px;
+            }
+
+            #contacto {
+                padding: 40px 15px;
+            }
+            #contacto h2 {
+                font-size: 1.8em;
+                margin-bottom: 25px;
+            }
+            .contact-form {
+                padding: 20px;
+            }
+            .contact-form input,
+            .contact-form textarea {
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+            .contact-form .contact-btn {
+                padding: 12px;
+                font-size: 1.2em;
+            }
+            .contact-info p {
+                font-size: 1em;
+                margin-bottom: 15px;
+            }
+            .contact-links a {
+                padding: 10px 20px;
+                font-size: 1.0em;
+            }
+
+            footer { padding: 10px; }
+            .social-icons a { width: 55px; height: 55px; font-size: 2em; }
+            .btn-whatsapp-footer { padding: 12px 40px; font-size: 1.1em; }
+            #back-to-top-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+
+            .whatsapp-float {
+                padding: 30px 15px;
+                font-size: 1.4em;
+                transform: translateY(-50%) translateX(15px);
+            }
+            .whatsapp-float:hover {
+                transform: translateY(-50%) translateX(0px);
+            }
+            .whatsapp-float i {
+                font-size: 1.5em;
+            }
+
+            .preloader-logo {
+                width: 150px;
+                height: 150px;
+            }
+
+            .preloader-progress-ring {
+                width: 200px;
+                height: 200px;
+            }
+        }
+        @media (max-width: 480px) {
+            .btn-whatsapp-footer { padding: 10px 25px; font-size: 1.0em; }
+            .preloader-logo {
+                width: 120px;
+                height: 120px;
+            }
+            .preloader-progress-ring {
+                width: 180px;
+                height: 180px;
+            }
+            .preloader-percentage {
+                font-size: 1.5em;
+            }
+            .preloader-messages {
+                font-size: 1em;
+            }
+            .about-parallax .parallax-text {
+                font-size: 1.2em;
+                margin-top: 80px;
+            }
+            .reveal-image {
+                width: 220px;
+                height: 220px;
+            }
+            .reveal-image::after {
+                font-size: 1.1em;
+            }
+            .wider-parallax .logo-parallax {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="preloader">
+        <div class="preloader-container">
+            <div class="preloader-logo"></div>
+            <div class="preloader-progress-ring"></div>
+            <div class="preloader-percentage" id="preloaderPercentage">0%</div>
+        </div>
+        <div class="preloader-messages" id="preloaderMessages">
+            <div class="preloader-message-item active">Cargando información sobre nosotros...</div>
+            <div class="preloader-message-item">Conoce al equipo que impulsa tu éxito.</div>
+            <div class="preloader-message-item">Descubre nuestra pasión por el diseño y la estrategia.</div>
+            <div class="preloader-message-item">Estamos casi listos para contarte nuestra historia.</div>
+        </div>
+    </div>
+
+    <header class="top-bar">
+        <a href="index.html" class="logo" id="logo">Boost & Launch 🚀</a>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        <nav class="nav-inline" id="nav">
+            <a href="portfolio.html" class="btn-nav"><i class="fa-solid fa-laptop-code"></i> Portafolio</a>
+            <a href="about-us.html" class="btn-nav"><i class="fa-solid fa-users"></i> ¿Quiénes somos?</a>
+            <a href="index.html#contacto" class="btn-nav"><i class="fa-solid fa-paper-plane"></i> Contáctanos</a>
+        </nav>
+    </header>
+
+    <div class="about-parallax">
+        <div class="parallax-slide"></div>
+        <div class="particles" id="particles"></div>
+        <div class="logo-parallax"></div>
+        <h1 class="parallax-text">Conoce al Equipo detrás de tú Éxito Digital</h1>
+    </div>
+
+    <div class="reveal-container">
+        <div class="reveal-image" id="revealImage">
+            <img src="img/equipo.jpg" alt="Nuestro Equipo">
+        </div>
+    </div>
+
+    <section class="about-text-section">
+        <p>Ayudamos a marcas y emprendedores a construir su presencia digital desde cero, con soluciones integrales que combinan diseño, programación, marketing y gestión estratégica de redes sociales.</p>
+        <p>Nuestro enfoque se basa en el conocimiento, la experiencia y una visión clara: lograr que cada proyecto no solo se vea bien, sino que funcione, conecte y crezca.</p>
+    </section>
+
+    <div class="wider-parallax">
+        <div class="parallax-slide"></div>
+        <div class="particles" id="particles-wider"></div>
+        <div class="logo-parallax"></div>
+    </div>
+
+    <section class="section-light" id="contacto">
+        <h2><i class="fa-solid fa-headset"></i> Hablemos de tu Próximo Proyecto</h2>
+        <div class="contact-form">
+            <label for="fullName">Nombre Completo:</label>
+            <input type="text" id="fullName" name="fullName" required>
+
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="subject">Asunto:</label>
+            <input type="text" id="subject" name="subject">
+
+            <label for="message">Tu Mensaje:</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit" class="contact-btn">Enviar Mensaje</button>
+        </div>
+        <p>También puedes contactarnos directamente:</p>
+        <div class="contact-links">
+            <a href="mailto:tucorreo@example.com" class="contact-btn btn-email"><i class="fa-solid fa-envelope"></i> Enviar Correo</a>
+            <a href="https://wa.me/yourphonenumber" target="_blank" class="contact-btn btn-whatsapp-direct"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        </div>
+        <div class="social-icons">
+            <a href="https://youtu.be/dQw4w9WgXcQ?si=Mv0nbO47jAdIntYn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.linkedin.com/in/leonel-e-rodr%C3%ADguez-s-66390335b/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </section>
+
+    <footer class="section-dark" style="padding: 20px; text-align: center;">
+        <p>© 2025 ~ 👨‍💻 by: theAstroBruh con 💙~</p>
+    </footer>
+
+    <button id="back-to-top-btn"><i class="fas fa-arrow-up"></i></button>
+
+    <a href="https://wa.me/yourphonenumber" class="whatsapp-float" target="_blank" id="whatsappFloat">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Globals ---
+            const hamburger = document.getElementById('hamburger');
+            const nav = document.getElementById('nav');
+            const logo = document.getElementById('logo');
+            const preloader = document.getElementById('preloader');
+            const preloaderPercentage = document.getElementById('preloaderPercentage');
+            const preloaderProgressRing = document.querySelector('.preloader-progress-ring');
+            const preloaderMessages = document.querySelectorAll('.preloader-message-item');
+            const backToTopBtn = document.getElementById('back-to-top-btn');
+            const whatsappFloat = document.getElementById('whatsappFloat');
+            const revealImage = document.getElementById('revealImage');
+
+            let currentPreloaderMessageIndex = 0;
+            let loadProgress = 0;
+            let loadingInterval;
+            let scrollHistory = [];
+
+            // --- Preloader Logic (copied from index for consistency) ---
+            function updatePreloaderProgress() {
+                if (loadProgress < 100) {
+                    loadProgress += Math.floor(Math.random() * 10) + 1;
+                    if (loadProgress > 100) loadProgress = 100;
+                    preloaderPercentage.textContent = `${loadProgress}%`;
+
+                    const radius = preloaderProgressRing.offsetWidth / 2;
+                    const circumference = 2 * Math.PI * radius;
+                    const offset = circumference - (loadProgress / 100) * circumference;
+                    preloaderProgressRing.style.strokeDasharray = `${circumference} ${circumference}`;
+                    preloaderProgressRing.style.strokeDashoffset = offset;
+                } else {
+                    clearInterval(loadingInterval);
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                        startParallaxAnimation('.about-parallax');
+                        startParallaxAnimation('.wider-parallax', false); // No zoom for wider parallax
+                    }, 500);
+                }
+            }
+
+            function rotatePreloaderMessages() {
+                preloaderMessages[currentPreloaderMessageIndex].classList.remove('active');
+                currentPreloaderMessageIndex = (currentPreloaderMessageIndex + 1) % preloaderMessages.length;
+                preloaderMessages[currentPreloaderMessageIndex].classList.add('active');
+            }
+
+            window.addEventListener('load', () => {
+                loadingInterval = setInterval(updatePreloaderProgress, 150);
+                setInterval(rotatePreloaderMessages, 3000);
+            });
+
+            // --- Parallax Animation ---
+            function startParallaxAnimation(selector, withZoom = true) {
+                const parallaxElement = document.querySelector(selector);
+                if (!parallaxElement) return;
+
+                const parallaxSlide = parallaxElement.querySelector('.parallax-slide');
+                if (!parallaxSlide) return;
+
+                // Reset styles
+                parallaxSlide.style.opacity = 0;
+                parallaxSlide.style.filter = 'brightness(0.2) saturate(0.2)';
+                parallaxSlide.style.transform = 'scale(1)';
+                parallaxSlide.classList.remove('active');
+
+                setTimeout(() => {
+                    parallaxSlide.classList.add('active');
+                    parallaxSlide.style.opacity = 1;
+
+                    // Remove existing animations to apply new ones
+                    parallaxSlide.style.animation = 'none';
+                    void parallaxSlide.offsetWidth; // Trigger reflow
+                    if (withZoom) {
+                        parallaxSlide.style.animation = 'zoomDarkenLighten 20s ease-in-out infinite forwards';
+                    } else {
+                        parallaxSlide.style.animation = 'darkenLighten 20s ease-in-out infinite forwards';
+                    }
+
+                    // Re-trigger animation at intervals to keep it looping
+                    setInterval(() => {
+                        parallaxSlide.style.animation = 'none';
+                        void parallaxSlide.offsetWidth; // Trigger reflow
+                        if (withZoom) {
+                            parallaxSlide.style.animation = 'zoomDarkenLighten 20s ease-in-out infinite forwards';
+                        } else {
+                            parallaxSlide.style.animation = 'darkenLighten 20s ease-in-out infinite forwards';
+                        }
+                    }, 20000);
+                }, 500); // Shorter delay after preloader hides
+            }
+
+            // Create particles for both parallax sections
+            function createParticles(containerId) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                const particleCount = 50;
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+
+                    const size = Math.random() * 3 + 1;
+                    const posX = Math.random() * 100;
+                    const delay = Math.random() * 5;
+                    const duration = Math.random() * 10 + 5;
+                    const opacity = Math.random() * 0.5 + 0.3;
+                    const color = `hsl(${Math.random() * 60 + 180}, 100%, ${Math.random() * 30 + 70}%)`;
+
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${posX}%`;
+                    particle.style.animationDelay = `${delay}s`;
+                    particle.style.animationDuration = `${duration}s`;
+                    particle.style.opacity = opacity;
+                    particle.style.background = color;
+                    particle.style.bottom = `-10px`;
+
+                    container.appendChild(particle);
+                }
+            }
+            createParticles('particles');
+            createParticles('particles-wider');
+
+            // --- Reveal Image Logic ---
+            if (revealImage) {
+                revealImage.addEventListener('click', () => {
+                    revealImage.classList.toggle('revealed');
+                });
+            }
+
+            // --- Hamburger Menu ---
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                nav.classList.toggle('show');
+            });
+
+            nav.addEventListener('click', e => {
+                if (e.target.tagName === 'A' && nav.classList.contains('show')) {
+                    hamburger.classList.remove('active');
+                    nav.classList.remove('show');
+                }
+            });
+
+            // --- Logo Click ---
+            logo.addEventListener('click', () => {
+                smoothScrollTo(0);
+                logo.classList.add('clicked');
+                setTimeout(() => logo.classList.remove('clicked'), 300);
+            });
+
+            // --- Button Hover Illumination ---
+            document.querySelectorAll('.btn-nav, .contact-btn, .btn-whatsapp-footer, .whatsapp-float').forEach(button => {
+                button.addEventListener('mousemove', e => {
+                    const rect = button.getBoundingClientRect();
+                    button.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                    button.style.setProperty('--y', `${e.clientY - rect.top}px`);
+                });
+            });
+
+            // --- Smooth Scroll Logic and History ---
+            const smoothScrollTo = (targetId) => {
+                let targetElement;
+                if (typeof targetId === 'string') {
+                    targetElement = document.getElementById(targetId);
+                } else if (typeof targetId === 'number') {
+                    window.scrollTo({ top: targetId, behavior: 'smooth' });
+                    return;
+                }
+
+                if (targetElement) {
+                    const currentScrollTop = window.scrollY;
+                    if (scrollHistory.length === 0 || Math.abs(currentScrollTop - scrollHistory[scrollHistory.length - 1]) > 50) {
+                        scrollHistory.push(currentScrollTop);
+                    }
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            };
+
+            // Attach smooth scroll to all relevant links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    smoothScrollTo(targetId);
+                });
+            });
+
+            // --- Back to Top Button Logic ---
+            window.addEventListener('scroll', () => {
+                const aboutTextSection = document.querySelector('.about-text-section');
+                if (aboutTextSection) {
+                    const aboutTextRect = aboutTextSection.getBoundingClientRect();
+                    if (aboutTextRect.top < window.innerHeight) {
+                        backToTopBtn.classList.add('show');
+                    } else {
+                        backToTopBtn.classList.remove('show');
+                    }
+                }
+            });
+
+            backToTopBtn.addEventListener('click', () => {
+                if (scrollHistory.length > 0) {
+                    const lastScrollPos = scrollHistory.pop();
+                    window.scrollTo({ top: lastScrollPos, behavior: 'smooth' });
+                } else {
+                    smoothScrollTo(0); // Fallback to very top
+                }
+            });
+
+            // --- Floating WhatsApp Button Click Effect ---
+            whatsappFloat.addEventListener('click', () => {
+                whatsappFloat.classList.add('clicked');
+                setTimeout(() => whatsappFloat.classList.remove('clicked'), 300);
+            });
+
+            // --- Image Preloading ---
+            ['img/chibi.png', 'img/main_chibi_about-us.png', 'img/about-us-bg_1.png', 'img/about-us-bg_2.png', 'img/equipo.jpg'].forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Boost & Launch🚀</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <style>
+        :root {
+            --color-primary: #26baf5; /* Azul brillante */
+            --color-secondary: #26baf5; /* Azul brillante */
+            --color-dark-bg: #000000; /* Negro puro */
+            --color-light-bg: #090f20; /* Azul oscuro casi negro */
+            --color-text-light: #f4f4f4; /* Blanco grisáceo */
+            --color-text-dark: #000; /* Negro puro */
+            --color-gray-text: #ccc; /* Gris claro */
+            --color-border: #000000; /* Negro puro */
+            --color-button-hover: #75cff3; /* Azul más claro para hover */
+            --color-icon-hover: #0f0f10; /* Casi negro para iconos en hover */
+            --color-shadow-primary: rgba(59, 151, 238, 0.4); /* Sombra azul para elementos */
+            --color-shadow-dark: rgba(0,0,0,0.7); /* Sombra oscura para elementos */
+        }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--color-dark-bg);
+            color: var(--color-text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth; /* Smooth scroll para todo el body */
+        }
+
+        /* Preloader Styles */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1.5s ease;
+        }
+
+        .preloader-logo {
+            width: 600px;
+            height: 300px;
+            background-image: url('img/logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            animation: preloaderFloatRotate 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px var(--color-primary));
+        }
+
+        @keyframes preloaderFloatRotate {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                filter: drop-shadow(0 0 30px var(--color-primary));
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+                filter: drop-shadow(0 0 50px var(--color-primary));
+            }
+        }
+
+        /* General Button Hover Effect */
+        .btn-nav, .project-link, .btn-whatsapp-footer, .pre-hero-btn {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-nav::before, .project-link::before, .btn-whatsapp-footer::before, .pre-hero-btn::before {
+            content: '';
+            position: absolute;
+            top: var(--y);
+            left: var(--x);
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            transition: width 0.5s, height 0.5s;
+            border-radius: 50%;
+            z-index: -1;
+        }
+        .btn-nav:hover::before, .project-link:hover::before { width: 300px; height: 300px; }
+        .btn-whatsapp-footer:hover::before, .pre-hero-btn:hover::before { width: 250px; height: 250px; }
+
+        /* Top Bar */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: #000;
+            backdrop-filter: blur(10px);
+            border-bottom: 5px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+        .scrolled .top-bar {
+            padding: 10px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .logo {
+            font-size: 2.0em;
+            font-weight: bold;
+            background-image: linear-gradient(120deg, #fff 10%, var(--color-primary) 40%, #fff 70%);
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        .logo.clicked { animation: shimmer 3s linear infinite, logoPop 0.3s ease-out; }
+        @keyframes logoPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .nav-inline { display: flex; gap: 12px; }
+        .btn-nav {
+            padding: 10px 20px;
+            background: #27272a;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.10em;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-nav:hover { color: var(--color-button-hover); background: var(--color-primary); }
+        .btn-nav:hover i { color: var(--color-icon-hover); }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 44px;
+            height: 38px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 200;
+        }
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: var(--color-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* Pre-Hero Parallax & Buttons */
+        .pre-hero-parallax {
+            position: relative;
+            height: 680px;
+            border-radius: 40px;
+            margin: 0 6px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            background-color: var(--color-dark-bg);
+            box-shadow: 0 40px 60px rgba(0,0,0,0.8);
+        }
+        .parallax-slider {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+        .parallax-slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            filter: brightness(0.2) saturate(0.2);
+            transform: scale(1);
+            transition: opacity 1.5s ease-in-out, transform 20s ease-in-out, filter 20s ease-in-out; /* Adjusted to ease-in-out */
+            background-image: url('img/bg_main_1.jpg');
+        }
+        .parallax-slide.active {
+            opacity: 1;
+            animation: zoomDarkenLighten 20s ease-in-out infinite forwards; /* Adjusted to ease-in-out */
+        }
+
+        @keyframes zoomDarkenLighten {
+            0% {
+                transform: scale(1);
+                filter: brightness(0.2) saturate(0.2);
+            }
+            50% {
+                transform: scale(1.08);
+                filter: brightness(1) saturate(1);
+            }
+            100% {
+                transform: scale(1);
+                filter: brightness(0.2) saturate(0.2);
+            }
+        }
+
+        /* Partículas por encima de las imágenes (animación invertida) */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 3;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            opacity: 0.6;
+            /* Inicia desde abajo y sube */
+            transform: translateY(100vh);
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            to {
+                transform: translateY(-100vh); /* Sube fuera de la vista */
+            }
+        }
+
+        .logo-parallax {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1200px;
+            height: 1000px;
+            background-image: url('img/logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 4;
+            animation: floatRotate 8s ease-in-out infinite, shimmer-parallax-logo 3s linear infinite; /* Added shimmer-parallax-logo */
+            filter: drop-shadow(0 0 60px rgba(38, 186, 245, 0.8)) drop-shadow(0 0 100px rgba(38, 186, 245, 0.5));
+        }
+
+        /* New animation for parallax logo shimmer */
+        @keyframes shimmer-parallax-logo {
+            0% { filter: drop-shadow(0 0 40px rgba(38, 186, 245, 0.6)); }
+            50% { filter: drop-shadow(0 0 70px rgba(38, 186, 245, 1)); }
+            100% { filter: drop-shadow(0 0 40px rgba(38, 186, 245, 0.6)); }
+        }
+
+        @keyframes floatRotate {
+            0%, 100% {
+                transform: translate(-50%, -50%) rotate(0deg);
+                filter: drop-shadow(0 0 40px rgba(38, 186, 245, 0.6)) drop-shadow(0 0 80px rgba(38, 186, 245, 0.3));
+            }
+            50% {
+                transform: translate(-50%, calc(-50% - 20px)) rotate(3deg);
+                filter: drop-shadow(0 0 50px rgba(38, 186, 245, 0.9)) drop-shadow(0 0 90px rgba(38, 186, 245, 0.6));
+            }
+        }
+        .pre-hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 30px 20px;
+            background: var(--color-dark-bg);
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .pre-hero-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 35px;
+            background: var(--color-primary);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.6em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(38, 186, 245, 0.4);
+            min-width: 440px;
+            text-align: center;
+            margin-bottom: 120px;
+        }
+        .pre-hero-btn i { margin-right: 8px; }
+        .pre-hero-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(38, 186, 245, 0.6); background: var(--color-button-hover); }
+
+        /* Spacer between buttons and hero */
+        .hero-spacer {
+            height: 80px;
+            background: var(--color-dark-bg);
+        }
+
+        /* Info Bar */
+        .info-bar {
+            display: flex; align-items: center; justify-content: center; width: 100%; height: 40px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.9), rgba(0,0,0,0.9)); padding: 7px 25px;
+            border-bottom: 1px solid var(--color-border); box-sizing: border-box; position: relative;
+            z-index: 99; margin: 10px 0 10px; overflow: hidden;
+        }
+        .info-bar-content { position: relative; width: 100%; text-align: center; font-size: 1.8em; font-weight: bold; color: var(--color-text-light); text-shadow: 0 0 5px rgba(0,0,0,0.5); height: 100%;  }
+        .info-bar-text { position: absolute; width: 100%; top: 50%; left: 0; transform: translateY(-50%); opacity: 0; transition: opacity 1s ease-in-out; padding: 0 10px; box-sizing: border-box; white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+        .info-bar-text.active { opacity: 1; }
+        .info-bar-text span { color: var(--color-primary); font-weight: bold; }
+
+        /* Hero Options Section */
+        .hero-options-section { position: relative; min-height: 100vh; padding: 0; background-color: var(--color-dark-bg); overflow: hidden; }
+        .hero-options-container { display: flex; width: 100%; height: 100vh; margin: 0; }
+        .hero-option { position: relative; flex: 1; min-width: 0; height: 100%; overflow: hidden; transition: all 0.5s ease; cursor: pointer; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; text-align: center; border-radius: 50px; margin: 22px; transform-style: preserve-3d; isolation: isolate; box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.1); border: 2px solid transparent; }
+        .hero-option::before { content: ''; position: absolute; inset: -1px; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%); transition: all 0.5s ease; z-index: 1; border-radius: 25px; }
+        .hero-option:hover::before { background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%); }
+        .hero-option-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform 0.2s ease-out; will-change: transform; border-radius: 25px; }
+        .hero-option-overlay { position: absolute; inset: 0; background-size: contain; background-position: center; background-repeat: no-repeat; transition: transform 0.1s ease-out, filter 0.3s ease; z-index: 2; transform: translateZ(20px); will-change: transform; filter: drop-shadow(0 0 44px rgba(0,0,0,0.5)); }
+        .hero-option:hover .hero-option-overlay { transform: translateZ(20px) scale(1.05); filter: drop-shadow(0 0 15px var(--color-shadow-primary)); }
+        .hero-option-content { position: relative; width: 100%; padding: 40px 30px; box-sizing: border-box; color: white; z-index: 3; max-width: 600px; margin-bottom: 80px; transform: translateZ(30px); transition: transform 0.1s ease-out; }
+        .hero-option h2 { font-size: 2.5em; margin-bottom: 110px; text-shadow: 8px 8px 22px rgba(0, 0, 0, 0.8); transition: all 0.5s ease; }
+        .hero-option.ignite { animation: ignite-border 0.8s ease-out forwards; }
+        @keyframes ignite-border {
+            25%, 75% { box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 25px var(--color-primary); border-color: var(--color-primary); }
+            0%, 50%, 100% { box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.1); border-color: transparent; }
+        }
+
+        /* Carousel */
+        .carousel-hero { position: relative; width: 100%; height: 105vh; overflow: hidden; touch-action: pan-y; }
+        .carousel-slide { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; box-sizing: border-box; opacity: 0; transition: opacity 0.8s ease; z-index: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        .carousel-slide::before { content: ''; position: absolute; inset: 0; background-size: cover; background-position: center; filter: blur(2px) brightness(0.5); z-index: -1; }
+        .carousel-slide:nth-child(1)::before { background-image: url('img/img_bg_1.jpg'); }
+        .carousel-slide:nth-child(2)::before { background-image: url('img/img_bg_2.jpg'); }
+        .carousel-slide:nth-child(3)::before { background-image: url('img/img_bg_3.jpg'); }
+        .carousel-slide.current { opacity: 1; z-index: 2; }
+        .slide-content { max-width: 1280px; width: 100%; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; padding-bottom: 80px; }
+        .slide-image { max-height: 50vh; max-width: 80%; margin-bottom: 60px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); transition: transform 0.5s ease; object-fit: contain; }
+        .carousel-slide.current .slide-image { transform: scale(1.10); }
+        .slide-text { background: rgba(15, 15, 16, 0.8); padding: 20px; border-radius: 15px; position: relative; overflow: hidden; width: 90%; max-width: 1200px; margin: 0 auto; box-sizing: border-box; }
+        .slide-text::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0, 132, 247, 0.2), transparent); animation: shine 3s infinite; }
+        @keyframes shine { 100% { left: 100%; } }
+        .carousel-slide h2 { font-size: 2.0em; margin-bottom: 30px; color: var(--color-text-light); }
+        .carousel-slide p { font-size: 1.1em; margin-bottom: 30px; }
+        .project-link { display: inline-block; padding: 12px 25px; background: var(--color-primary); color: var(--color-text-dark); text-decoration: none; border-radius: 5px; font-weight: bold; transition: all 0.3s ease; }
+        .project-link:hover { background: var(--color-button-hover); transform: translateY(-3px); }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 60px; height: 60px; background: hwb(0 0% 100% / 0.7); border: none; border-radius: 50%; color: var(--color-text-light); font-size: 24px; cursor: pointer; z-index: 3; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; backdrop-filter: blur(5px); }
+        .carousel-btn:hover { background: var(--color-primary); transform: translateY(-50%) scale(1.1); }
+        .left-btn { left: 30px; }
+        .right-btn { right: 30px; }
+
+        /* Sections & Footer */
+        section { padding: 80px 20px; text-align: center; }
+        .section-dark { background: var(--color-dark-bg); }
+        .section-light { background: var(--color-light-bg); }
+        .separator-section { padding: 60px 20px; text-align: center; background: linear-gradient(to bottom, var(--color-dark-bg), var(--color-light-bg)); position: relative; z-index: 5; }
+        .social-icons { display: flex; justify-content: center; gap: 30px; margin: 10px 0; }
+        .social-icons a { width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; border-radius: 50%; background: var(--color-text-dark); color: var(--color-primary); font-size: 2em; transition: all 0.3s ease; }
+        .social-icons a:hover { background: var(--color-primary); color: var(--color-icon-hover); transform: translateY(-5px); }
+        .section-parallax { background: url('img/bg_index.jpg') fixed center/cover no-repeat; height: 480px; }
+        footer { text-align: center; }
+
+        /* WhatsApp Footer Button */
+        .btn-whatsapp-footer {
+            display: inline-flex; align-items: center; justify-content: center; padding: 15px 40px; margin-top: 30px;
+            background: linear-gradient(90deg, #25D366, #128C7E); color: #fff; text-decoration: none;
+            border-radius: 50px; font-size: 1.3em; font-weight: bold; transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+        }
+        .btn-whatsapp-footer i { margin-right: 8px; }
+        .btn-whatsapp-footer:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6); background: #128C7E; }
+
+        /* Back Button */
+        #back-to-top-btn {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            font-size: 24px;
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.5s ease;
+            opacity: 0;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #back-to-top-btn.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        #back-to-top-btn:hover {
+            background-color: var(--color-button-hover);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            html { font-size: 13px; }
+            .top-bar { padding: 10px 20px; }
+            .scrolled .top-bar { padding: 8px 15px; }
+            .logo { font-size: 1.5em; }
+            .nav-inline { position: fixed; top: 60px; left: 0; width: 100%; background: #1f1f22ee; border: 1px solid var(--color-border); padding: 15px; flex-direction: column; display: none; font-size: 1.4em; z-index: 1000; box-sizing: border-box; }
+            .nav-inline.show { display: flex; }
+            .hamburger { display: flex; width: 46px; height: 30px;}
+            .info-bar { height: 65px; padding: 10px; margin: 6px 0 15px; }
+            .info-bar-text { font-size: 0.8em; white-space: normal; margin: 6px 0 15px; }
+            .pre-hero-parallax {
+                height: 400px;
+                margin: 0 6px;
+                border-radius: 30px;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+            }
+            .logo-parallax {
+                width: 280px;
+                height: 280px;
+            }
+            .pre-hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+                padding: 5px 10px;
+            }
+            .pre-hero-btn {
+                width: 100%;
+                max-width: 260px;
+                min-width: auto;
+                padding: 10px 6px;
+                font-size: 1.5em;
+                margin-bottom: 4px;
+            }
+            .hero-spacer {
+                height: 100px;
+            }
+            .hero-options-container { flex-direction: column; height: auto; }
+            .hero-option { height: 70vh; min-height: 200px; margin: 5px; border-radius: 44px; }
+            .hero-option::before, .hero-option-bg { border-radius: 15px; }
+            .hero-option-content { padding: 5px; margin-bottom: 60px; }
+            .hero-option h2 { font-size: 2.2em; margin-bottom: -60px; }
+            .hero-option-overlay { transform: translateZ(10px); }
+            .hero-option:hover .hero-option-overlay { transform: translateZ(10px) scale(1.03); }
+            .carousel-hero { height: auto; min-height: 95vh; }
+            .slide-content { padding-bottom: 20px; }
+            .slide-image { max-height: 70vh; margin-bottom: 12px; }
+            .carousel-slide h2 { font-size: 1.5em; margin-bottom: 12px; }
+            .carousel-slide p { font-size: 1.4em; margin-bottom: 12px; }
+            .slide-text { width: 90%; padding: 10px; }
+            .carousel-btn { width: 35px; height: 35px; font-size: 22px; }
+            .project-link { font-size: 1.0em; padding: 7px 12px; }
+            section { padding: 30px 15px; }
+            .separator-section, #contacto { padding: 20px 10px; }
+            .separator-section h2, #contacto h2 { font-size: 1.2em; }
+            .separator-section p, #contacto p { font-size: 1.0em; }
+            footer { padding: 10px; }
+            .social-icons a { width: 55px; height: 55px; font-size: 2em; }
+            .btn-whatsapp-footer { padding: 12px 40px; font-size: 1.1em; }
+            #back-to-top-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+        }
+        @media (max-width: 480px) {
+            .carousel-slide h2 { font-size: 1.2em; }
+            .carousel-slide p { font-size: 1.0em; }
+            .btn-whatsapp-footer { padding: 10px 25px; font-size: 1.8em; }
+            .preloader-logo {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="preloader">
+        <div class="preloader-logo"></div>
+    </div>
+
+    <header class="top-bar">
+        <div class="logo" id="logo">Boost & Launch 🚀</div>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        <nav class="nav-inline" id="nav">
+            <a href="#carousel-hero" class="btn-nav"><i class="fa-solid fa-laptop-code"></i> Portafolio</a>
+            <a href="contactanos.html" class="btn-nav"><i class="fa-solid fa-users"></i> ¿Quiénes somos?</a>
+            <a href="#contacto" class="btn-nav"><i class="fa-solid fa-paper-plane"></i> Contáctanos</a>
+        </nav>
+    </header>
+
+    <div class="pre-hero-parallax">
+        <div class="parallax-slider" id="parallaxSlider">
+            <div class="parallax-slide"></div>
+        </div>
+        <div class="particles" id="particles"></div>
+        <div class="logo-parallax"></div>
+    </div>
+
+    <div class="info-bar">
+        <div class="info-bar-content">
+            <div class="info-bar-text active">Hola, bienvenido a <span>Boost & Launch</span> ¿Cómo podemos ayudarte?</div>
+            <div class="info-bar-text">Recuerda que puedes agendar una <span>consulta gratuita</span> via WhatsApp.</div>
+            <div class="info-bar-text">Diseñamos Páginas webs adaptables a <span>dispositivos moviles</span>.</div>
+            <div class="info-bar-text">Creamos Tiendas Online atractivas que <span>venden solas</span>.</div>
+            <div class="info-bar-text">Agenda una <span>consulta gratuita</span> via WhatsApp.</div>
+        </div>
+    </div>
+
+    <div class="pre-hero-buttons">
+        <a href="#hero-option-design" class="pre-hero-btn scroll-link"><i class="fa fa-bars" aria-hidden="true"></i> Nuestros Servicios</a>
+        <a href="#carousel-hero" class="pre-hero-btn scroll-link"><i class="fas fa-briefcase"></i> Portafolio</a>
+        <a href="#contacto" class="pre-hero-btn scroll-link"><i class="fa fa-phone-square" aria-hidden="true"></i> Contáctanos</a>
+    </div>
+
+    <div class="hero-spacer"></div>
+
+    <section class="hero-options-section" id="hero">
+        <div class="hero-options-container">
+            <div class="hero-option" data-slide="0" id="hero-option-design">
+                <div class="hero-option-bg" style="background-image: url('img/h1.gif');"></div>
+                <div class="hero-option-overlay" style="background-image: url('img/h1-overlay.png');"></div>
+                <div class="hero-option-content"><h2>Diseño de Website</h2></div>
+            </div>
+            <div class="hero-option" data-slide="1">
+                <div class="hero-option-bg" style="background-image: url('img/h2.gif');"></div>
+                <div class="hero-option-overlay" style="background-image: url('img/h2-overlay.png');"></div>
+                <div class="hero-option-content"><h2>Tienda Online</h2></div>
+            </div>
+            <div class="hero-option" data-slide="2">
+                <div class="hero-option-bg" style="background-image: url('img/h3.gif');"></div>
+                <div class="hero-option-overlay" style="background-image: url('img/h3-overlay.png');"></div>
+                <div class="hero-option-content"><h2>Remodelado de Marca</h2></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="separator-section" id="quienes-somos">
+        <h2><i class="fa-solid fa-layer-group"></i> Estetica con estrategia.</h2>
+        <p>Captamos la atención apropiada de cada Mercado.</p>
+    </section>
+
+    <div class="carousel-hero" id="carousel-hero">
+        <div class="carousel-slide current">
+            <div class="slide-content">
+                <img src="img/img_1.png" alt="Sitio web corporativo" class="slide-image">
+                <div class="slide-text">
+                    <h2>Te diseñamos la Página Web que necesitas.</h2>
+                    <p>Destaca con una Web Personalizada, tu empresa merece más que una plantilla más.</p>
+                    <a href="#contacto" class="project-link scroll-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Necesito mi Página Web</a>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-slide">
+            <div class="slide-content">
+                <img src="img/img_2.png" alt="Tienda online" class="slide-image">
+                <div class="slide-text">
+                    <h2>Imagina comprar con un click.</h2>
+                    <p>Te creamos la tienda que quieres con las funciones que necesitas.</p>
+                    <a href="#contacto" class="project-link scroll-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Quiero una Tienda Online</a>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-slide">
+            <div class="slide-content">
+                <img src="img/img_3.png" alt="Gestión de redes sociales" class="slide-image">
+                <div class="slide-text">
+                    <h2>¿Buscas hacer cambios a tú marca?</h2>
+                    <p>¿Quieres cambiar tú logo?, ¿Los colores?, ¿Te hace falta una animación? Consultanos y te cotizamos.</p>
+                    <a href="#contacto" class="project-link scroll-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Empecemos con mi Proyecto.</a>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-btn left-btn" onclick="moveSlide(-1)">‹</button>
+        <button class="carousel-btn right-btn" onclick="moveSlide(1)">›</button>
+    </div>
+
+    <section class="section-dark">
+        <h2><i class="fa-solid fa-id-card-clip"></i> Una nueva identidad digital.</h2>
+        <p>La fórmula y la estrategia que se adapta a tú presupuesto.</p>
+    </section>
+
+    <div class="section-parallax"></div>
+
+    <section class="section-light" id="contacto">
+        <h2><i class="fa-solid fa-headset"></i> Hablemos de tu Próximo Proyecto</h2>
+        <p>Conoce un poco más sobre nuestros otros trabajos.</p>
+        <div class="social-icons">
+            <a href="https://youtu.be/dQw4w9WgXcQ?si=Mv0nbO47jAdIntYn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.linkedin.com/in/leonel-e-rodr%C3%ADguez-s-66390335b/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <a href="https://youtu.be/dQw4w9WgXcQ?si=Mv0nbO47jAdIntYn" target="_blank" class="btn-whatsapp-footer"><i class="fab fa-whatsapp"></i> Chatea con nosotros</a>
+    </section>
+
+    <footer class="section-dark" style="padding: 20px; text-align: center;">
+        <p>© 2025 ~ 👨‍💻 by: theAstroBruh con 💙~</p>
+    </footer>
+
+    <button id="back-to-top-btn"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Globals ---
+        const infoBarTexts = document.querySelectorAll('.info-bar-text');
+        const heroOptions = document.querySelectorAll('.hero-option');
+        const carouselHero = document.getElementById('carousel-hero');
+        const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+        const logo = document.getElementById('logo');
+        const parallaxSlide = document.querySelector('.parallax-slide');
+        const particlesContainer = document.getElementById('particles');
+        const preloader = document.getElementById('preloader');
+        const backToTopBtn = document.getElementById('back-to-top-btn');
+
+        let currentInfoIndex = 0;
+        let currentIndex = 0;
+        let autoSlideInterval;
+        let autoParallaxInterval;
+        let parallaxAnimationTimeout;
+        let scrollHistory = []; // Para almacenar el historial de desplazamiento
+
+        // --- Preloader Logic ---
+        window.addEventListener('load', () => {
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+                startParallaxAnimation();
+            }, 500);
+        });
+
+        // Create particles (inverted animation and fixed initial position)
+        function createParticles() {
+            const particleCount = 50;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                const size = Math.random() * 3 + 1;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 10 + 5;
+                const opacity = Math.random() * 0.5 + 0.3;
+                const color = `hsl(${Math.random() * 60 + 180}, 100%, ${Math.random() * 30 + 70}%)`;
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.opacity = opacity;
+                particle.style.background = color;
+                // Posición inicial para que las partículas no se vean en el borde
+                particle.style.bottom = `-10px`; // Inicia justo debajo del contenedor
+
+                particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // --- Info Bar ---
+        function rotateInfoTexts() {
+            infoBarTexts[currentInfoIndex].classList.remove('active');
+            currentInfoIndex = (currentInfoIndex + 1) % infoBarTexts.length;
+            infoBarTexts[currentInfoIndex].classList.add('active');
+        }
+        setInterval(rotateInfoTexts, 4000);
+
+        // --- Parallax Slider ---
+        function startParallaxAnimation() {
+            // Reset styles before starting animation to ensure smooth restart
+            parallaxSlide.style.opacity = 0;
+            parallaxSlide.style.filter = 'brightness(0.2) saturate(0.2)';
+            parallaxSlide.style.transform = 'scale(1)';
+            parallaxSlide.classList.remove('active');
+
+            parallaxAnimationTimeout = setTimeout(() => {
+                parallaxSlide.classList.add('active');
+                parallaxSlide.style.opacity = 1;
+                
+                autoParallaxInterval = setInterval(() => {
+                    // Re-trigger animation by removing and re-adding the class
+                    parallaxSlide.classList.remove('active');
+                    void parallaxSlide.offsetWidth; // Trigger reflow
+                    parallaxSlide.classList.add('active');
+                }, 20000); // This should match the animation duration
+            }, 2000);
+        }
+
+        // --- Hero Options Interaction ---
+        heroOptions.forEach(option => {
+            const bg = option.querySelector('.hero-option-bg');
+            const overlay = option.querySelector('.hero-option-overlay');
+            const content = option.querySelector('.hero-option-content');
+
+            option.addEventListener('mousemove', e => {
+                const rect = option.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                bg.style.transform = `translate(${(x - centerX) / 40}px, ${(y - centerY) / 40}px) scale(1.02)`;
+                overlay.style.transform = `translateZ(20px) rotateY(${(x - centerX) / 10}deg) rotateX(${(y - centerY) / -10}deg) scale(1.05)`;
+                content.style.transform = `translateZ(30px) translate(${(x - centerX) / 60}px, ${(y - centerY) / 60}px)`;
+            });
+
+            option.addEventListener('mouseleave', () => {
+                bg.style.transform = 'translate(0px, 0px) scale(1)';
+                overlay.style.transform = 'translateZ(20px) rotateY(0deg) rotateX(0deg) scale(1)';
+                content.style.transform = 'translateZ(30px) translate(0px, 0px)';
+            });
+
+            option.addEventListener('click', e => {
+                e.preventDefault();
+                option.classList.add('ignite');
+                setTimeout(() => {
+                    option.classList.remove('ignite');
+                    currentIndex = parseInt(option.getAttribute('data-slide'));
+                    updateCarousel();
+                    resetAutoSlide();
+                    smoothScrollTo('carousel-hero');
+                }, 800);
+            });
+        });
+
+        // --- Carousel ---
+        window.moveSlide = direction => {
+            currentIndex = (currentIndex + direction + slides.length) % slides.length;
+            updateCarousel();
+            resetAutoSlide();
+        };
+
+        const updateCarousel = () => slides.forEach((slide, index) => slide.classList.toggle('current', index === currentIndex));
+        const startAutoSlide = () => autoSlideInterval = setInterval(() => moveSlide(1), 15000);
+        const resetAutoSlide = () => { clearInterval(autoSlideInterval); startAutoSlide(); };
+
+        // Carousel Drag/Swipe
+        let isDragging = false, startX;
+        carouselHero.addEventListener('mousedown', e => { isDragging = true; startX = e.clientX; resetAutoSlide(); });
+        carouselHero.addEventListener('touchstart', e => { isDragging = true; startX = e.touches[0].clientX; resetAutoSlide(); }, { passive: true });
+
+        const handleDragEnd = e => {
+            if (!isDragging) return;
+            isDragging = false;
+            const endX = e.clientX || e.changedTouches[0].clientX;
+            if (Math.abs(startX - endX) > 50) {
+                moveSlide(startX > endX ? 1 : -1);
+            }
+        };
+        carouselHero.addEventListener('mouseup', handleDragEnd);
+        carouselHero.addEventListener('mouseleave', () => isDragging = false);
+        carouselHero.addEventListener('touchend', handleDragEnd);
+
+        startAutoSlide();
+        updateCarousel(); // Initial call
+
+        // --- Hamburger Menu ---
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('show');
+        });
+
+        nav.addEventListener('click', e => {
+            if (e.target.tagName === 'A' && nav.classList.contains('show')) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('show');
+            }
+        });
+
+        // --- Logo Click ---
+        logo.addEventListener('click', () => {
+            smoothScrollTo(0);
+            logo.classList.add('clicked');
+            setTimeout(() => logo.classList.remove('clicked'), 300);
+        });
+
+        // --- Button Hover Illumination ---
+        document.querySelectorAll('.btn-nav, .project-link, .btn-whatsapp-footer, .pre-hero-btn').forEach(button => {
+            button.addEventListener('mousemove', e => {
+                const rect = button.getBoundingClientRect();
+                button.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                button.style.setProperty('--y', `${e.clientY - rect.top}px`);
+            });
+        });
+
+        // --- Smooth Scroll Logic and History ---
+        const smoothScrollTo = (targetId) => {
+            let targetElement;
+            if (typeof targetId === 'string') {
+                targetElement = document.getElementById(targetId);
+            } else if (typeof targetId === 'number') {
+                window.scrollTo({ top: targetId, behavior: 'smooth' });
+                return;
+            }
+
+            if (targetElement) {
+                const currentScrollTop = window.scrollY;
+                // Add current scroll position to history only if it's a significant change
+                if (scrollHistory.length === 0 || Math.abs(currentScrollTop - scrollHistory[scrollHistory.length - 1]) > 50) {
+                    scrollHistory.push(currentScrollTop);
+                }
+                
+                // Adjust scroll for "Nuestros Servicios" button
+                if (targetId === 'hero-option-design') {
+                    const offset = targetElement.getBoundingClientRect().top + window.scrollY;
+                    window.scrollTo({ top: offset, behavior: 'smooth' });
+                } else {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        };
+
+        // Attach smooth scroll to all relevant links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                smoothScrollTo(targetId);
+            });
+        });
+
+        // --- Back to Top Button Logic ---
+        window.addEventListener('scroll', () => {
+            const heroOptionsSection = document.getElementById('hero');
+            if (heroOptionsSection) {
+                const heroOptionsRect = heroOptionsSection.getBoundingClientRect();
+                // Show button if the user has scrolled past the top of the hero options section
+                if (heroOptionsRect.top < window.innerHeight) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            if (scrollHistory.length > 0) {
+                const lastScrollPos = scrollHistory.pop();
+                window.scrollTo({ top: lastScrollPos, behavior: 'smooth' });
+            } else {
+                // If no history, scroll to the top of hero-options-section as a fallback
+                smoothScrollTo('hero');
+            }
+        });
+
+        // --- Image Preloading (mantener para un mejor rendimiento) ---
+        ['img/h1.gif', 'img/h2.gif', 'img/h3.gif', 'img/h1-overlay.png', 'img/h2-overlay.png', 'img/h3-overlay.png',
+         'img/bg_main_1.jpg'].forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+    });
+    </script>
+</body>
+</html>

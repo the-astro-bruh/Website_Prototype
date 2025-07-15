@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Portafolio - Boost & Launch🚀</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <style>
+        :root {
+            --color-primary: #26baf5; /* Azul brillante */
+            --color-secondary: #26baf5; /* Azul brillante */
+            --color-dark-bg: #000000; /* Negro puro */
+            --color-light-bg: #090f20; /* Azul oscuro casi negro */
+            --color-text-light: #f4f4f4; /* Blanco grisáceo */
+            --color-text-dark: #000; /* Negro puro */
+            --color-gray-text: #ccc; /* Gris claro */
+            --color-border: #000000; /* Negro puro */
+            --color-button-hover: #005374; /* Azul más claro para hover */
+            --color-icon-hover: #0f0f10; /* Casi negro para iconos en hover */
+            --color-shadow-primary: rgba(59, 151, 238, 0.4); /* Sombra azul para elementos */
+            --color-shadow-dark: rgba(0,0,0,0.7); /* Sombra oscura para elementos */
+        }
+        
+        html {
+            font-size: 16px; /* Base font size for rem units */
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--color-dark-bg);
+            color: var(--color-text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Preloader Styles */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1.5s ease;
+            flex-direction: column;
+        }
+
+        .preloader-container {
+            position: relative;
+            width: 80vmin; /* Responsive width */
+            height: 80vmin; /* Responsive height */
+            max-width: 320px;
+            max-height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .preloader-logo {
+            width: 60%; /* Relative to container */
+            height: 60%; /* Relative to container */
+            background-image: url('img/chibi.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            animation: preloaderFloatRotate 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px var(--color-primary));
+            position: absolute;
+        }
+
+        .preloader-progress-ring {
+            position: absolute;
+            width: 95%; /* Relative to container */
+            height: 95%; /* Relative to container */
+            border-radius: 50%;
+            border: 8px solid rgba(38, 186, 245, 0.3);
+            border-top: 8px solid var(--color-primary);
+            animation: preloaderRingRotate 2s linear infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .preloader-percentage {
+            position: absolute;
+            font-size: 2.5rem; /* Relative font size */
+            font-weight: bold;
+            color: var(--color-text-light);
+            text-shadow: 0 0 10px var(--color-primary);
+        }
+
+        .preloader-messages {
+            margin-top: 1.5rem; /* Relative margin */
+            font-size: 1.2rem; /* Relative font size */
+            color: var(--color-gray-text);
+            height: 2.5rem; /* Fixed height for consistent display */
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+
+        .preloader-message-item {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .preloader-message-item.active {
+            opacity: 1;
+        }
+
+        @keyframes preloaderFloatRotate {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                filter: drop-shadow(0 0 30px var(--color-primary));
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+                filter: drop-shadow(0 0 50px var(--color-primary));
+            }
+        }
+
+        @keyframes preloaderRingRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* General Button Hover Effect */
+        .btn-nav, .project-link, .btn-whatsapp-footer, .pre-hero-btn, .whatsapp-float {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-nav::before, .project-link::before, .btn-whatsapp-footer::before, .pre-hero-btn::before, .whatsapp-float::before {
+            content: '';
+            position: absolute;
+            top: var(--y);
+            left: var(--x);
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            transition: width 0.5s, height 0.5s;
+            border-radius: 50%;
+            z-index: -1;
+        }
+        .btn-nav:hover::before, .project-link:hover::before { width: 300px; height: 300px; }
+        .btn-whatsapp-footer:hover::before, .pre-hero-btn:hover::before, .whatsapp-float:hover::before { width: 250px; height: 250px; }
+
+        /* Top Bar */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem; /* Relative padding */
+            background: #000;
+            backdrop-filter: blur(10px);
+            border-bottom: 5px solid var(--color-border);
+            transition: all 0.3s ease;
+        }
+        .scrolled .top-bar {
+            padding: 0.8rem 1rem; /* Smaller padding when scrolled */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .logo {
+            font-size: 2rem; /* Relative font size */
+            font-weight: bold;
+            background-image: linear-gradient(120deg, #fff 10%, var(--color-primary) 40%, #fff 70%);
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        .logo.clicked { animation: shimmer 3s linear infinite, logoPop 0.3s ease-out; }
+        @keyframes logoPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .nav-inline { display: flex; gap: 0.75rem; } /* Relative gap */
+        .btn-nav {
+            padding: 0.75rem 1.25rem; /* Relative padding */
+            background: #27272a;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem; /* Relative font size */
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem; /* Relative gap */
+        }
+        .btn-nav:hover { color: var(--color-button-hover); background: var(--color-primary); }
+        .btn-nav:hover i { color: var(--color-icon-hover); }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 2.75rem; /* Relative width */
+            height: 2.375rem; /* Relative height */
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 200;
+        }
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: var(--color-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* Portfolio Parallax */
+        .portfolio-parallax {
+            position: relative;
+            height: 50vh; /* Responsive height */
+            min-height: 300px; /* Minimum height */
+            margin: 0;
+            overflow: hidden;
+            background-color: var(--color-dark-bg);
+            box-shadow: 0 40px 60px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .parallax-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.2) saturate(0.2);
+            transform: scale(1);
+            transition: opacity 1.5s ease-in-out, transform 20s ease-in-out, filter 20s ease-in-out;
+            background-image: url('img/bg_main_1.png');
+        }
+        .parallax-background.active {
+            opacity: 1;
+            animation: zoomDarkenLighten 20s ease-in-out infinite forwards;
+        }
+
+        .portfolio-parallax-content {
+            position: relative;
+            z-index: 5;
+            color: var(--color-text-light);
+            text-shadow: 0 0 15px rgba(0,0,0,0.8);
+        }
+        .portfolio-parallax h1 {
+            font-size: 2.5em; /* Responsive font size */
+            margin-top: 1rem;
+            font-weight: bold;
+            color: var(--color-primary);
+            background-image: linear-gradient(120deg, #fff 10%, var(--color-primary) 40%, #fff 70%);
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+        }
+
+        /* Particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 3;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            opacity: 0.6;
+            transform: translateY(100vh);
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            to {
+                transform: translateY(-100vh);
+            }
+        }
+
+        .logo-parallax {
+            width: 400px; /* Responsive width */
+            height: 900px; /* Responsive height */
+            max-width: 600px;
+            max-height: 1100px;
+            background-image: url('img/main_chibi_portfolio.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 4;
+            animation: floatRotate 8s ease-in-out infinite, shimmer-parallax-logo 3s linear infinite;
+            filter: drop-shadow(0 0 40px rgba(38, 186, 245, 0.8));
+            margin-top: 20px; /* Adjust position relative to viewport height */
+        }
+
+        @keyframes shimmer-parallax-logo {
+            0% { filter: drop-shadow(0 0 40px rgba(38, 186, 245, 0.6)); }
+            50% { filter: drop-shadow(0 0 70px rgba(38, 186, 245, 1)); }
+            100% { filter: drop-shadow(0 0 40px rgba(38, 186, 245, 0.6)); }
+        }
+
+        @keyframes floatRotate {
+            0%, 100% {
+                transform: translateY(0%) rotate(0deg);
+                filter: drop-shadow(0 0 40px rgba(38, 186, 245, 0.6)) drop-shadow(0 0 80px rgba(38, 186, 245, 0.3));
+            }
+            50% {
+                transform: translateY(-10px) rotate(3deg);
+                filter: drop-shadow(0 0 50px rgba(38, 186, 245, 0.9)) drop-shadow(0 0 90px rgba(38, 186, 245, 0.6));
+            }
+        }
+        
+        @keyframes zoomDarkenLighten {
+            0% {
+                transform: scale(1);
+                filter: brightness(0.2) saturate(0.2);
+            }
+            50% {
+                transform: scale(1.08);
+                filter: brightness(1) saturate(1);
+            }
+            100% {
+                transform: scale(1);
+                filter: brightness(0.2) saturate(0.2);
+            }
+        }
+
+        /* 3D Hover Image Hero */
+        .hero-3d-image-section {
+            background: var(--color-dark-bg);
+            padding: 4rem 1rem; /* Relative padding */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh; /* Responsive minimum height */
+            perspective: 1000px; /* For 3D effect */
+            position: relative;
+            margin: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+        .hero-3d-image-container {
+            position: relative;
+            width: 60vmin; /* Responsive width */
+            height: 60vmin; /* Responsive height */
+            max-width: 500px; /* Max size */
+            max-height: 500px; /* Max size */
+            transform-style: preserve-3d;
+            transition: transform 0.1s linear;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+            border-radius: 25px;
+            overflow: hidden;
+        }
+
+        /* New: Slider for 3D Hero */
+        .hero-image-slider {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+
+        .hero-slider-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .hero-slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.5); /* Oscurecer un poco */
+        }
+
+        .hero-slide.active {
+            filter: brightness(1); /* Iluminar el slide activo */
+        }
+
+        /* Render central PNG */
+        .central-render {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50vmin; /* Responsive width */
+            height: 50vmin; /* Responsive height */
+            max-width: 400px; /* Max size */
+            max-height: 400px; /* Max size */
+            background-image: url('img/render_central.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 10;
+            pointer-events: none;
+            filter: drop-shadow(0 0 30px rgba(38, 186, 245, 0.7));
+            transform-style: preserve-3d;
+            transition: transform 0.1s linear;
+            transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
+        }
+
+        /* Adjusted duplicate 3D Parallax */
+        .hero-3d-image-section.duplicated-parallax {
+            min-height: 60vh; /* Slightly smaller height for the duplicated one */
+        }
+        .hero-3d-image-section.duplicated-parallax .hero-3d-image-container {
+            width: 55vmin;
+            height: 55vmin;
+            max-width: 450px;
+            max-height: 450px;
+        }
+        .hero-3d-image-section.duplicated-parallax .central-render {
+            width: 45vmin;
+            height: 45vmin;
+            max-width: 350px;
+            max-height: 350px;
+        }
+
+        /* Wider Parallax without text/zoom */
+        .wide-parallax-section {
+            position: relative;
+            height: 60vh; /* Responsive height */
+            min-height: 350px; /* Minimum height */
+            background-color: var(--color-dark-bg);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.5);
+            margin-top: 0;
+            border-radius: 0;
+        }
+        .wide-parallax-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('img/bg_main_1.png');
+            background-size: cover;
+            background-position: center;
+            filter: brightness(0.2) saturate(0.2);
+        }
+        .wide-parallax-logo {
+            width: 400px; /* Responsive width */
+            height: 600px; /* Responsive height */
+            max-width: 320px;
+            max-height: 600px;
+            background-image: url('img/main_chibi_index.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: 4;
+            animation: floatRotate 8s ease-in-out infinite, shimmer-parallax-logo 3s linear infinite;
+            filter: drop_shadow(0 0 60px rgba(38, 186, 245, 0.8)) drop-shadow(0 0 100px rgba(38, 186, 245, 0.5));
+        }
+
+        /* Sections & Footer */
+        section { padding: 4rem 1rem; text-align: center; } /* Relative padding */
+        .section-dark { background: var(--color-dark-bg); }
+        .section-light { background: var(--color-light-bg); }
+        .separator-section { 
+            padding: 3rem 1rem; /* Relative padding */
+            text-align: center; 
+            background: linear-gradient(to bottom, var(--color-dark-bg), var(--color-light-bg)); 
+            position: relative; 
+            z-index: 5; 
+        }
+        .social-icons { display: flex; justify-content: center; gap: 1.5rem; margin: 0.5rem 0; } /* Relative gap/margin */
+        .social-icons a { 
+            width: 4rem; /* Relative size */
+            height: 4rem; /* Relative size */
+            display: flex; justify-content: center; align-items: center; border-radius: 50%; 
+            background: var(--color-text-dark); color: var(--color-primary); 
+            font-size: 2rem; /* Relative font size */
+            transition: all 0.3s ease; 
+        }
+        .social-icons a:hover { background: var(--color-primary); color: var(--color-icon-hover); transform: translateY(-5px); }
+        .section-parallax { background: url('img/bg_index.jpg') fixed center/cover no-repeat; height: 480px; } /* Consider making height responsive */
+        footer { text-align: center; padding: 1.25rem; } /* Relative padding */
+
+        /* WhatsApp Footer Button */
+        .btn-whatsapp-footer {
+            display: inline-flex; align-items: center; justify-content: center; 
+            padding: 1rem 2.5rem; /* Relative padding */
+            margin-top: 0.5rem; /* Relative margin */
+            background: linear-gradient(90deg, #25D366, #128C7E); color: #fff; text-decoration: none;
+            border-radius: 50px; 
+            font-size: 1.3rem; /* Relative font size */
+            font-weight: bold; transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+        }
+        .btn-whatsapp-footer i { margin-right: 0.5rem; } /* Relative margin */
+        .btn-whatsapp-footer:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6); background: #128C7E; }
+
+        /* Back Button */
+        #back-to-top-btn {
+            display: none;
+            position: fixed;
+            bottom: 1.875rem; /* Relative bottom */
+            right: 1.875rem; /* Relative right */
+            z-index: 99;
+            font-size: 1.5rem; /* Relative font size */
+            background-color: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 3.125rem; /* Relative width */
+            height: 3.125rem; /* Relative height */
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.5s ease;
+            opacity: 0;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #back-to-top-btn.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        #back-to-top-btn:hover {
+            background-color: var(--color-button-hover);
+            transform: translateY(-3px);
+        }
+
+        /* Floating WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            right: 0;
+            top: 23%;
+            transform: translateY(-50%) translateX(1.5rem); /* Relative translation */
+            background: linear-gradient(90deg, #25D366, #128C7E);
+            color: #fff;
+            padding: 2.5rem 1.5rem; /* Relative padding */
+            border-top-left-radius: 40px;
+            border-bottom-left-radius: 40px;
+            text-decoration: none;
+            font-size: 1.5rem; /* Relative font size */
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem; /* Relative gap */
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+            z-index: 100;
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            white-space: nowrap;
+            transform-origin: center right;
+        }
+
+        .whatsapp-float:hover {
+            transform: translateY(-50%) translateX(0px);
+            background: #128C7E;
+            box-shadow: -8px 0 20px rgba(0,0,0,0.5);
+        }
+        
+        .whatsapp-float.clicked {
+            animation: whatsappFloatPop 0.3s ease-out;
+        }
+
+        @keyframes whatsappFloatPop {
+            0% { transform: translateY(-50%) translateX(0px) scale(1); }
+            50% { transform: translateY(-50%) translateX(0px) scale(1.05); }
+            100% { transform: translateY(-50%) translateX(0px) scale(1); }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            html {
+                font-size: 15px; /* Adjust base font size for larger tablets */
+            }
+        }
+
+        @media (max-width: 768px) {
+            html { 
+            html { font-size: 13px; }
+            .top-bar { padding: 10px 20px; }
+            .scrolled .top-bar { padding: 8px 15px; }
+            .logo { font-size: 1.5em; }
+            .nav-inline { 
+                position: fixed; 
+                top: 55px; /* Adjust based on top-bar height */
+                left: 0; 
+                width: 100%; 
+                background: #1f1f22ee; 
+                border: 1px solid var(--color-border); 
+                padding: 1rem; 
+                flex-direction: column; 
+                display: none; 
+                font-size: 1.2rem; 
+                z-index: 1000; 
+                box-sizing: border-box;
+                animation: slideDown 0.3s ease-out forwards;
+            }
+            .nav-inline.show { display: flex; }
+            .hamburger { display: flex; width: 46px; height: 30px;}
+
+            @keyframes slideDown {
+                0% { transform: translateY(-100%); opacity: 0; }
+                100% { transform: translateY(0); opacity: 1; }
+            }
+
+            .portfolio-parallax {
+                height: 40vh;
+                min-height: 250px;
+            }
+            .logo-parallax {
+                width: 380px;
+                height: 850px;
+                margin-top: 20px;
+            }
+            .portfolio-parallax h1 {
+                font-size: 2.5em;
+            }
+            
+            .hero-3d-image-section {
+                padding: 2.5rem 0.75rem;
+                min-height: 60vh;
+            }
+            .hero-3d-image-container {
+                width: 70vmin;
+                height: 70vmin;
+                max-width: 350px;
+                max-height: 350px;
+            }
+            .central-render {
+                width: 60vmin;
+                height: 60vmin;
+                max-width: 280px;
+                max-height: 280px;
+            }
+            .hero-3d-image-section.duplicated-parallax {
+                min-height: 50vh;
+            }
+            .hero-3d-image-section.duplicated-parallax .hero-3d-image-container {
+                width: 65vmin;
+                height: 65vmin;
+                max-width: 320px;
+                max-height: 320px;
+            }
+            .hero-3d-image-section.duplicated-parallax .central-render {
+                width: 55vmin;
+                height: 55vmin;
+                max-width: 250px;
+                max-height: 250px;
+            }
+
+            .wide-parallax-section {
+                height: 70vh;
+                min-height: 300px;
+            }
+            .wide-parallax-logo {
+                width: 460px;
+                height: 680px;
+            }
+
+            section { padding: 2rem 0.75rem; }
+            .separator-section, #contacto { padding: 20px 10px; }
+            .separator-section h2, #contacto h2 { font-size: 1.2em; }
+            .separator-section p, #contacto p { font-size: 1.0em; }
+            footer { padding: 10px; }
+            .social-icons a { width: 55px; height: 55px; font-size: 2em; }
+            .btn-whatsapp-footer { padding: 12px 40px; font-size: 1.1em; }
+            #back-to-top-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+            .whatsapp-float {
+                padding: 30px 15px;
+                font-size: 1.4em;
+                transform: translateY(-50%) translateX(15px); /* Adjusted for smaller screens */
+            }
+            .whatsapp-float:hover {
+                transform: translateY(-50%) translateX(0px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            html {
+                font-size: 13px; /* Smaller base font size for very small mobiles */
+            }
+            .logo { font-size: 1.5rem; }
+            .btn-nav { font-size: 1rem; padding: 0.6rem 1rem; }
+            .hamburger { width: 2.2rem; height: 1.5rem;}
+
+            .preloader-percentage { font-size: 2rem; }
+            .preloader-messages { font-size: 1rem; }
+
+            .portfolio-parallax {
+                height: 35vh;
+                min-height: 200px;
+            }
+            .portfolio-parallax h1 {
+                font-size: 2.2rem;
+            }
+            .logo-parallax {
+                width: 20vmin;
+                height: 20vmin;
+                margin-top: -3vh;
+            }
+            .hero-3d-image-section {
+                padding: 1.5rem 0.5rem;
+                min-height: 50vh;
+            }
+            .hero-3d-image-container {
+                width: 80vmin;
+                height: 80vmin;
+                max-width: 300px;
+                max-height: 300px;
+            }
+            .central-render {
+                width: 70vmin;
+                height: 70vmin;
+                max-width: 220px;
+                max-height: 220px;
+            }
+            .hero-3d-image-section.duplicated-parallax .hero-3d-image-container {
+                width: 75vmin;
+                height: 75vmin;
+                max-width: 280px;
+                max-height: 280px;
+            }
+            .hero-3d-image-section.duplicated-parallax .central-render {
+                width: 65vmin;
+                height: 65vmin;
+                max-width: 200px;
+                max-height: 200px;
+            }
+            .wide-parallax-section {
+                height: 40vh;
+                min-height: 250px;
+            }
+            .wide-parallax-logo {
+                width: 25vmin;
+                height: 25vmin;
+            }
+            section { padding: 1.5rem 0.5rem; }
+            .separator-section h2, #contacto h2 { font-size: 1.5rem; }
+            .social-icons { gap: 1rem; }
+            .social-icons a { 
+                width: 3rem; 
+                height: 3rem; 
+                font-size: 1.5rem; 
+            }
+            .btn-whatsapp-footer { padding: 0.7rem 1.5rem; font-size: 1rem; }
+            #back-to-top-btn {
+                bottom: 1rem;
+                right: 1rem;
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1rem;
+            }
+            .whatsapp-float {
+                padding: 1rem 0.8rem;
+                font-size: 1rem;
+                transform: translateY(-50%) translateX(0.5rem);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="preloader">
+        <div class="preloader-container">
+            <div class="preloader-logo"></div>
+            <div class="preloader-progress-ring"></div>
+            <div class="preloader-percentage" id="preloaderPercentage">0%</div>
+        </div>
+        <div class="preloader-messages" id="preloaderMessages">
+            <div class="preloader-message-item active">Cargando nuestro Portafolio...</div>
+            <div class="preloader-message-item">Descubre nuestros proyectos más recientes.</div>
+            <div class="preloader-message-item">La creatividad se une a la estrategia.</div>
+            <div class="preloader-message-item">Inspiración en cada diseño.</div>
+            <div class="preloader-message-item">Tu visión, nuestra pasión.</div>
+            <div class="preloader-message-item">Prepárate para la innovación.</div>
+        </div>
+    </div>
+
+    <header class="top-bar">
+        <a href="index.html" class="logo" id="logo">Boost & Launch 🚀</a>
+        <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+        <nav class="nav-inline" id="nav">
+            <a href="index.html" class="btn-nav"><i class="fa-solid fa-house"></i> Inicio</a>
+            <a href="about-us.html" class="btn-nav"><i class="fa-solid fa-users"></i> ¿Quiénes somos?</a>
+            <a href="#contacto" class="btn-nav"><i class="fa-solid fa-paper-plane"></i> Contáctanos</a>
+        </nav>
+    </header>
+
+    <div class="portfolio-parallax">
+        <div class="parallax-background" id="parallaxBackground"></div>
+        <div class="particles" id="particles"></div>
+        <div class="logo-parallax"></div>
+        <div class="portfolio-parallax-content">
+            <h1>Nuestra experiencia</h1>
+        </div>
+    </div>
+
+    <section class="hero-3d-image-section" id="hero3dImageSectionTop">
+        <div class="hero-image-slider">
+            <div class="hero-slider-track" id="heroSliderTrackTop">
+                <div class="hero-slide" style="background-image: url('img/parallax.portfolio_01.jpeg');"></div>
+                <div class="hero-slide" style="background-image: url('img/parallax.portfolio_02.jpeg');"></div>
+                <div class="hero-slide" style="background-image: url('img/parallax.portfolio_03.jpeg');"></div>
+            </div>
+        </div>
+        <div class="central-render" id="centralRenderTop"></div>
+    </section>
+
+    <section class="section-dark">
+        <h2><i class="fa-solid fa-palette"></i> Proyectos Destacados</h2>
+        <p>Una muestra de la calidad y creatividad que ponemos en cada trabajo.</p>
+    </section>
+
+    <section class="hero-3d-image-section" id="hero3dImageSectionBottom">
+        <div class="hero-image-slider">
+            <div class="hero-slider-track" id="heroSliderTrackBottom">
+                <div class="hero-slide" style="background-image: url('img/slider_bg_1.jpg');"></div>
+                <div class="hero-slide" style="background-image: url('img/slider_bg_2.jpg');"></div>
+                <div class="hero-slide" style="background-image: url('img/slider_bg_3.jpg');"></div>
+            </div>
+        </div>
+        <div class="central-render" id="centralRenderBottom"></div>
+    </section>
+
+    <div class="wide-parallax-section">
+        <div class="wide-parallax-bg"></div>
+        <div class="particles" id="wideParallaxParticles"></div> <div class="wide-parallax-logo"></div>
+    </div>
+
+    <section class="section-light" id="contacto">
+        <h2><i class="fa-solid fa-headset"></i> Hablemos de tu Próximo Proyecto</h2>
+        <a href="https://wa.me/yourphonenumber" target="_blank" class="btn-whatsapp-footer"><i class="fab fa-whatsapp"></i> Chatea con nosotros</a>
+        <p>Conoce un poco más sobre nuestros otros trabajos.</p>
+        <div class="social-icons">
+            <a href="https://youtu.be/dQw4w9WgXcQ?si=Mv0nbO47jAdIntYn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.linkedin.com/in/leonel-e-rodr%C3%ADguez-s-66390335b/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </section>
+
+    <footer class="section-dark">
+        <p>© 2025 ~ 👨‍💻 by: theAstroBruh con 💙~</p>
+    </footer>
+
+    <button id="back-to-top-btn"><i class="fas fa-arrow-up"></i></button>
+
+    <a href="https://wa.me/yourphonenumber" class="whatsapp-float" target="_blank" id="whatsappFloat">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Globals ---
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+        const logo = document.getElementById('logo');
+        const backToTopBtn = document.getElementById('back-to-top-btn');
+        const whatsappFloat = document.getElementById('whatsappFloat');
+
+        const preloader = document.getElementById('preloader');
+        const preloaderPercentage = document.getElementById('preloaderPercentage');
+        const preloaderProgressRing = document.querySelector('.preloader-progress-ring');
+        const preloaderMessages = document.querySelectorAll('.preloader-message-item');
+        let loadProgress = 0;
+        let loadingInterval;
+        let currentPreloaderMessageIndex = 0;
+
+        // Portfolio Parallax
+        const portfolioParallaxBg = document.getElementById('parallaxBackground');
+        let parallaxAnimationTimeout;
+
+        // 3D Hover Image (Now with a slider background) - Top instance
+        const hero3dImageSectionTop = document.getElementById('hero3dImageSectionTop');
+        const centralRenderTop = document.getElementById('centralRenderTop');
+        const heroSliderTrackTop = document.getElementById('heroSliderTrackTop');
+        const heroSlidesTop = Array.from(heroSliderTrackTop.querySelectorAll('.hero-slide'));
+        let currentHeroSlideIndexTop = 0;
+        let heroSliderIntervalTop;
+
+        // 3D Hover Image (Now with a slider background) - Bottom instance
+        const hero3dImageSectionBottom = document.getElementById('hero3dImageSectionBottom');
+        const centralRenderBottom = document.getElementById('centralRenderBottom');
+        const heroSliderTrackBottom = document.getElementById('heroSliderTrackBottom');
+        const heroSlidesBottom = Array.from(heroSliderTrackBottom.querySelectorAll('.hero-slide'));
+        let currentHeroSlideIndexBottom = 0;
+        let heroSliderIntervalBottom;
+        
+        const rotationIntensity = 20;
+
+        let scrollHistory = [];
+
+        // --- Preloader Logic ---
+        function updatePreloaderProgress() {
+            if (loadProgress < 100) {
+                loadProgress += Math.floor(Math.random() * 10) + 1;
+                if (loadProgress > 100) loadProgress = 100;
+                preloaderPercentage.textContent = `${loadProgress}%`;
+
+                // Calculate stroke-dashoffset for the progress ring
+                const radius = preloaderProgressRing.offsetWidth / 2;
+                const circumference = 2 * Math.PI * radius;
+                // preloaderProgressRing.style.strokeDasharray is already set in CSS for the ring itself
+                const offset = circumference - (loadProgress / 100) * circumference;
+                // We need to apply the stroke-dashoffset to the border-top specifically if it were an SVG circle,
+                // but since it's a div with a border-top, this visual effect is more complex with pure CSS borders.
+                // The current CSS animation for preloaderRingRotate creates a spinning effect, not a filling circle.
+                // For a filling circle, an SVG element would be more suitable.
+                // Keeping the JS for percentage update, but note the limitation with pure CSS div for the ring fill effect.
+            } else {
+                clearInterval(loadingInterval);
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    startPortfolioParallaxAnimation();
+                    startHeroSliderAutoSlide(heroSliderTrackTop, heroSlidesTop, currentHeroSlideIndexTop, 'Top');
+                    startHeroSliderAutoSlide(heroSliderTrackBottom, heroSlidesBottom, currentHeroSlideIndexBottom, 'Bottom');
+                }, 500);
+            }
+        }
+
+        function rotatePreloaderMessages() {
+            preloaderMessages[currentPreloaderMessageIndex].classList.remove('active');
+            currentPreloaderMessageIndex = (currentPreloaderMessageIndex + 1) % preloaderMessages.length;
+            preloaderMessages[currentPreloaderMessageIndex].classList.add('active');
+        }
+
+        window.addEventListener('load', () => {
+            loadingInterval = setInterval(updatePreloaderProgress, 150);
+            setInterval(rotatePreloaderMessages, 3000);
+        });
+
+        // --- Create Particles ---
+        function createParticles(containerId) {
+            const particlesContainer = document.getElementById(containerId);
+            if (!particlesContainer) return;
+
+            // Clear existing particles to prevent duplicates on re-creation
+            particlesContainer.innerHTML = ''; 
+
+            const particleCount = 50;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                const size = Math.random() * 3 + 1;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 10 + 5;
+                const opacity = Math.random() * 0.5 + 0.3;
+                // Keep original color for consistency, or modify as needed
+                const color = `var(--color-primary)`; // Use CSS variable for consistency
+
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.opacity = opacity;
+                particle.style.background = color;
+                particle.style.bottom = `-10px`; // Start from slightly below the screen
+
+                particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles('particles'); // For the portfolio parallax
+        createParticles('wideParallaxParticles'); // For the wider parallax
+
+        // --- Portfolio Parallax Animation ---
+        function startPortfolioParallaxAnimation() {
+            // Ensure initial state before applying active class
+            portfolioParallaxBg.style.opacity = 0;
+            portfolioParallaxBg.style.filter = 'brightness(0.2) saturate(0.2)';
+            portfolioParallaxBg.style.transform = 'scale(1)';
+            portfolioParallaxBg.classList.remove('active');
+
+            parallaxAnimationTimeout = setTimeout(() => {
+                portfolioParallaxBg.classList.add('active');
+                portfolioParallaxBg.style.opacity = 1;
+                
+                // Reiniciar la animación cada 20 segundos para un ciclo continuo
+                // This ensures the animation resets and replays after completion
+                setInterval(() => {
+                    portfolioParallaxBg.classList.remove('active');
+                    void portfolioParallaxBg.offsetWidth; // Trigger reflow to restart animation
+                    portfolioParallaxBg.classList.add('active');
+                }, 20000); 
+            }, 500); // Shorter delay since preloader already ran
+        }
+        
+        // --- 3D Hover and Slider Hero Logic (Generalized for multiple instances) ---
+        function updateHeroSlider(sliderTrack, slides, currentIndex) {
+            slides.forEach((slide, index) => {
+                if (index === currentIndex) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            sliderTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        function startHeroSliderAutoSlide(sliderTrack, slides, currentIndex, instanceName) {
+            // Clear existing interval for this instance
+            if (instanceName === 'Top') {
+                clearInterval(heroSliderIntervalTop);
+                heroSliderIntervalTop = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    updateHeroSlider(sliderTrack, slides, currentIndex);
+                    currentHeroSlideIndexTop = currentIndex; // Update global index
+                }, 5000);
+            } else if (instanceName === 'Bottom') {
+                clearInterval(heroSliderIntervalBottom);
+                heroSliderIntervalBottom = setInterval(() => {
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    updateHeroSlider(sliderTrack, slides, currentIndex);
+                    currentHeroSlideIndexBottom = currentIndex; // Update global index
+                }, 5000);
+            }
+        }
+
+        // Apply 3D hover effect to central renders
+        function apply3DHoverEffect(sectionElement, renderElement) {
+            sectionElement.addEventListener('mousemove', e => {
+                const rect = sectionElement.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                // Calculate rotation based on mouse position relative to center
+                const rotateX = ((y - centerY) / centerY) * rotationIntensity;
+                const rotateY = ((x - centerX) / centerX) * -rotationIntensity;
+
+                if (renderElement) {
+                    // Only apply rotation, translation is handled by CSS (top: 50%, left: 50%, translate: -50%, -50%)
+                    renderElement.style.transform = `translate(-50%, -50%) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                }
+            });
+
+            sectionElement.addEventListener('mouseleave', () => {
+                if (renderElement) {
+                    // Reset rotation to 0 when mouse leaves, maintain translation
+                    renderElement.style.transform = 'translate(-50%, -50%) rotateX(0deg) rotateY(0deg)';
+                }
+            });
+        }
+
+        // Initialize 3D hover effects for both sections
+        if (hero3dImageSectionTop && centralRenderTop) {
+            apply3DHoverEffect(hero3dImageSectionTop, centralRenderTop);
+        }
+        if (hero3dImageSectionBottom && centralRenderBottom) {
+            apply3DHoverEffect(hero3dImageSectionBottom, centralRenderBottom);
+        }
+
+        // Initial setup for the hero sliders
+        updateHeroSlider(heroSliderTrackTop, heroSlidesTop, currentHeroSlideIndexTop);
+        updateHeroSlider(heroSliderTrackBottom, heroSlidesBottom, currentHeroSlideIndexBottom);
+
+
+        // --- Hamburger Menu ---
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('show');
+        });
+
+        // Close nav when a link is clicked (mobile)
+        nav.addEventListener('click', e => {
+            if (e.target.tagName === 'A' && nav.classList.contains('show')) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('show');
+            }
+        });
+
+        // --- Logo Click ---
+        logo.addEventListener('click', () => {
+            smoothScrollTo(0);
+            logo.classList.add('clicked');
+            setTimeout(() => logo.classList.remove('clicked'), 300);
+        });
+
+        // --- Button Hover Illumination ---
+        document.querySelectorAll('.btn-nav, .project-link, .btn-whatsapp-footer, .pre-hero-btn, .whatsapp-float').forEach(button => {
+            button.addEventListener('mousemove', e => {
+                const rect = button.getBoundingClientRect();
+                button.style.setProperty('--x', `${e.clientX - rect.left}px`);
+                button.style.setProperty('--y', `${e.clientY - rect.top}px`);
+            });
+        });
+
+        // --- Smooth Scroll Logic and History ---
+        const smoothScrollTo = (target) => {
+            let targetElement;
+            let targetPosition = 0;
+
+            if (typeof target === 'string') {
+                targetElement = document.getElementById(target);
+                if (targetElement) {
+                    targetPosition = targetElement.offsetTop;
+                }
+            } else if (typeof target === 'number') {
+                targetPosition = target;
+            }
+
+            const currentScrollTop = window.scrollY;
+            // Add current scroll position to history only if it's significantly different from the last one
+            if (scrollHistory.length === 0 || Math.abs(currentScrollTop - scrollHistory[scrollHistory.length - 1]) > 50) {
+                scrollHistory.push(currentScrollTop);
+            }
+            
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+        };
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                smoothScrollTo(targetId);
+            });
+        });
+
+        // --- Back to Top Button Logic ---
+        window.addEventListener('scroll', () => {
+            const portfolioParallaxSection = document.querySelector('.portfolio-parallax');
+            if (portfolioParallaxSection) {
+                const portfolioParallaxRect = portfolioParallaxSection.getBoundingClientRect();
+                // Show button when scrolled past the top of the parallax section (or a bit before)
+                if (window.scrollY > portfolioParallaxRect.top + portfolioParallaxSection.offsetHeight / 4) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            } else { // Fallback if parallax section is not found
+                 if (window.scrollY > window.innerHeight / 2) {
+                    backToTopBtn.classList.add('show');
+                } else {
+                    backToTopBtn.classList.remove('show');
+                }
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            if (scrollHistory.length > 0) {
+                const lastScrollPos = scrollHistory.pop();
+                window.scrollTo({ top: lastScrollPos, behavior: 'smooth' });
+            } else {
+                smoothScrollTo(0); // Fallback to top of the page
+            }
+        });
+
+        // --- Floating WhatsApp Button Click Effect ---
+        whatsappFloat.addEventListener('click', () => {
+            whatsappFloat.classList.add('clicked');
+            setTimeout(() => whatsappFloat.classList.remove('clicked'), 300);
+        });
+
+        // Preload images
+        ['img/chibi.png', 'img/main_chibi_portfolio.png', 'img/bg_main_1.png', 'img/img_1.png', 'img/img_2.png', 'img/img_3.png', 'img/img_h1.png', 'img/render_central.png', 'img/parallax.portfolio_01.jpeg', 'img/parallax.portfolio_02.jpeg', 'img/parallax.portfolio_03.jpeg'].forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+
+    });
+    </script>
+</body>
+</html>
